@@ -1,0 +1,19 @@
+import express from "express";
+
+import {
+  createReply,
+  deleteReply,
+  editReply,
+  getRepliesByPostId
+} from "../controllers/replies.controller";
+
+import verifyToken from "../middleware/verityToken";
+
+const router = express.Router();
+
+router.get("/:postId", getRepliesByPostId);
+router.post("/:postId", verifyToken, createReply);
+router.put("/:replyId", verifyToken, editReply);
+router.delete("/:replyId", verifyToken, deleteReply);
+
+export default router;

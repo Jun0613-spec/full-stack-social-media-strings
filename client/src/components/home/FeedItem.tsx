@@ -1,0 +1,141 @@
+import { formatDistanceToNow } from "date-fns";
+import { HiDotsHorizontal } from "react-icons/hi";
+import { HiOutlineChatBubbleOvalLeft, HiOutlineHeart } from "react-icons/hi2";
+import { LuDot } from "react-icons/lu";
+import { Link, useNavigate } from "react-router-dom";
+
+import UserAvatar from "@/components/UserAvatar";
+
+import Button from "../Button";
+
+import { cn } from "@/lib/utils";
+
+import { useAuthStore } from "@/stores/authStore";
+
+import { Post } from "@/types";
+
+interface FeedItemProps {
+  post: Post;
+}
+
+export const FeedItem = ({ post }: FeedItemProps) => {
+  const navigate = useNavigate();
+
+  const { currentUser } = useAuthStore();
+
+  const formattedDate = formatDistanceToNow(new Date(post.createdAt), {
+    addSuffix: true
+  });
+
+  const handleClickPost = () => {
+    navigate(`/post/${post.id}`);
+  };
+
+  return (
+    <div
+      onClick={handleClickPost}
+      className="p-4 border-b border-neutral-200 dark:border-neutral-800 hover:bg-muted/20 dark:hiover:bg-muted/50 cursor-pointer"
+    >
+      <div className="flex items-start space-x-2">
+        <div className="flex-shrink-0">
+          <Link to={`/${post.user.username}`}>
+            <UserAvatar src={post.user.avatarImage} className="w-10 h-10" />
+          </Link>
+        </div>
+
+        <div className="flex-1">
+          <div className="flex items-center justify-between">
+            <div className="flex items-cetner space-x-1">
+              <Link to={`/${post.user.username}`} className="hover:underline">
+                <p className="font-bold text-sm lg:text-base">
+                  {post.user.firstName} {post.user.lastName}
+                </p>
+              </Link>
+              <p className="text-neutral-500 dark:text-neutral-400 text-xs lg:text-sm">
+                @{post.user.username}
+              </p>
+
+              <LuDot className="text-neutral-500 dark:text-neutral-400" />
+
+              <time
+                dateTime={post.createdAt.toISOString()}
+                className="text-neutral-500 dark:text-neutral-400  text-xs lg:text-sm hover:underline"
+                title={post.createdAt.toLocaleString()}
+              >
+                {formattedDate}
+              </time>
+            </div>
+
+            <div>
+              {/* {currentUser?.id === post.user.id && <HiDotsHorizontal />} */}
+              <Button variant="muted" size="icon">
+                <HiDotsHorizontal className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+
+          <div className="mt-1 space-y-3">
+            {post.text && (
+              <p className="text-gray-800 dark:text-gray-200 break-words whitespace-pre-line">
+                {post.text}
+              </p>
+            )}
+
+            {post.images.length > 0 && (
+              <div
+                className={cn(
+                  "grid gap-2 mt-2 rounded-xl overflow-hidden",
+                  post.images.length === 1 ? "grid-cols-1" : "grid-cols-2",
+                  post.images.length === 3 && "grid-rows-2"
+                )}
+              >
+                {post.images.map((image, index) => (
+                  <div
+                    key={index}
+                    className={cn(
+                      "relative overflow-hidden group rounded-xl",
+                      post.images.length === 1
+                        ? "aspect-square"
+                        : "aspect-square",
+                      post.images.length === 3 &&
+                        index === 0 &&
+                        "row-span-2 aspect-auto"
+                    )}
+                  >
+                    <img
+                      src={image}
+                      alt={`Post by ${post.user.username}`}
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="flex items-center gap-4 mt-3 text-muted-foreground text-sm ">
+            <button
+              onClick={() => {}}
+              className="flex items-center space-x-1 hover:text-primary"
+            >
+              <HiOutlineChatBubbleOvalLeft className="w-4 h-4" />
+              <span>{post._count?.replies}</span>
+            </button>
+
+            <button
+              onClick={() => {}}
+              className="flex items-center space-x-1 hover:text-primary"
+            >
+              <HiOutlineHeart className="w-4 h-4" />
+              <span>{post._count?.likes}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default FeedItem;
