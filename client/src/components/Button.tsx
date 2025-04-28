@@ -4,7 +4,7 @@ import { cn } from "../lib/utils";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  variant?: "primary" | "danger" | "outline" | "ghost" | "muted";
+  variant?: "primary" | "secondary" | "danger" | "outline" | "ghost" | "muted";
   size?: "sm" | "md" | "lg" | "icon";
   className?: string;
 }
@@ -20,7 +20,9 @@ const Button = ({
     "rounded-md font-medium transition duration-200 flex items-center justify-center cursor-pointer";
   const variantStyles = {
     primary:
-      "text-white bg-neutral-900 hover:bg-neutral-900/80 dark:text-black dark:bg-white dark:hover:bg-white/80 ",
+      "text-white bg-neutral-900 hover:bg-neutral-900/80 dark:text-black dark:bg-white dark:hover:bg-white/80",
+    secondary:
+      "text-black bg-white hover:bg-white/80 dark:text-white dark:bg-neutral-800 dark:hover:bg-neutral-800/80 border border-neutral-300 dark:border-neutral-700",
     danger:
       "text-white bg-red-600 hover:bg-red-700 dark:bg-red-800 dark:hover:bg-red-900",
     outline:

@@ -11,7 +11,7 @@ interface LoaderProps {
 
 const Loader = ({
   size = 18,
-  color = "text-muted-foreground dark:text-muted",
+  color = "text-muted-foreground dark:text-muted-foreground",
   className = "",
   iconClassName = ""
 }: LoaderProps) => {
