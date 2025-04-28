@@ -11,6 +11,7 @@ import Loader from "@/components/Loader";
 import { LoginRequest } from "@/types";
 
 import { useLogin } from "@/hooks/auth/useLogin";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -85,13 +86,27 @@ const LoginPage = () => {
         <Button
           type="submit"
           variant="primary"
-          size="lg"
+          size="md"
           disabled={isPending}
           className="w-full"
         >
           {isPending ? <Loader size={24} className="text-muted" /> : "Continue"}
         </Button>
       </form>
+
+      <div className="mt-6">
+        <div className="relative">
+          <div className="relative flex items-center justify-center text-sm">
+            <div className="flex-1 w-full border-t border-neutral-200 dark:border-neutral-800" />
+            <span className="bg-transparent px-2 text-gray-500">Or</span>
+            <div className="flex-1 w-full border-t border-neutral-200 dark:border-neutral-800" />
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <GoogleSignInButton />
+        </div>
+      </div>
 
       <div className="text-center mt-6">
         <p className="text-neutral-500 dark:text-neutral-400">

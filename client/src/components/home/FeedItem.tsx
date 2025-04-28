@@ -1,6 +1,12 @@
+import { useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { HiDotsHorizontal } from "react-icons/hi";
-import { HiOutlineChatBubbleOvalLeft, HiOutlineHeart } from "react-icons/hi2";
+import {
+  HiOutlineChatBubbleOvalLeft,
+  HiOutlineHeart,
+  HiPencilSquare,
+  HiTrash
+} from "react-icons/hi2";
 import { LuDot } from "react-icons/lu";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -14,6 +20,8 @@ import { useAuthStore } from "@/stores/authStore";
 
 import { Post } from "@/types";
 
+import useHandleOutsideClick from "@/hooks/useHandleOutsideClick";
+
 interface FeedItemProps {
   post: Post;
 }
@@ -22,6 +30,19 @@ export const FeedItem = ({ post }: FeedItemProps) => {
   const navigate = useNavigate();
 
   const { currentUser } = useAuthStore();
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+
+  const dropdownRef = useHandleOutsideClick({
+    isOpen: isDropdownOpen,
+    onClose: () => setIsDropdownOpen(false)
+  });
+
+  const toggleDropdown = (e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    setIsDropdownOpen((prev) => !prev);
+  };
 
   const formattedDate = formatDistanceToNow(new Date(post.createdAt), {
     addSuffix: true
@@ -38,7 +59,10 @@ export const FeedItem = ({ post }: FeedItemProps) => {
     >
       <div className="flex items-start space-x-2">
         <div className="flex-shrink-0">
-          <Link to={`/${post.user.username}`}>
+          <Link
+            to={`/${post.user.username}`}
+            onClick={(e) => e.stopPropagation()}
+          >
             <UserAvatar src={post.user.avatarImage} className="w-10 h-10" />
           </Link>
         </div>
@@ -46,7 +70,11 @@ export const FeedItem = ({ post }: FeedItemProps) => {
         <div className="flex-1">
           <div className="flex items-center justify-between">
             <div className="flex items-cetner space-x-1">
-              <Link to={`/${post.user.username}`} className="hover:underline">
+              <Link
+                to={`/${post.user.username}`}
+                onClick={(e) => e.stopPropagation()}
+                className="hover:underline"
+              >
                 <p className="font-bold text-sm lg:text-base">
                   {post.user.firstName} {post.user.lastName}
                 </p>
@@ -66,17 +94,39 @@ export const FeedItem = ({ post }: FeedItemProps) => {
               </time>
             </div>
 
-            <div>
+            <div className="relative" ref={dropdownRef}>
               {/* {currentUser?.id === post.user.id && <HiDotsHorizontal />} */}
-              <Button variant="muted" size="icon">
+              <Button variant="muted" size="icon" onClick={toggleDropdown}>
                 <HiDotsHorizontal className="w-4 h-4" />
               </Button>
+              {isDropdownOpen && (
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  className="absolute right-0 w-30 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden z-50 bg-white dark:bg-black"
+                >
+                  <button
+                    className="w-full px-4 py-3 text-left hover:bg-muted dark:hover:bg-neutral-900 flex items-center justify-between gap-3 text-sm transition duration-150 ease-in-out"
+                    onClick={() => {}}
+                  >
+                    <span className="truncate font-medium">Edit</span>
+                    <HiPencilSquare className="text-lg flex-shrink-0" />
+                  </button>
+
+                  <button
+                    onClick={() => {}}
+                    className="w-full px-4 py-3 text-left hover:bg-muted dark:hover:bg-neutral-900 flex items-center justify-between gap-3 text-sm border-t border-neutral-200 dark:border-neutral-800  text-red-500"
+                  >
+                    <span className="truncate font-medium ">Delete</span>
+                    <HiTrash className="text-lg flex-shrink-0" />
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
           <div className="mt-1 space-y-3">
             {post.text && (
-              <p className="text-gray-800 dark:text-gray-200 break-words whitespace-pre-line">
+              <p className="text-neutral-800 dark:text-neutral-200 break-words ">
                 {post.text}
               </p>
             )}
@@ -93,7 +143,7 @@ export const FeedItem = ({ post }: FeedItemProps) => {
                   <div
                     key={index}
                     className={cn(
-                      "relative overflow-hidden group rounded-xl",
+                      " overflow-hidden group rounded-xl",
                       post.images.length === 1
                         ? "aspect-square"
                         : "aspect-square",
@@ -105,7 +155,7 @@ export const FeedItem = ({ post }: FeedItemProps) => {
                     <img
                       src={image}
                       alt={`Post by ${post.user.username}`}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       loading="lazy"
                       decoding="async"
                     />

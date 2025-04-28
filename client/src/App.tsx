@@ -16,6 +16,7 @@ import HomePage from "./pages/Home";
 import SearchPage from "./pages/main/Search";
 import NotificationsPage from "./pages/main/Notifications";
 import ProfilePage from "./pages/main/Profile";
+import GoogleAuthSuccess from "./pages/auth/GoogleAuthSuccess";
 
 function App() {
   useAuth();
@@ -43,6 +44,7 @@ function App() {
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/auth/google/success" element={<GoogleAuthSuccess />} />
         </Route>
       </Route>
 
