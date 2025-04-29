@@ -1,36 +1,37 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FaRegImage } from "react-icons/fa6";
-import { EmojiClickData } from "emoji-picker-react";
 import { HiX } from "react-icons/hi";
+import { EmojiClickData } from "emoji-picker-react";
 
-import { useAuthStore } from "@/stores/authStore";
-import { usePostModalStore } from "@/stores/modals/posts/postModalStore";
+import { useEditPost } from "@/hooks/posts/useEditPost";
 
 import Button from "../Button";
 import Loader from "../Loader";
 import EmojiSelector from "../EmojiSelector";
 import UserAvatar from "../UserAvatar";
 
-import { PostFormData } from "@/types";
+import { EditPostFormData } from "@/types";
 
 import { MAX_FILES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-import { useCreatePost } from "@/hooks/posts/useCreatePost";
+import { useAuthStore } from "@/stores/authStore";
+import { useEditPostModalStore } from "@/stores/modals/posts/editPostModalStore";
 
-const CreatePostModal = () => {
+const EditPostModal = () => {
   const { currentUser } = useAuthStore();
-  const { isOpen, closeModal } = usePostModalStore();
+  const { isOpen, closeModal, postId, initialText } = useEditPostModalStore();
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const modalRef = useRef<HTMLDivElement | null>(null);
 
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+
   const [imageFiles, setImageFiles] = useState<File[]>([]);
 
-  const { mutate: createPost, isPending } = useCreatePost();
+  const { mutate: editPost, isPending } = useEditPost();
 
   const {
     register,
@@ -39,14 +40,22 @@ const CreatePostModal = () => {
     setValue,
     watch,
     reset
-  } = useForm<PostFormData>({
+  } = useForm<EditPostFormData>({
     defaultValues: {
-      text: ""
+      text: initialText ?? ""
     },
     mode: "onChange"
   });
 
   const currentText = watch("text");
+
+  useEffect(() => {
+    if (isOpen) {
+      reset({ text: initialText ?? "" });
+
+      setImageFiles([]);
+    }
+  }, [isOpen, initialText, reset]);
 
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -57,10 +66,11 @@ const CreatePostModal = () => {
     }
   }, [currentText]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !postId) return null;
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
+
     if (!files) return;
 
     const newFiles = Array.from(files);
@@ -122,22 +132,33 @@ const CreatePostModal = () => {
     }
   };
 
-  const onSubmit = (data: PostFormData) => {
+  const onSubmit = (data: EditPostFormData) => {
     const formData = new FormData();
 
     formData.append("text", data.text);
-    imageFiles.forEach((file) => formData.append("images", file));
 
-    createPost(formData, {
-      onSuccess: () => {
-        imagePreviews.forEach((url) => URL.revokeObjectURL(url));
-        reset();
-        setImageFiles([]);
-        setImagePreviews([]);
+    const noImagesLeft = imageFiles.length === 0;
 
-        closeModal();
-      }
+    if (noImagesLeft) {
+      formData.append("clearImages", "true");
+    }
+
+    imageFiles.forEach((file) => {
+      formData.append("images", file);
     });
+
+    editPost(
+      { postId, formData },
+      {
+        onSuccess: () => {
+          imagePreviews.forEach((url) => URL.revokeObjectURL(url));
+          reset();
+          setImageFiles([]);
+          setImagePreviews([]);
+          closeModal();
+        }
+      }
+    );
   };
 
   const handleOutsideClick = (e: React.MouseEvent) => {
@@ -157,7 +178,7 @@ const CreatePostModal = () => {
         className="bg-white dark:bg-black rounded-xl w-full max-w-xl mx-4 shadow-xl"
       >
         <div className="flex items-center justify-between p-2 border-b border-neutral-200 dark:border-neutral-800">
-          <h1 className="ml-2 text-xl font-bold">Create Post</h1>
+          <h1 className="ml-2 text-xl font-bold">Edit Post</h1>
           <Button
             variant="muted"
             size="icon"
@@ -185,7 +206,7 @@ const CreatePostModal = () => {
                   register("text").ref(e);
                 }}
                 maxLength={280}
-                placeholder="What's new?"
+                placeholder="What's on your mind?"
                 className="w-full resize-none overflow-hidden bg-transparent outline-none placeholder:text-neutral-500 dark:placeholder:text-neutral-400 text-xl placeholder:text-xl leading-tight min-h-[100px]"
               />
 
@@ -232,7 +253,7 @@ const CreatePostModal = () => {
                     type="button"
                     onClick={() => inputRef.current?.click()}
                     disabled={imageFiles.length >= MAX_FILES}
-                    className="disabled:opacity-50 disabled:cursor-not-allowed  cursor-pointer hover:text-muted-foreground"
+                    className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer hover:text-muted-foreground"
                   >
                     <FaRegImage className="w-5 h-5 " />
                   </Button>
@@ -262,7 +283,7 @@ const CreatePostModal = () => {
                       (currentText?.length || 0) > 280
                     }
                   >
-                    {isPending ? <Loader /> : "Post"}
+                    {isPending ? <Loader /> : "Save"}
                   </Button>
                 </div>
               </div>
@@ -274,4 +295,4 @@ const CreatePostModal = () => {
   );
 };
 
-export default CreatePostModal;
+export default EditPostModal;

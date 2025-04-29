@@ -21,7 +21,7 @@ const SearchPage = () => {
   const { data: followingsUsers } = useGetFollowingUsers();
   const { mutate: toggleFollow } = useToggleFollowUser();
 
-  const users = data?.pages.flatMap((page) => page.users) || [];
+  const users = data?.pages.flatMap((page) => page.searchUsers) || [];
 
   const followings =
     followingsUsers?.pages.flatMap((page) => page.followingUsers ?? []) || [];

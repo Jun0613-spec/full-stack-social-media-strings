@@ -4,6 +4,7 @@ import FeedItem from "./FeedItem";
 import Loader from "../Loader";
 
 import { Post } from "@/types/prismaTypes";
+import { useGetForYouFeed } from "@/hooks/posts/useGetForYouFeed";
 
 const generateMockPosts = (): Post[] => {
   const posts: Post[] = [];
@@ -55,38 +56,30 @@ interface FeedProps {
 export const Feed = ({ type }: FeedProps) => {
   const mockPosts = generateMockPosts();
 
+  const { data, fetchNextPage, hasNextPage } = useGetForYouFeed();
+
+  const posts = data?.pages.flatMap((page) => page.forYouFeed) ?? [];
+
   if (type === "for_you") {
     return (
-      // <InfiniteScroll
-      //   dataLength={4}
-      //   next={() => {}}
-      //   hasMore={false}
-      //   loader={<Loader />}
-      //   endMessage={<h3>All Posts Loaded</h3>}
-      // >
-      //   {mockPosts.map((post) => (
-      //     <FeedItem key={post.id} post={post} />
-      //   ))}
-      // </InfiniteScroll>
-
-      <InfiniteScroll
-        dataLength={1}
-        next={() => {}}
-        hasMore={false}
-        loader={<Loader />}
-        endMessage={
-          <div className="text-center py-4 text-gray-500 dark:text-gray-400">
-            You've reached the end
-          </div>
-        }
-        scrollableTarget="scrollableDiv"
-      >
-        <div className=" divide-y divide-neutral-200 dark:divide-neutral-800">
-          {mockPosts.map((post) => (
+      <div className=" no-scrollbar">
+        <InfiniteScroll
+          dataLength={posts.length}
+          next={fetchNextPage}
+          hasMore={!!hasNextPage}
+          loader={<Loader />}
+          endMessage={
+            <div className="text-center py-4 text-neutral-500 dark:text-neutral-400">
+              You've reached the end of the feed
+            </div>
+          }
+          scrollableTarget="scrollableDiv"
+        >
+          {posts.map((post: Post) => (
             <FeedItem key={post.id} post={post} />
           ))}
-        </div>
-      </InfiniteScroll>
+        </InfiniteScroll>
+      </div>
     );
   }
 

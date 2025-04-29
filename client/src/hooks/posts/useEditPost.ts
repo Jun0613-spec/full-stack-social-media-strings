@@ -3,15 +3,25 @@ import { toast } from "react-toastify";
 
 import { axiosInstance, handleAxiosError } from "@/lib/axios";
 
-export const useCreatePost = () => {
+export const useEditPost = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async (formData: FormData) => {
+    mutationFn: async ({
+      postId,
+      formData
+    }: {
+      postId: string;
+      formData: FormData;
+    }) => {
       try {
-        const response = await axiosInstance.post("/api/posts", formData, {
-          withCredentials: true
-        });
+        const response = await axiosInstance.put(
+          `/api/posts/${postId}`,
+          formData,
+          {
+            withCredentials: true
+          }
+        );
 
         return response.data;
       } catch (error) {
@@ -20,9 +30,11 @@ export const useCreatePost = () => {
       }
     },
     onSuccess: async () => {
-      toast.success("Your post has been created");
+      toast.success("Your post has been edited");
 
       await queryClient.invalidateQueries({ queryKey: ["posts"] });
+
+      await queryClient.invalidateQueries({ queryKey: ["forYouFeed"] });
     },
     onError: (error) => {
       toast.error(error.message);

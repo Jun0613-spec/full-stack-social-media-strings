@@ -27,12 +27,12 @@ const Tabs = ({ tabs, active, onChange }: TabsProps) => {
               : "text-muted-foreground dark:text-muted-foreground"
           )}
         >
-          <p className="relative inline-block">
+          <div className="relative inline-block">
             {tab.label}
             {active === tab.value && (
               <div className="absolute -bottom-2 left-0 right-0 h-1 bg-neutral-800 dark:bg-neutral-200 rounded-full" />
             )}
-          </p>
+          </div>
         </Button>
       ))}
     </div>

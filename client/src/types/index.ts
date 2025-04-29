@@ -172,12 +172,22 @@ export interface RegisterResponse {
 }
 
 export interface SearchUsersResponse {
-  users: User[];
+  searchUsers: User[];
   nextCursor: string | null;
 }
 
 export interface SuggestedUsersResponse {
   suggestedUsers: User[];
+  nextCursor: string | null;
+}
+
+export interface ForYouFeedResponse {
+  forYouFeed: Post[];
+  nextCursor: string | null;
+}
+
+export interface FollowingsFeedResponse {
+  FollowingsFeed: Post[];
   nextCursor: string | null;
 }
 
@@ -192,6 +202,12 @@ export interface FollowersResponse {
 }
 
 export interface PostFormData {
+  text: string;
+  imageFiles: FileList;
+  imageUrls: string[];
+}
+
+export interface EditPostFormData {
   text: string;
   imageFiles: FileList;
   imageUrls: string[];

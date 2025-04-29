@@ -15,10 +15,10 @@ import EmojiSelector from "../EmojiSelector";
 
 import { PostFormData } from "@/types";
 
-import { useCreatePost } from "@/hooks/posts/useCreatePost";
-
 import { MAX_FILES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+
+import { useCreatePost } from "@/hooks/posts/useCreatePost";
 
 const PostForm = () => {
   const { currentUser } = useAuthStore();

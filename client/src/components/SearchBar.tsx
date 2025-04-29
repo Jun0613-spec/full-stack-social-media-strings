@@ -87,7 +87,7 @@ const SearchBar = () => {
 
   const { data, isLoading, fetchNextPage, hasNextPage } = useSearchUsers(query);
 
-  const users = data?.pages.flatMap((page) => page.users) || [];
+  const users = data?.pages.flatMap((page) => page.searchUsers) || [];
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
