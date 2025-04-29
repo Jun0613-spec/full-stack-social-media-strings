@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { IoIosMore, IoMdLogOut } from "react-icons/io";
+import { IoMdLogOut } from "react-icons/io";
+import { HiDotsHorizontal } from "react-icons/hi";
 import { LuSettings } from "react-icons/lu";
 
 import UserAvatar from "@/components/UserAvatar";
+
+import UserButtonItems from "./UserButtonItems";
 
 import { useAuthStore } from "@/stores/authStore";
 
@@ -54,30 +57,27 @@ const UserButton = () => {
             </div>
           </div>
 
-          {/* More icon */}
           <div className="hidden 2xl:block">
-            <IoIosMore size={18} />
+            <HiDotsHorizontal size={18} />
           </div>
         </div>
       </button>
 
       {/* Dropdown Menu */}
       {isDropdownOpen && (
-        <div className="absolute bottom-20 lg:bottom-16 left-2 lg:right-auto 2xl:right-auto w-52 rounded-xl shadow-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden z-10 bg-white dark:bg-black">
-          <button
-            className="w-full px-4 py-3 hover:bg-muted dark:hover:bg-neutral-900 flex items-center gap-3 text-sm"
+        <div className="absolute bottom-14 left-2 lg:right-auto 2xl:right-auto w-64 rounded-xl shadow-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden z-10 bg-white dark:bg-black">
+          <UserButtonItems
+            icon={LuSettings}
+            label="Settings"
             onClick={() => navigate("/settings")}
-          >
-            <LuSettings className="text-lg flex-shrink-0" />
-            <span className="truncate">Settings</span>
-          </button>
-          <button
+          />
+
+          <UserButtonItems
+            icon={IoMdLogOut}
+            label="Logout"
             onClick={handleLogout}
-            className="w-full px-4 py-3 hover:bg-muted dark:hover:bg-neutral-900 flex items-center gap-3 text-sm border-t border-neutral-200 dark:border-neutral-700"
-          >
-            <IoMdLogOut className="text-lg flex-shrink-0" />
-            <span className="truncate">Log out</span>
-          </button>
+            className="border-t border-neutral-200 dark:border-neutral-700"
+          />
         </div>
       )}
     </div>

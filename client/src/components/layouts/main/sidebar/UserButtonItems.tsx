@@ -19,7 +19,7 @@ const UserButtonItems = ({
     <button
       onClick={onClick}
       className={cn(
-        "w-full h-10 flex items-center gap-4 px-4 font-medium text-left hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer",
+        "w-full flex items-center gap-4 px-4 py-2 font-medium text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer",
         className
       )}
     >

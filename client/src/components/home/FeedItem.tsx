@@ -1,13 +1,8 @@
 import { useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { HiDotsHorizontal } from "react-icons/hi";
-import {
-  HiOutlineChatBubbleOvalLeft,
-  HiOutlineHeart,
-  HiPencilSquare,
-  HiTrash
-} from "react-icons/hi2";
-import { LuDot } from "react-icons/lu";
+import { HiOutlineChatBubbleOvalLeft, HiOutlineHeart } from "react-icons/hi2";
+import { LuDot, LuPencil, LuTrash } from "react-icons/lu";
 import { Link, useNavigate } from "react-router-dom";
 
 import UserAvatar from "@/components/UserAvatar";
@@ -94,6 +89,7 @@ export const FeedItem = ({ post }: FeedItemProps) => {
               </time>
             </div>
 
+            {/* More Button */}
             <div className="relative" ref={dropdownRef}>
               {/* {currentUser?.id === post.user.id && <HiDotsHorizontal />} */}
               <Button variant="muted" size="icon" onClick={toggleDropdown}>
@@ -105,19 +101,19 @@ export const FeedItem = ({ post }: FeedItemProps) => {
                   className="absolute right-0 w-30 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden z-50 bg-white dark:bg-black"
                 >
                   <button
-                    className="w-full px-4 py-3 text-left hover:bg-muted dark:hover:bg-neutral-900 flex items-center justify-between gap-3 text-sm transition duration-150 ease-in-out"
+                    className="w-full px-3 py-2 hover:bg-muted dark:hover:bg-neutral-900 flex items-center gap-4 text-sm transition duration-150 ease-in-out"
                     onClick={() => {}}
                   >
+                    <LuPencil className="text-lg flex-shrink-0" />
                     <span className="truncate font-medium">Edit</span>
-                    <HiPencilSquare className="text-lg flex-shrink-0" />
                   </button>
 
                   <button
                     onClick={() => {}}
-                    className="w-full px-4 py-3 text-left hover:bg-muted dark:hover:bg-neutral-900 flex items-center justify-between gap-3 text-sm border-t border-neutral-200 dark:border-neutral-800  text-red-500"
+                    className="w-full px-3 py-2 hover:bg-muted dark:hover:bg-neutral-900 flex items-center gap-4 text-sm border-t border-neutral-200 dark:border-neutral-800  text-red-500"
                   >
+                    <LuTrash className="text-lg flex-shrink-0" />
                     <span className="truncate font-medium ">Delete</span>
-                    <HiTrash className="text-lg flex-shrink-0" />
                   </button>
                 </div>
               )}

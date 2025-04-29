@@ -38,9 +38,9 @@ const SidebarItem = ({
       className="p-2 rounded-full hover:bg-muted dark:hover:bg-neutral-800 flex items-center gap-4 cursor-pointer"
     >
       {isActive ? (
-        <ActiveIcon className="w-7 h-7" />
+        <ActiveIcon className="w-6 h-6" />
       ) : (
-        <Icon className="w-7 h-7" />
+        <Icon className="w-6 h-6" />
       )}
 
       <span
