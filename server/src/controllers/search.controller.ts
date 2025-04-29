@@ -80,7 +80,7 @@ export const searchUsers = async (
       : null;
 
     res.status(200).json({
-      users: trimmedUsers,
+      searchUsers: trimmedUsers,
       nextCursor
     });
   } catch (error) {

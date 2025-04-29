@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { prisma } from "../lib/prisma";
 import { deleteImage, uploadImages } from "../lib/handleImage";
 
-export const getFollowingFeed = async (
+export const getFollowingsFeed = async (
   req: Request,
   res: Response
 ): Promise<void> => {
@@ -75,7 +75,7 @@ export const getFollowingFeed = async (
       : null;
 
     res.status(200).json({
-      posts: trimmedPosts,
+      followingsFeed: trimmedPosts,
       nextCursor
     });
   } catch (error) {
@@ -118,6 +118,7 @@ export const getForYouFeed = async (
             avatarImage: true
           }
         },
+
         ...(userId && {
           likes: {
             where: {
@@ -144,7 +145,7 @@ export const getForYouFeed = async (
       : null;
 
     res.status(200).json({
-      posts: trimmedPosts,
+      forYouFeed: trimmedPosts,
       nextCursor
     });
   } catch (error) {
@@ -239,7 +240,7 @@ export const createPost = async (
 
 export const editPost = async (req: Request, res: Response): Promise<void> => {
   const { postId } = req.params;
-  const { text } = req.body;
+  const { text, clearImages } = req.body;
 
   const userId = req.userId;
 
@@ -266,25 +267,38 @@ export const editPost = async (req: Request, res: Response): Promise<void> => {
     }
 
     let newImages: string[] | null = null;
-    const oldImages = post.images || [];
     const imageFiles = req.files as Express.Multer.File[];
 
     if (imageFiles?.length) {
-      for (const image of oldImages) {
+      for (const image of post.images || []) {
         await deleteImage(image);
       }
 
       newImages = await uploadImages(imageFiles);
+    } else if (clearImages === "true") {
+      for (const image of post.images || []) {
+        await deleteImage(image);
+      }
+
+      newImages = [];
     }
 
     const updatedPost = await prisma.post.update({
-      where: { id: postId },
+      where: {
+        id: postId
+      },
       data: {
         text: text || undefined,
         images: newImages || undefined
       },
       include: {
-        user: true
+        user: true,
+        _count: {
+          select: {
+            likes: true,
+            replies: true
+          }
+        }
       }
     });
 
