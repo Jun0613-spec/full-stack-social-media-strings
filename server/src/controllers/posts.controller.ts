@@ -3,8 +3,6 @@ import { Request, Response } from "express";
 import { prisma } from "../lib/prisma";
 import { deleteImage, uploadImages } from "../lib/handleImage";
 
-import { NotificationType } from "../types";
-
 export const getFollowingFeed = async (
   req: Request,
   res: Response
