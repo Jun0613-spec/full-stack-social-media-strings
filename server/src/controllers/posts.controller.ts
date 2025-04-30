@@ -21,10 +21,13 @@ export const getFollowingsFeed = async (
     const posts = await prisma.post.findMany({
       where: {
         user: {
-          followers: {
+          followings: {
             some: {
               followerId: userId
             }
+          },
+          id: {
+            not: userId
           }
         }
       },
@@ -56,7 +59,9 @@ export const getFollowingsFeed = async (
             userId
           },
           select: {
-            id: true
+            id: true,
+            userId: true,
+            postId: true
           }
         },
         _count: {
@@ -118,17 +123,16 @@ export const getForYouFeed = async (
             avatarImage: true
           }
         },
-
-        ...(userId && {
-          likes: {
-            where: {
-              userId
-            },
-            select: {
-              id: true
-            }
+        likes: {
+          where: {
+            userId
+          },
+          select: {
+            id: true,
+            userId: true,
+            postId: true
           }
-        }),
+        },
         _count: {
           select: {
             likes: true,
@@ -162,7 +166,9 @@ export const getPostByPostId = async (
 
   try {
     const post = await prisma.post.findUnique({
-      where: { id: postId },
+      where: {
+        id: postId
+      },
       include: {
         user: {
           select: {

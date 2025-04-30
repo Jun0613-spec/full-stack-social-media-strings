@@ -32,8 +32,6 @@ export const toggleLikePost = async (
     });
 
     if (likedPost) {
-      // If the post is already liked, unlike it
-
       if (!likedPost.post) {
         res.status(404).json({ message: "Post not found" });
         return;

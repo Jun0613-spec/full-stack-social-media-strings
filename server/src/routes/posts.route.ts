@@ -15,7 +15,7 @@ import { upload } from "../config/multer";
 
 const router = express.Router();
 
-router.get("/following", verifyToken, getFollowingsFeed);
+router.get("/followings", verifyToken, getFollowingsFeed);
 router.get("/for-you", getForYouFeed);
 router.get("/:postId", getPostByPostId);
 router.post("/", verifyToken, upload.array("images", 4), createPost);

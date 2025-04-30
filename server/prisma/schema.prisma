@@ -92,7 +92,7 @@ model Follow {
   followingId   String
 
   notifications Notification[]
-
+  
   @@unique([followerId, followingId])
   @@index([followerId])
   @@index([followingId])
