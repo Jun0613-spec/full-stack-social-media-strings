@@ -187,7 +187,7 @@ export interface ForYouFeedResponse {
 }
 
 export interface FollowingsFeedResponse {
-  FollowingsFeed: Post[];
+  followingsFeed: Post[];
   nextCursor: string | null;
 }
 
@@ -211,4 +211,8 @@ export interface EditPostFormData {
   text: string;
   imageFiles: FileList;
   imageUrls: string[];
+}
+
+export interface ReplyFormData {
+  text: string;
 }

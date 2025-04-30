@@ -156,6 +156,7 @@ const CreatePostModal = () => {
         onClick={(e) => e.stopPropagation()}
         className="bg-white dark:bg-black rounded-xl w-full max-w-xl mx-4 shadow-xl"
       >
+        {/* Header */}
         <div className="flex items-center justify-between p-2 border-b border-neutral-200 dark:border-neutral-800">
           <h1 className="ml-2 text-xl font-bold">Create Post</h1>
           <Button
@@ -167,6 +168,8 @@ const CreatePostModal = () => {
             <HiX className="w-5 h-5" />
           </Button>
         </div>
+
+        {/* Content */}
 
         <form onSubmit={handleSubmit(onSubmit)} className="p-4">
           <div className="flex gap-4">
@@ -186,7 +189,7 @@ const CreatePostModal = () => {
                 }}
                 maxLength={280}
                 placeholder="What's new?"
-                className="w-full resize-none overflow-hidden bg-transparent outline-none placeholder:text-neutral-500 dark:placeholder:text-neutral-400 text-xl placeholder:text-xl leading-tight min-h-[100px]"
+                className="w-full resize-none overflow-hidden bg-transparent outline-none placeholder:text-neutral-500 dark:placeholder:text-neutral-400 text-lg placeholder:text-lg leading-tight min-h-[100px]"
               />
 
               {errors.text && (
@@ -232,7 +235,7 @@ const CreatePostModal = () => {
                     type="button"
                     onClick={() => inputRef.current?.click()}
                     disabled={imageFiles.length >= MAX_FILES}
-                    className="disabled:opacity-50 disabled:cursor-not-allowed  cursor-pointer hover:text-muted-foreground"
+                    className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer hover:text-muted-foreground"
                   >
                     <FaRegImage className="w-5 h-5 " />
                   </Button>

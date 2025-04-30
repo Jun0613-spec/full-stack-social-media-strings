@@ -33,8 +33,8 @@ export const useEditPost = () => {
       toast.success("Your post has been edited");
 
       await queryClient.invalidateQueries({ queryKey: ["posts"] });
-
       await queryClient.invalidateQueries({ queryKey: ["forYouFeed"] });
+      await queryClient.invalidateQueries({ queryKey: ["followingsFeed"] });
     },
     onError: (error) => {
       toast.error(error.message);

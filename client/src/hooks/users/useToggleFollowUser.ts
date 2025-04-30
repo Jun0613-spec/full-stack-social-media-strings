@@ -24,7 +24,7 @@ export const useToggleFollowUser = () => {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["followings"] });
       await queryClient.invalidateQueries({ queryKey: ["followers"] });
-      await queryClient.invalidateQueries({ queryKey: ["currentUser"] });
+      await queryClient.invalidateQueries({ queryKey: ["followingsFeed"] });
     },
     onError: (error) => {
       toast.error(error.message);

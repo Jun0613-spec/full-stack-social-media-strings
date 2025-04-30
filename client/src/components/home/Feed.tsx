@@ -5,93 +5,93 @@ import Loader from "../Loader";
 
 import { Post } from "@/types/prismaTypes";
 import { useGetForYouFeed } from "@/hooks/posts/useGetForYouFeed";
-
-const generateMockPosts = (): Post[] => {
-  const posts: Post[] = [];
-
-  const imageURLs = [
-    "https://plus.unsplash.com/premium_photo-1734435588155-1d6606d9b6c8?q=80&w=1667&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://plus.unsplash.com/premium_photo-1740347577512-08add2bd9740?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1745503261928-e3c568ab960f?q=80&w=1585&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  ];
-
-  for (let i = 0; i < 30; i++) {
-    // Randomly decide how many images this post will have (0 to 4)
-    const numImages = Math.floor(Math.random() * 5);
-
-    // Select images based on random count
-    const images = [];
-    for (let j = 0; j < numImages; j++) {
-      // Select a random image from the imageURLs list
-      const randomImage =
-        imageURLs[Math.floor(Math.random() * imageURLs.length)];
-      images.push(randomImage);
-    }
-
-    posts.push({
-      id: i.toString(),
-      user: {
-        username: `user${i}`,
-        firstName: `test${i}`,
-        lastName: `user${i}`,
-        avatarImage: `https://i.pravatar.cc/150?img=${i}` // Mock avatar
-      },
-      createdAt: new Date(),
-      text: `This is the content of post ${i + 1}`,
-      images: images, // Assign the selected images here
-      _count: {
-        likes: Math.floor(Math.random() * 100), // Random likes count
-        replies: Math.floor(Math.random() * 20) // Random replies count
-      }
-    });
-  }
-
-  return posts;
-};
+import { FaArrowUp } from "react-icons/fa6";
+import { useGetFollowingsFeed } from "@/hooks/posts/useGetFollowingsFeed";
 
 interface FeedProps {
   type: string;
 }
 
 export const Feed = ({ type }: FeedProps) => {
-  const mockPosts = generateMockPosts();
+  const {
+    data: forYouData,
+    fetchNextPage: fetchForYouNextPage,
+    hasNextPage: hasForYouNextPage,
+    refetch: refetchForYou
+  } = useGetForYouFeed();
+  const {
+    data: followingsData,
+    fetchNextPage: fetchFollowingsNextPage,
+    hasNextPage: hasFollowingsNextPage,
+    refetch: refetchFollowings
+  } = useGetFollowingsFeed();
 
-  const { data, fetchNextPage, hasNextPage } = useGetForYouFeed();
-
-  const posts = data?.pages.flatMap((page) => page.forYouFeed) ?? [];
+  const forYouPosts =
+    forYouData?.pages.flatMap((page) => page.forYouFeed) ?? [];
+  const followingsPosts =
+    followingsData?.pages.flatMap((page) => page.followingsFeed) ?? [];
 
   if (type === "for_you") {
     return (
-      <div className=" no-scrollbar">
-        <InfiniteScroll
-          dataLength={posts.length}
-          next={fetchNextPage}
-          hasMore={!!hasNextPage}
-          loader={<Loader />}
-          endMessage={
-            <div className="text-center py-4 text-neutral-500 dark:text-neutral-400">
-              You've reached the end of the feed
+      <InfiniteScroll
+        dataLength={forYouPosts.length}
+        next={fetchForYouNextPage}
+        hasMore={!!hasForYouNextPage}
+        loader={<Loader />}
+        endMessage={
+          <div className="text-center py-4 text-neutral-500 dark:text-neutral-400">
+            You've reached the end of the feed
+          </div>
+        }
+        refreshFunction={refetchForYou}
+        pullDownToRefresh
+        pullDownToRefreshThreshold={50}
+        releaseToRefreshContent={
+          <div className="sticky z-10 w-full">
+            <div className="mx-auto max-w-2xl bg-white dark:bg-black border-b border-neutral-200 dark:border-neutral-800 shadow-sm">
+              <div className="flex items-center justify-center gap-2 py-3 px-4 text-sm text-neutral-500 dark:text-neutral-400">
+                <FaArrowUp className="animate-bounce" />
+                <span>Release to refresh</span>
+              </div>
             </div>
-          }
-          scrollableTarget="scrollableDiv"
-        >
-          {posts.map((post: Post) => (
-            <FeedItem key={post.id} post={post} />
-          ))}
-        </InfiniteScroll>
-      </div>
+          </div>
+        }
+        scrollableTarget="scrollableDiv"
+      >
+        {forYouPosts.map((post: Post) => (
+          <FeedItem key={post.id} post={post} />
+        ))}
+      </InfiniteScroll>
     );
   }
 
   return (
     <InfiniteScroll
-      dataLength={4}
-      next={() => {}}
-      hasMore={false}
+      dataLength={followingsPosts.length}
+      next={fetchFollowingsNextPage}
+      hasMore={!!hasFollowingsNextPage}
       loader={<Loader />}
-      endMessage={<h3>All Posts Loaded</h3>}
+      endMessage={
+        <div className="text-center py-4 text-neutral-500 dark:text-neutral-400">
+          You've reached the end of the feed
+        </div>
+      }
+      refreshFunction={refetchFollowings}
+      pullDownToRefresh
+      pullDownToRefreshThreshold={50}
+      releaseToRefreshContent={
+        <div className="sticky z-10 w-full">
+          <div className="mx-auto max-w-2xl bg-white dark:bg-black border-b border-neutral-200 dark:border-neutral-800 shadow-sm">
+            <div className="flex items-center justify-center gap-2 py-3 px-4 text-sm text-neutral-500 dark:text-neutral-400">
+              <FaArrowUp className="animate-bounce" />
+              <span>Release to refresh</span>
+            </div>
+          </div>
+        </div>
+      }
+      scrollableTarget="scrollableDiv"
     >
-      {mockPosts.map((post) => (
+      {followingsPosts.map((post: Post) => (
         <FeedItem key={post.id} post={post} />
       ))}
     </InfiniteScroll>

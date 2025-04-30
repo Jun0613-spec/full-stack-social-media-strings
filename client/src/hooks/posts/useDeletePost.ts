@@ -24,7 +24,8 @@ export const useDeletePost = () => {
 
       await queryClient.invalidateQueries({ queryKey: ["posts"] });
 
-      queryClient.invalidateQueries({ queryKey: ["forYouFeed"] });
+      await queryClient.invalidateQueries({ queryKey: ["forYouFeed"] });
+      await queryClient.invalidateQueries({ queryKey: ["followingsFeed"] });
     },
     onError: (error) => {
       toast.error(error.message);

@@ -4,12 +4,12 @@ import { axiosInstance, handleAxiosError } from "@/lib/axios";
 
 import { Post } from "@/types";
 
-export const useGetPostByPostId = (postId: string) => {
+export const useGetPost = () => {
   return useQuery<Post>({
-    queryKey: ["posts", postId],
+    queryKey: ["posts"],
     queryFn: async () => {
       try {
-        const response = await axiosInstance.get(`/api/posts/${postId}`, {
+        const response = await axiosInstance.get("/api/posts", {
           withCredentials: true
         });
 
@@ -19,7 +19,6 @@ export const useGetPostByPostId = (postId: string) => {
         throw error;
       }
     },
-    enabled: !!postId,
     staleTime: 1000 * 60 * 5,
     retry: 1
   });
