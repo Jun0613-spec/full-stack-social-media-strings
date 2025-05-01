@@ -176,9 +176,8 @@ export interface SearchUsersResponse {
   nextCursor: string | null;
 }
 
-export interface SuggestedUsersResponse {
+export interface SuggestedUsers {
   suggestedUsers: User[];
-  nextCursor: string | null;
 }
 
 export interface ForYouFeedResponse {

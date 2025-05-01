@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import UserAvatar from "@/components/UserAvatar";
 import Button from "@/components/Button";
@@ -11,25 +11,20 @@ import { useToggleFollowUser } from "@/hooks/users/useToggleFollowUser";
 import { User } from "@/types";
 
 const SuggestedUsersCard = () => {
-  const {
-    data,
-    isLoading,
-    isFetching,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage
-  } = useGetSuggestedUsers();
+  const navigate = useNavigate();
+
+  const { data, isLoading } = useGetSuggestedUsers();
   const { data: followingsUsers } = useGetFollowingUsers();
   const { mutate: toggleFollow } = useToggleFollowUser();
 
-  const users = data?.pages.flatMap((page) => page.suggestedUsers ?? []) || [];
+  const users = data?.suggestedUsers ?? [];
   const followings =
     followingsUsers?.pages.flatMap((page) => page.followingUsers ?? []) || [];
 
   const isFollowing = (userId: string) =>
     followings.some((user: User) => user.id === userId);
 
-  if (isFetching && isLoading) {
+  if (isLoading) {
     return (
       <div className="p-4 rounded-2xl border border-neutral-200 dark:border-neutral-800">
         <Loader />
@@ -74,17 +69,14 @@ const SuggestedUsersCard = () => {
         ))
       )}
 
-      {hasNextPage && (
-        <Button
-          variant="muted"
-          size="sm"
-          onClick={() => fetchNextPage()}
-          disabled={isFetchingNextPage}
-          className="self-end mt-2"
-        >
-          {isFetchingNextPage ? <Loader /> : "Load More"}
-        </Button>
-      )}
+      <Button
+        variant="muted"
+        size="sm"
+        onClick={() => navigate("/search")}
+        className="flex items-center justify-start mt-2"
+      >
+        Show more
+      </Button>
     </div>
   );
 };

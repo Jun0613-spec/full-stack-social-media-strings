@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { NotificationType } from "@prisma/client";
+import { NotificationType, Prisma } from "@prisma/client";
 
 import { prisma } from "../lib/prisma";
 import { deleteImage, uploadSingleImage } from "../lib/handleImage";
@@ -162,9 +162,6 @@ export const getSuggestedUsers = async (
     return;
   }
 
-  const { cursor } = req.query;
-  const take = 5;
-
   try {
     const following = await prisma.follow.findMany({
       where: {
@@ -175,25 +172,33 @@ export const getSuggestedUsers = async (
       }
     });
 
-    const followingIds = following.map((f) => f.followingId);
-    followingIds.push(userId);
+    const excludedIds = [...following.map((f) => f.followingId), userId];
+
+    const availableUsers = await prisma.user.findMany({
+      where: {
+        id: {
+          notIn: excludedIds
+        }
+      },
+      select: {
+        id: true
+      }
+    });
+
+    if (availableUsers.length === 0) {
+      res.status(200).json({ suggestedUsers: [] });
+      return;
+    }
+
+    const shuffled = [...availableUsers].sort(() => 0.5 - Math.random());
+    const randomFiveIds = shuffled.slice(0, 5).map((user) => user.id);
 
     const suggestedUsers = await prisma.user.findMany({
       where: {
         id: {
-          notIn: followingIds
+          in: randomFiveIds
         }
       },
-      orderBy: [
-        {
-          id: "desc"
-        }
-      ],
-      take: take + 1,
-      ...(cursor && {
-        cursor: { id: cursor as string },
-        skip: 1
-      }),
       select: {
         id: true,
         username: true,
@@ -209,19 +214,7 @@ export const getSuggestedUsers = async (
       }
     });
 
-    const hasNextPage = suggestedUsers.length > take;
-    const trimmedUsers = hasNextPage
-      ? suggestedUsers.slice(0, take)
-      : suggestedUsers;
-
-    const nextCursor = hasNextPage
-      ? trimmedUsers[trimmedUsers.length - 1].id
-      : null;
-
-    res.status(200).json({
-      suggestedUsers: trimmedUsers,
-      nextCursor
-    });
+    res.status(200).json({ suggestedUsers });
   } catch (error) {
     console.error("getSuggestedUsers error:", error);
     res.status(500).json({ message: "Failed to fetch suggested users" });
