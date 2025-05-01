@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 
 import RightBar from "./RightBar";
 import Sidebar from "./Sidebar";
+import MobileNav from "./MobileNav";
 
 const MainLayout = () => {
   return (
@@ -16,6 +17,8 @@ const MainLayout = () => {
       </main>
 
       <RightBar />
+
+      <MobileNav />
     </div>
   );
 };

@@ -15,7 +15,7 @@ const Sidebar = () => {
   const links = sidebarLinks(currentUser);
 
   return (
-    <div className="sticky top-0 h-screen xs:px-2 2xl:px-8 flex flex-col justify-between pt-2 pb-4">
+    <div className="hidden md:flex flex-col justify-between sticky top-0 h-screen xs:px-2 2xl:px-8  pt-2 pb-4">
       <div className="flex flex-col gap-6 text-lg items-center 2xl:items-start">
         <SidebarLogo />
 
