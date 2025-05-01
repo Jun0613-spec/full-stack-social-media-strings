@@ -43,7 +43,7 @@ const SuggestedUsersCard = () => {
             className="flex items-center justify-between p-2 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-800 transition"
           >
             <Link
-              to={`/${user.username}`}
+              to={`/profile/${user.username}`}
               className="flex items-center gap-2 flex-1 cursor-pointer"
             >
               <UserAvatar src={user.avatarImage} className="w-10 h-10" />

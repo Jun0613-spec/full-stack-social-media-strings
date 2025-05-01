@@ -141,7 +141,7 @@ const PostForm = () => {
       <form className="p-4 flex gap-4" onSubmit={handleSubmit(onSubmit)}>
         <UserAvatar
           src={currentUser?.avatarImage}
-          href={`/${currentUser?.username}`}
+          href={`/profile/${currentUser?.username}`}
           className="size-12 hover:opacity-80 cursor-pointer"
         />
 

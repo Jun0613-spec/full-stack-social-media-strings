@@ -13,9 +13,15 @@ const UserAvatar = ({ src, className, href }: UserAvatarProps) => {
 
   const navigate = useNavigate();
 
+  const handleClick = () => {
+    if (href) {
+      navigate(href);
+    }
+  };
+
   return (
     <div
-      onClick={() => navigate(href || "/")}
+      onClick={href ? handleClick : undefined}
       className={cn("size-8 rounded-full overflow-hidden", className)}
     >
       <img

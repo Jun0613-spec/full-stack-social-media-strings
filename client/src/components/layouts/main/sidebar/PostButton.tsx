@@ -1,6 +1,6 @@
 import { FaPlus } from "react-icons/fa6";
 
-import { usePostModalStore } from "@/stores/modals/posts/postModalStore";
+import { usePostModalStore } from "@/stores/modals/modalStore";
 
 const PostButton = () => {
   const { openModal } = usePostModalStore();

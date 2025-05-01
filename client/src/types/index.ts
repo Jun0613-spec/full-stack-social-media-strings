@@ -215,3 +215,12 @@ export interface EditPostFormData {
 export interface ReplyFormData {
   text: string;
 }
+
+export interface EditUserFormData {
+  firstName?: string;
+  lastName?: string;
+  username?: string;
+  bio?: string;
+  avatarImage?: File | null;
+  coverImage?: File | null;
+}

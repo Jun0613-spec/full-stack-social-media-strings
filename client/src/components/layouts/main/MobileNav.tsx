@@ -3,7 +3,7 @@ import { FaPlus } from "react-icons/fa6";
 import { sidebarLinks } from "@/lib/constants";
 
 import { useAuthStore } from "@/stores/authStore";
-import { usePostModalStore } from "@/stores/modals/posts/postModalStore";
+import { usePostModalStore } from "@/stores/modals/modalStore";
 
 import SidebarItem from "./sidebar/SidebarItem";
 import MobileUserButton from "./MobileUserButton";

@@ -5,7 +5,7 @@ import { EmojiClickData } from "emoji-picker-react";
 import { HiX } from "react-icons/hi";
 
 import { useAuthStore } from "@/stores/authStore";
-import { usePostModalStore } from "@/stores/modals/posts/postModalStore";
+import { usePostModalStore } from "@/stores/modals/modalStore";
 
 import Button from "../Button";
 import Loader from "../Loader";
@@ -154,7 +154,7 @@ const CreatePostModal = () => {
       <div
         ref={modalRef}
         onClick={(e) => e.stopPropagation()}
-        className="bg-white dark:bg-black rounded-xl w-full max-w-xl mx-4 shadow-xl"
+        className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-xl w-full max-w-xl mx-4 shadow-xl"
       >
         {/* Header */}
         <div className="flex items-center justify-between p-2 border-b border-neutral-200 dark:border-neutral-800">

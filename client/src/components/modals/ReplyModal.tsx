@@ -100,7 +100,7 @@ const ReplyModal = () => {
       <div
         ref={modalRef}
         onClick={(e) => e.stopPropagation()}
-        className="bg-white dark:bg-black rounded-xl w-full max-w-xl shadow-xl"
+        className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-xl w-full max-w-xl shadow-xl"
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-800">

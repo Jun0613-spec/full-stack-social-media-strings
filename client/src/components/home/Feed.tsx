@@ -1,11 +1,13 @@
 import InfiniteScroll from "react-infinite-scroll-component";
+import { FaArrowUp } from "react-icons/fa6";
 
-import FeedItem from "./FeedItem";
+import PostCard from "./PostCard";
+
 import Loader from "../Loader";
 
 import { Post } from "@/types/prismaTypes";
+
 import { useGetForYouFeed } from "@/hooks/posts/useGetForYouFeed";
-import { FaArrowUp } from "react-icons/fa6";
 import { useGetFollowingsFeed } from "@/hooks/posts/useGetFollowingsFeed";
 
 interface FeedProps {
@@ -59,7 +61,7 @@ export const Feed = ({ type }: FeedProps) => {
         scrollableTarget="scrollableDiv"
       >
         {forYouPosts.map((post: Post) => (
-          <FeedItem key={post.id} post={post} />
+          <PostCard key={post.id} post={post} />
         ))}
       </InfiniteScroll>
     );
@@ -92,7 +94,7 @@ export const Feed = ({ type }: FeedProps) => {
       scrollableTarget="scrollableDiv"
     >
       {followingsPosts.map((post: Post) => (
-        <FeedItem key={post.id} post={post} />
+        <PostCard key={post.id} post={post} />
       ))}
     </InfiniteScroll>
   );

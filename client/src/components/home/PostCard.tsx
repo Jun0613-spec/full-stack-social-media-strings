@@ -31,7 +31,7 @@ interface FeedItemProps {
   post: Post;
 }
 
-export const FeedItem = ({ post }: FeedItemProps) => {
+export const PostCard = ({ post }: FeedItemProps) => {
   const navigate = useNavigate();
 
   const { currentUser } = useAuthStore();
@@ -213,7 +213,7 @@ export const FeedItem = ({ post }: FeedItemProps) => {
               className="flex items-center gap-1.5 hover:text-primary cursor-pointer"
             >
               <HiOutlineChatBubbleOvalLeft className="w-4 h-4" />
-              <span>{post._count?.replies}</span>
+              <span>{post._count?.replies || 0}</span>
             </button>
             <button
               onClick={(e) => {
@@ -232,7 +232,7 @@ export const FeedItem = ({ post }: FeedItemProps) => {
               ) : (
                 <HiOutlineHeart className="w-4 h-4" />
               )}
-              <span>{post._count?.likes}</span>
+              <span>{post._count?.likes || 0}</span>
             </button>
           </div>
         </div>
@@ -241,4 +241,4 @@ export const FeedItem = ({ post }: FeedItemProps) => {
   );
 };
 
-export default FeedItem;
+export default PostCard;

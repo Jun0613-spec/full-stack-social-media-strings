@@ -175,7 +175,7 @@ const EditPostModal = () => {
       <div
         ref={modalRef}
         onClick={(e) => e.stopPropagation()}
-        className="bg-white dark:bg-black rounded-xl w-full max-w-xl mx-4 shadow-xl"
+        className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-xl w-full max-w-xl mx-4 shadow-xl"
       >
         <div className="flex items-center justify-between p-2 border-b border-neutral-200 dark:border-neutral-800">
           <h1 className="ml-2 text-xl font-bold">Edit Post</h1>

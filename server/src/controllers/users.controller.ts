@@ -26,6 +26,7 @@ export const getCurrentUser = async (
         lastName: true,
         username: true,
         avatarImage: true,
+        coverImage: true,
         bio: true,
         createdAt: true,
         updatedAt: true,
@@ -104,9 +105,7 @@ export const getUserProfile = async (
 
   try {
     const user = await prisma.user.findUnique({
-      where: {
-        username: username
-      },
+      where: { username },
       select: {
         id: true,
         firstName: true,
@@ -125,6 +124,7 @@ export const getUserProfile = async (
           }
         },
         posts: {
+          orderBy: { createdAt: "desc" },
           select: {
             id: true,
             text: true,
@@ -132,9 +132,47 @@ export const getUserProfile = async (
             createdAt: true,
             updatedAt: true,
             likes: true,
-            replies: true
-          },
-          orderBy: { createdAt: "desc" }
+            replies: true,
+            user: {
+              select: {
+                id: true,
+                username: true,
+                firstName: true,
+                lastName: true,
+                avatarImage: true
+              }
+            },
+            _count: {
+              select: {
+                likes: true,
+                replies: true
+              }
+            }
+          }
+        },
+        replies: {
+          orderBy: { createdAt: "desc" },
+          select: {
+            id: true,
+            text: true,
+            createdAt: true,
+            updatedAt: true,
+            postId: true,
+            user: {
+              select: {
+                id: true,
+                username: true,
+                firstName: true,
+                lastName: true,
+                avatarImage: true
+              }
+            },
+            _count: {
+              select: {
+                likes: true
+              }
+            }
+          }
         }
       }
     });

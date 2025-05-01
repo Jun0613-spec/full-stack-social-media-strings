@@ -34,7 +34,7 @@ const ConfirmModal = () => {
     >
       <div
         ref={modalRef}
-        className="bg-white dark:bg-neutral-800 rounded-md shadow-xl w-[95vw] max-w-md p-6 sm:p-8 border border-neutral-200 dark:border-neutral-800"
+        className="bg-white dark:bg-black rounded-md shadow-xl w-[95vw] max-w-md p-6 sm:p-8 border border-neutral-200 dark:border-neutral-800"
       >
         <div className="text-center space-y-4">
           <h3 className="text-2xl font-bold ">{title}</h3>

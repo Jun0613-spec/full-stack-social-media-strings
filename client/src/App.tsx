@@ -57,7 +57,7 @@ function App() {
 
           <Route path="/settings" element={<SettingsPage />} />
 
-          <Route path="/:username" element={<ProfilePage />} />
+          <Route path="/profile/:username" element={<ProfilePage />} />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/" />} />

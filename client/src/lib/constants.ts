@@ -45,7 +45,7 @@ export const sidebarLinks = (currentUser: User) => [
   {
     id: 5,
     label: "Profile",
-    href: `/${currentUser.username}`,
+    href: `/profile/${currentUser.username}`,
     icon: HiOutlineUser,
     activeIcon: HiUser
   }

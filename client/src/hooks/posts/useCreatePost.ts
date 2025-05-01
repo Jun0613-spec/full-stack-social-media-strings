@@ -25,6 +25,7 @@ export const useCreatePost = () => {
       await queryClient.invalidateQueries({ queryKey: ["posts"] });
       await queryClient.invalidateQueries({ queryKey: ["forYouFeed"] });
       await queryClient.invalidateQueries({ queryKey: ["followingsFeed"] });
+      await queryClient.invalidateQueries({ queryKey: ["userProfile"] });
     },
     onError: (error) => {
       toast.error(error.message);

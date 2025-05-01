@@ -45,7 +45,7 @@ const SearchPage = () => {
               <div key={user.id}>
                 <div className="flex items-center justify-between py-4 cursor-pointer">
                   <Link
-                    to={`/${user.username}`}
+                    to={`/profile/${user.username}`}
                     className="flex items-start gap-2"
                   >
                     <UserAvatar src={user.avatarImage} className="w-12 h-12" />
