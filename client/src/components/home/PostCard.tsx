@@ -62,7 +62,7 @@ export const PostCard = ({ post }: FeedItemProps) => {
       ? new Date(post.updatedAt)
       : new Date(post.createdAt);
 
-  const formattedDate = format(displayDate, "dd MMM yy");
+  const formattedDate = format(displayDate, "dd MMM yyyy");
 
   const handleClickPost = () => {
     navigate(`/post/${post.id}`);
