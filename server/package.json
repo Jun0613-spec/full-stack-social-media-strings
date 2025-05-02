@@ -16,7 +16,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "@prisma/client": "^6.6.0",
+    "@prisma/client": "^6.7.0",
     "axios": "^1.8.4",
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.6.0",
@@ -45,7 +45,7 @@
     "@types/node": "^22.14.0",
     "@types/node-cron": "^3.0.11",
     "eslint": "^9.23.0",
-    "prisma": "^6.6.0",
+    "prisma": "^6.7.0",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.13",
     "tsx": "^4.19.3",

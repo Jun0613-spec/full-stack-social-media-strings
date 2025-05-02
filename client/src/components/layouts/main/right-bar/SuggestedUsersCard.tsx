@@ -18,11 +18,11 @@ const SuggestedUsersCard = () => {
   const { mutate: toggleFollow } = useToggleFollowUser();
 
   const users = data?.suggestedUsers ?? [];
-  const followings =
-    followingsUsers?.pages.flatMap((page) => page.followingUsers ?? []) || [];
+  const followings = followingsUsers?.followingUsers || [];
 
-  const isFollowing = (userId: string) =>
-    followings.some((user: User) => user.id === userId);
+  const isFollowing = (userId: string) => {
+    return followings.some((user: User) => user.id === userId);
+  };
 
   if (isLoading) {
     return (

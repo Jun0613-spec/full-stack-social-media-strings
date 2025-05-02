@@ -7,10 +7,10 @@ export const useToggleFollowUser = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async (followingId: string) => {
+    mutationFn: async (userId: string) => {
       try {
         const response = await axiosInstance.post(
-          `/api/users/follow/${followingId}`,
+          `/api/users/follow/${userId}`,
           {},
           { withCredentials: true }
         );
@@ -25,6 +25,8 @@ export const useToggleFollowUser = () => {
       await queryClient.invalidateQueries({ queryKey: ["followings"] });
       await queryClient.invalidateQueries({ queryKey: ["followers"] });
       await queryClient.invalidateQueries({ queryKey: ["followingsFeed"] });
+      await queryClient.invalidateQueries({ queryKey: ["searchUsers"] });
+      await queryClient.invalidateQueries({ queryKey: ["userProfile"] });
     },
     onError: (error) => {
       toast.error(error.message);

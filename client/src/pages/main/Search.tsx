@@ -23,8 +23,7 @@ const SearchPage = () => {
 
   const users = data?.pages.flatMap((page) => page.searchUsers) || [];
 
-  const followings =
-    followingsUsers?.pages.flatMap((page) => page.followingUsers ?? []) || [];
+  const followings = followingsUsers?.followingUsers || [];
 
   const isFollowing = (userId: string) => {
     return followings.some((user: User) => user.id === userId);
@@ -61,10 +60,10 @@ const SearchPage = () => {
                       <p className="text-sm mt-1 line-clamp-2">{user.bio}</p>
                       <div className="flex  items-center gap-2">
                         <span className="text-neutral-500 dark:text-neutral-400 text-xs mt-1">
-                          {user._count?.followers.toLocaleString()} followers
+                          {user._count?.followings.toLocaleString()} followings
                         </span>
                         <span className="text-neutral-500 dark:text-neutral-400 text-xs mt-1">
-                          {user._count?.followings.toLocaleString()} followings
+                          {user._count?.followers.toLocaleString()} followers
                         </span>
                       </div>
                     </div>

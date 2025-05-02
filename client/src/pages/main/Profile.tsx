@@ -12,10 +12,12 @@ import PostCard from "@/components/home/PostCard";
 import { useAuthStore } from "@/stores/authStore";
 
 import { useGetUserProfile } from "@/hooks/users/useGetUserProfile";
-
-import { Post } from "@/types/prismaTypes";
+import { useGetFollowingUsers } from "@/hooks/users/useGetFollowings";
+import { useToggleFollowUser } from "@/hooks/users/useToggleFollowUser";
 
 import { useEditUserModalStore } from "@/stores/modals/modalStore";
+
+import { User, Post } from "@/types";
 
 const ProfilePage = () => {
   const { currentUser } = useAuthStore();
@@ -24,11 +26,20 @@ const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState<string>("posts");
 
   const { username } = useParams();
+
   const { data } = useGetUserProfile(username as string);
+  const { data: followingsUsers } = useGetFollowingUsers();
+  const { mutate: toggleFollow } = useToggleFollowUser();
 
   if (!data?.user) return null;
 
   const user = data?.user;
+
+  const followings = followingsUsers?.followingUsers || [];
+
+  const isFollowing = (userId: string) => {
+    return followings.some((user: User) => user.id === userId);
+  };
 
   return (
     <div className="min-h-screen">
@@ -57,7 +68,7 @@ const ProfilePage = () => {
                 <Button
                   size="md"
                   variant="outline"
-                  className="rounded-full py-1.5 font-bold"
+                  className="rounded-full py-1 font-bold"
                   onClick={openModal}
                 >
                   Edit Profile
@@ -65,10 +76,11 @@ const ProfilePage = () => {
               ) : (
                 <Button
                   size="md"
-                  variant="primary"
-                  className="rounded-full py-1.5 font-bold"
+                  variant={isFollowing(user.id) ? "outline" : "primary"}
+                  onClick={() => toggleFollow(user.id)}
+                  className="rounded-full py-1 font-bold"
                 >
-                  Follow
+                  {isFollowing(user.id) ? "Following" : "Follow"}
                 </Button>
               )}
             </div>
@@ -96,7 +108,7 @@ const ProfilePage = () => {
           <div className="flex gap-4 mt-3">
             <div className="flex gap-1">
               <span className="font-bold">{user._count.followings || 0}</span>
-              <span className="text-neutral-500">Following</span>
+              <span className="text-neutral-500">Followings</span>
             </div>
             <div className="flex gap-1">
               <span className="font-bold">{user._count.followers || 0}</span>

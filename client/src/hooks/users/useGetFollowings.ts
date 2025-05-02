@@ -1,17 +1,16 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { axiosInstance, handleAxiosError } from "@/lib/axios";
 
 import { FollowingsResponse } from "@/types";
 
 export const useGetFollowingUsers = () => {
-  return useInfiniteQuery<FollowingsResponse>({
+  return useQuery<FollowingsResponse>({
     queryKey: ["followings"],
-    initialPageParam: "",
-    queryFn: async ({ pageParam = "" }) => {
+
+    queryFn: async () => {
       try {
         const response = await axiosInstance.get("/api/users/followings", {
-          params: { cursor: pageParam },
           withCredentials: true
         });
         return response.data;
@@ -20,7 +19,7 @@ export const useGetFollowingUsers = () => {
         throw error;
       }
     },
-    getNextPageParam: (lastPage) => lastPage.nextCursor,
+
     staleTime: 1000 * 60 * 5,
     retry: 1
   });

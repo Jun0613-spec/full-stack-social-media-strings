@@ -105,7 +105,9 @@ export const getUserProfile = async (
 
   try {
     const user = await prisma.user.findUnique({
-      where: { username },
+      where: {
+        username
+      },
       select: {
         id: true,
         firstName: true,
@@ -118,13 +120,15 @@ export const getUserProfile = async (
         updatedAt: true,
         _count: {
           select: {
-            posts: true,
             followers: true,
             followings: true
           }
         },
+
         posts: {
-          orderBy: { createdAt: "desc" },
+          orderBy: {
+            createdAt: "desc"
+          },
           select: {
             id: true,
             text: true,
@@ -151,7 +155,9 @@ export const getUserProfile = async (
           }
         },
         replies: {
-          orderBy: { createdAt: "desc" },
+          orderBy: {
+            createdAt: "desc"
+          },
           select: {
             id: true,
             text: true,
@@ -270,28 +276,14 @@ export const getFollowingUsers = async (
     return;
   }
 
-  const { cursor } = req.query;
-  const take = 5;
-
   try {
     const followingUsers = await prisma.follow.findMany({
       where: {
         followerId: userId
       },
       select: {
-        id: true,
         followingId: true
-      },
-      orderBy: {
-        createdAt: "desc"
-      },
-      take: take + 1,
-      ...(cursor && {
-        cursor: {
-          id: cursor as string
-        },
-        skip: 1
-      })
+      }
     });
 
     const followingIds = followingUsers.map((f) => f.followingId);
@@ -318,17 +310,7 @@ export const getFollowingUsers = async (
       }
     });
 
-    const hasNextPage = followingUsers.length > take;
-    const trimmedUsers = hasNextPage ? users.slice(0, take) : users;
-
-    const nextCursor = hasNextPage
-      ? trimmedUsers[trimmedUsers.length - 1].id
-      : null;
-
-    res.status(200).json({
-      followingUsers: trimmedUsers,
-      nextCursor
-    });
+    res.status(200).json({ followingUsers: users });
   } catch (error) {
     console.error("getFollowingUsers error:", error);
     res.status(500).json({ message: "Failed to fetch following users" });
@@ -346,28 +328,14 @@ export const getFollowerUsers = async (
     return;
   }
 
-  const { cursor } = req.query;
-  const take = 5;
-
   try {
     const followerUsers = await prisma.follow.findMany({
       where: {
         followingId: userId
       },
       select: {
-        id: true,
         followerId: true
-      },
-      orderBy: {
-        createdAt: "desc"
-      },
-      take: take + 1,
-      ...(cursor && {
-        cursor: {
-          id: cursor as string
-        },
-        skip: 1
-      })
+      }
     });
 
     const followerIds = followerUsers.map((f) => f.followerId);
@@ -394,17 +362,7 @@ export const getFollowerUsers = async (
       }
     });
 
-    const hasNextPage = followerUsers.length > take;
-    const trimmedUsers = hasNextPage ? users.slice(0, take) : users;
-
-    const nextCursor = hasNextPage
-      ? trimmedUsers[trimmedUsers.length - 1].id
-      : null;
-
-    res.status(200).json({
-      followerUsers: trimmedUsers,
-      nextCursor
-    });
+    res.status(200).json({ followerUsers: users });
   } catch (error) {
     console.error("getFollowerUsers error:", error);
     res.status(500).json({ message: "Failed to fetch follower users" });
@@ -575,7 +533,12 @@ export const toggleFollowUser = async (
     if (isFollowing) {
       // Unfollow the user if already following
       await prisma.follow.delete({
-        where: { id: isFollowing.id }
+        where: {
+          followerId_followingId: {
+            followerId,
+            followingId
+          }
+        }
       });
 
       await prisma.notification.deleteMany({

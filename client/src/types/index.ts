@@ -192,12 +192,10 @@ export interface FollowingsFeedResponse {
 
 export interface FollowingsResponse {
   followingUsers: User[];
-  nextCursor: string | null;
 }
 
 export interface FollowersResponse {
-  followers: User[];
-  nextCursor: string | null;
+  followerUsers: User[];
 }
 
 export interface PostFormData {
