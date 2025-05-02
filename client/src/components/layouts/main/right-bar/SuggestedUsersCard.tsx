@@ -8,7 +8,7 @@ import { useGetSuggestedUsers } from "@/hooks/users/useGetSuggestedUsers";
 import { useGetFollowingUsers } from "@/hooks/users/useGetFollowings";
 import { useToggleFollowUser } from "@/hooks/users/useToggleFollowUser";
 
-import { User } from "@/types";
+import { User } from "@/types/prismaTypes";
 
 const SuggestedUsersCard = () => {
   const navigate = useNavigate();

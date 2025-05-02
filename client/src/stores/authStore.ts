@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { User } from "@/types";
+import { User } from "@/types/prismaTypes";
 
 interface AuthState {
   isLoggedIn: boolean;

@@ -170,18 +170,37 @@ export const getPostByPostId = async (
         id: postId
       },
       include: {
-        user: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            email: true,
-            username: true,
-            avatarImage: true
+        user: true,
+        likes: true,
+        replies: {
+          orderBy: {
+            createdAt: "desc"
+          },
+          include: {
+            user: {
+              select: {
+                id: true,
+                username: true,
+                firstName: true,
+                lastName: true,
+                avatarImage: true
+              }
+            },
+            likes: true,
+            _count: {
+              select: {
+                likes: true
+              }
+            }
           }
         },
-        likes: true,
-        replies: true
+
+        _count: {
+          select: {
+            replies: true,
+            likes: true
+          }
+        }
       }
     });
 

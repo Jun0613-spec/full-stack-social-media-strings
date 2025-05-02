@@ -5,7 +5,7 @@ import PostCard from "./PostCard";
 
 import Loader from "../Loader";
 
-import { Post } from "@/types";
+import { Post } from "@/types/prismaTypes";
 
 import { useGetForYouFeed } from "@/hooks/posts/useGetForYouFeed";
 import { useGetFollowingsFeed } from "@/hooks/posts/useGetFollowingsFeed";

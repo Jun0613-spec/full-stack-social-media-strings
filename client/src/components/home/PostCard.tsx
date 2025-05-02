@@ -7,7 +7,7 @@ import {
   HiOutlineHeart
 } from "react-icons/hi2";
 import { LuPencil, LuTrash } from "react-icons/lu";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import UserAvatar from "@/components/UserAvatar";
 
@@ -15,17 +15,16 @@ import Button from "../Button";
 
 import { cn } from "@/lib/utils";
 
-import { Post } from "@/types";
-
 import useHandleOutsideClick from "@/hooks/useHandleOutsideClick";
 import { useDeletePost } from "@/hooks/posts/useDeletePost";
+import { useToggleLikePost } from "@/hooks/posts/useToggleLikePost";
 
 import { useAuthStore } from "@/stores/authStore";
 import { useConfirmModalStore } from "@/stores/modals/confirmModalStore";
 import { useEditPostModalStore } from "@/stores/modals/posts/editPostModalStore";
-
-import { useToggleLikePost } from "@/hooks/posts/useToggleLikePost";
 import { useReplyModalStore } from "@/stores/modals/replies/replyModalStore";
+
+import { Post, Like } from "@/types/prismaTypes";
 
 interface FeedItemProps {
   post: Post;
@@ -33,6 +32,7 @@ interface FeedItemProps {
 
 export const PostCard = ({ post }: FeedItemProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { currentUser } = useAuthStore();
   const { openModal } = useEditPostModalStore();
@@ -49,7 +49,9 @@ export const PostCard = ({ post }: FeedItemProps) => {
   const { mutate: deletePost } = useDeletePost();
   const { mutate: toggleLikePost } = useToggleLikePost();
 
-  const isLiked = post.likes?.some((like) => like.userId === currentUser?.id);
+  const isLiked = post.likes?.some(
+    (like: Like) => like.userId === currentUser?.id
+  );
 
   const toggleDropdown = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -64,8 +66,12 @@ export const PostCard = ({ post }: FeedItemProps) => {
 
   const formattedDate = format(displayDate, "dd MMM yyyy");
 
+  const isPostDetailPage = location.pathname.includes(`/post/${post.id}`);
+
   const handleClickPost = () => {
-    navigate(`/post/${post.id}`);
+    if (!isPostDetailPage) {
+      navigate(`/${post.user.username}/post/${post.id}`);
+    }
   };
 
   const handleDeletePost = (postId: string) => {
@@ -79,7 +85,11 @@ export const PostCard = ({ post }: FeedItemProps) => {
   return (
     <div
       onClick={handleClickPost}
-      className="p-4 border-b border-neutral-200 dark:border-neutral-800 hover:bg-muted/20 dark:hiover:bg-muted/50 cursor-pointer"
+      className={cn(
+        "p-4 border-b border-neutral-200 dark:border-neutral-800 ",
+        !isPostDetailPage &&
+          "hover:bg-muted/20 dark:hiover:bg-muted/50 cursor-pointer"
+      )}
     >
       <div className="flex items-start space-x-2">
         <div className="flex-shrink-0">
@@ -178,7 +188,7 @@ export const PostCard = ({ post }: FeedItemProps) => {
                   post.images.length === 3 && "grid-rows-2"
                 )}
               >
-                {post.images.map((image, index) => (
+                {post.images.map((image: string, index: number) => (
                   <div
                     key={index}
                     className={cn(

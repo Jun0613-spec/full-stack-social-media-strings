@@ -5,7 +5,7 @@ import { axiosInstance, handleAxiosError } from "@/lib/axios";
 
 import { useAuthStore } from "@/stores/authStore";
 
-import { User } from "@/types";
+import { User } from "@/types/prismaTypes";
 
 export const useGoogleAuth = () => {
   const queryClient = useQueryClient();

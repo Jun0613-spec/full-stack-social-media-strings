@@ -179,7 +179,9 @@ const ReplyModal = () => {
                   className="w-full resize-none overflow-hidden bg-transparent outline-none placeholder:text-neutral-500 dark:placeholder:text-neutral-400 text-lg placeholder:text-lg leading-tight min-h-[100px]"
                 />
                 {errors.text && (
-                  <p className="text-red-500 text-sm">{errors.text.message}</p>
+                  <p className="text-red-500 dark:text-red-600 text-sm">
+                    {errors.text.message}
+                  </p>
                 )}
               </div>
             </div>

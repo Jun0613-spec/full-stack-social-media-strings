@@ -17,7 +17,7 @@ import { useToggleFollowUser } from "@/hooks/users/useToggleFollowUser";
 
 import { useEditUserModalStore } from "@/stores/modals/modalStore";
 
-import { User, Post } from "@/types";
+import { User, Post } from "@/types/prismaTypes";
 
 const ProfilePage = () => {
   const { currentUser } = useAuthStore();

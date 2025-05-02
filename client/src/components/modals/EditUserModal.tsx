@@ -7,11 +7,11 @@ import { useAuthStore } from "@/stores/authStore";
 import { useEditUser } from "@/hooks/users/useEditUser";
 import Input from "../Input";
 import Label from "../Label";
+import Loader from "../Loader";
 
 import { useForm } from "react-hook-form";
 
 import { EditUserFormData } from "@/types";
-import Loader from "../Loader";
 
 const EditUserModal = () => {
   const { isOpen, closeModal } = useEditUserModalStore();

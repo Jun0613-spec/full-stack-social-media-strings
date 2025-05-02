@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { axiosInstance, handleAxiosError } from "@/lib/axios";
 
-import { Post } from "@/types";
+import { Post } from "@/types/prismaTypes";
 
 export const useGetPostByPostId = (postId: string) => {
   return useQuery<Post>({

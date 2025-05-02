@@ -193,7 +193,9 @@ const CreatePostModal = () => {
               />
 
               {errors.text && (
-                <p className="text-red-500 text-sm">{errors.text.message}</p>
+                <p className="text-red-500 dark:text-red-600 text-sm">
+                  {errors.text.message}
+                </p>
               )}
 
               {imagePreviews.length > 0 && (

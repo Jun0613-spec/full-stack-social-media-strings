@@ -8,8 +8,9 @@ import {
 } from "react";
 import { io, Socket } from "socket.io-client";
 
-import { Conversation, Message, Notification } from "@/types";
-import { useAuth } from "./auth-provider";
+import { Conversation, Message, Notification } from "@/types/prismaTypes";
+
+import { useAuthStore } from "@/stores/authStore";
 
 interface SocketContextType {
   socket: Socket | null;
@@ -48,7 +49,7 @@ export const SocketProvider = ({ children }: SocketProviderProps) => {
   const [isConnected, setIsConnected] = useState<boolean>(false);
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
-  const { currentUser, isLoggedIn } = useAuth();
+  const { currentUser, isLoggedIn } = useAuthStore();
 
   const connect = useCallback(() => {
     if (socket && !isConnected) {

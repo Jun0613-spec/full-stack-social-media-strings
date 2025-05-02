@@ -168,7 +168,9 @@ const PostForm = () => {
           />
 
           {errors.text && (
-            <p className="text-red-500 text-sm">{errors.text.message}</p>
+            <p className="text-red-500 dark:text-red-600 dark:text-red-600 text-sm">
+              {errors.text.message}
+            </p>
           )}
           {imagePreviews.length > 0 && (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">

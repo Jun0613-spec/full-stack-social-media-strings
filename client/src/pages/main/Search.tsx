@@ -8,7 +8,7 @@ import { useGetFollowingUsers } from "@/hooks/users/useGetFollowings";
 import { useToggleFollowUser } from "@/hooks/users/useToggleFollowUser";
 import { useSearchUsers } from "@/hooks/users/useSearchUsers";
 
-import { User } from "@/types";
+import { User } from "@/types/prismaTypes";
 
 import { useSearchStore } from "@/stores/searchStore";
 import { useAuthStore } from "@/stores/authStore";
