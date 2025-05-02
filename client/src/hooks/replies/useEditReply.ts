@@ -2,14 +2,20 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { axiosInstance, handleAxiosError } from "@/lib/axios";
 
-export const useCreateReply = () => {
+export const useEditReply = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async ({ postId, text }: { postId: string; text: string }) => {
+    mutationFn: async ({
+      replyId,
+      text
+    }: {
+      replyId: string;
+      text: string;
+    }) => {
       try {
-        const response = await axiosInstance.post(
-          `/api/replies/${postId}`,
+        const response = await axiosInstance.put(
+          `/api/replies/${replyId}`,
           { text },
           { withCredentials: true }
         );
@@ -20,13 +26,14 @@ export const useCreateReply = () => {
       }
     },
     onSuccess: async () => {
-      toast.success("Your reply has been created");
+      toast.success("Your reply has been edited");
 
       await queryClient.invalidateQueries({ queryKey: ["replies"] });
       await queryClient.invalidateQueries({ queryKey: ["forYouFeed"] });
       await queryClient.invalidateQueries({ queryKey: ["followingsFeed"] });
       await queryClient.invalidateQueries({ queryKey: ["userProfile"] });
       await queryClient.invalidateQueries({ queryKey: ["posts"] });
+      await queryClient.invalidateQueries({ queryKey: ["replies"] });
     },
     onError: (error) => {
       toast.error((error as Error).message);

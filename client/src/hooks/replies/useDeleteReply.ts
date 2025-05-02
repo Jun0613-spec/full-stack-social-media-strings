@@ -1,18 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+
 import { axiosInstance, handleAxiosError } from "@/lib/axios";
 
-export const useCreateReply = () => {
+export const useDeleteReply = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async ({ postId, text }: { postId: string; text: string }) => {
+    mutationFn: async (replyId: string) => {
       try {
-        const response = await axiosInstance.post(
-          `/api/replies/${postId}`,
-          { text },
-          { withCredentials: true }
-        );
+        const response = await axiosInstance.delete(`/api/replies/${replyId}`, {
+          withCredentials: true
+        });
+
         return response.data;
       } catch (error) {
         handleAxiosError(error);
@@ -20,16 +20,17 @@ export const useCreateReply = () => {
       }
     },
     onSuccess: async () => {
-      toast.success("Your reply has been created");
+      toast.success("Your reply has been deleted");
 
       await queryClient.invalidateQueries({ queryKey: ["replies"] });
       await queryClient.invalidateQueries({ queryKey: ["forYouFeed"] });
       await queryClient.invalidateQueries({ queryKey: ["followingsFeed"] });
       await queryClient.invalidateQueries({ queryKey: ["userProfile"] });
       await queryClient.invalidateQueries({ queryKey: ["posts"] });
+      await queryClient.invalidateQueries({ queryKey: ["replies"] });
     },
     onError: (error) => {
-      toast.error((error as Error).message);
+      toast.error(error.message);
     }
   });
 

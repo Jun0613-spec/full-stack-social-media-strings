@@ -69,6 +69,8 @@ export const PostCard = ({ post }: FeedItemProps) => {
   const isPostDetailPage = location.pathname.includes(`/post/${post.id}`);
 
   const handleClickPost = () => {
+    if (isDropdownOpen) return;
+
     if (!isPostDetailPage) {
       navigate(`/${post.user.username}/post/${post.id}`);
     }
@@ -141,13 +143,13 @@ export const PostCard = ({ post }: FeedItemProps) => {
                   {isDropdownOpen && (
                     <div
                       onClick={(e) => e.stopPropagation()}
-                      className="absolute right-0 w-30 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden z-50 bg-white dark:bg-black"
+                      className="absolute right-8 top-0 w-30 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden z-50 bg-white dark:bg-black"
                     >
                       <button
                         className="w-full px-3 py-2 hover:bg-muted dark:hover:bg-neutral-900 flex items-center gap-4 text-sm transition duration-150 ease-in-out"
                         onClick={(e) => {
                           e.stopPropagation();
-                          openModal(post.id, post.text ?? "", post.images);
+                          openModal(post.id, post.text ?? "");
                           setIsDropdownOpen(false);
                         }}
                       >

@@ -12,14 +12,14 @@ export const getRepliesByPostId = async (
 
   const { cursor } = req.query;
 
-  const take = 10;
+  const take = 5;
 
   try {
     const replies = await prisma.reply.findMany({
       where: { postId },
       orderBy: [
         {
-          createdAt: "desc"
+          createdAt: "asc"
         },
         {
           id: "desc"

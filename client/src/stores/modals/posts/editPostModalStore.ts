@@ -4,7 +4,7 @@ interface EditPostModalState {
   isOpen: boolean;
   postId: string | null;
   initialText: string | null;
-  openModal: (postId: string, text: string, images: string[]) => void;
+  openModal: (postId: string, text: string) => void;
   closeModal: () => void;
 }
 

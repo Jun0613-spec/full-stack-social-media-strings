@@ -77,6 +77,10 @@ export interface ReplyFormData {
   text: string;
 }
 
+export interface EditReplyFormData {
+  text: string;
+}
+
 export interface EditUserFormData {
   firstName?: string;
   lastName?: string;
