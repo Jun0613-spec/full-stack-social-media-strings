@@ -84,7 +84,7 @@ export const PostCard = ({ post }: FeedItemProps) => {
       <div className="flex items-start space-x-2">
         <div className="flex-shrink-0">
           <Link
-            to={`/${post.user.username}`}
+            to={`/profile/${post.user.username}`}
             onClick={(e) => e.stopPropagation()}
           >
             <UserAvatar src={post.user.avatarImage} className="w-10 h-10" />
@@ -95,7 +95,7 @@ export const PostCard = ({ post }: FeedItemProps) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1">
               <Link
-                to={`/${post.user.username}`}
+                to={`/profile/${post.user.username}`}
                 onClick={(e) => e.stopPropagation()}
                 className="hover:underline"
               >
