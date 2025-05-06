@@ -194,7 +194,6 @@ export const getPostByPostId = async (
             }
           }
         },
-
         _count: {
           select: {
             replies: true,
