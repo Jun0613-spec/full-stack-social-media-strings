@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import { RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 
 import Label from "@/components/Label";
 import Input from "@/components/Input";
@@ -49,53 +49,63 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="container mx-auto max-w-xl w-full">
-      <h2 className="text-2xl font-bold text-center mb-8">Register</h2>
+    <div className="w-full">
+      {/* Header */}
+      <div className="mb-8 text-center">
+        <h1 className="text-3xl font-bold mb-2 text-neutral-900 dark:text-neutral-100">
+          Create your account
+        </h1>
+        <p className="text-neutral-500 dark:text-neutral-400">
+          Join Strings to connect with your world
+        </p>
+      </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <div className="flex items-center gap-4">
-          <div className="flex-1">
+      {/* Form */}
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        <div className="grid grid-cols-2 gap-4">
+          <div>
             <Label>First Name</Label>
             <Input
-              {...register("firstName", {
-                required: "First name is required"
-              })}
               type="text"
               placeholder="Enter your first name"
+              size="md"
+              {...register("firstName", { required: "First name is required" })}
               error={!!errors.firstName}
             />
             {errors.firstName && (
-              <p className="text-sm text-red-500 dark:text-red-600 mt-2">
+              <p className="mt-1.5 text-sm text-red-500 dark:text-red-600">
                 {errors.firstName?.message}
               </p>
             )}
           </div>
-          <div className="flex-1">
+          <div>
             <Label>Last Name</Label>
             <Input
-              {...register("lastName", { required: "Last name is required" })}
               type="text"
               placeholder="Enter your last name"
+              size="md"
+              {...register("lastName", { required: "Last name is required" })}
               error={!!errors.lastName}
             />
             {errors.lastName && (
-              <p className="text-sm text-red-500 dark:text-red-600 mt-2">
+              <p className="mt-1.5 text-sm text-red-500 dark:text-red-600">
                 {errors.lastName?.message}
               </p>
             )}
           </div>
         </div>
+
         <div>
           <Label>Username</Label>
           <Input
-            size="md"
-            type="username"
+            type="text"
             placeholder="Enter your username"
+            size="md"
             {...register("username", { required: "Username is required" })}
             error={!!errors.username}
           />
           {errors.username && (
-            <p className="text-sm text-red-500 dark:text-red-600 mt-2">
+            <p className="mt-1.5 text-sm text-red-500 dark:text-red-600">
               {errors.username?.message}
             </p>
           )}
@@ -104,14 +114,14 @@ const RegisterPage = () => {
         <div>
           <Label>Email</Label>
           <Input
-            size="md"
             type="email"
             placeholder="Enter your email"
+            size="md"
             {...register("email", { required: "Email is required" })}
             error={!!errors.email}
           />
           {errors.email && (
-            <p className="text-sm text-red-500 dark:text-red-600 mt-2">
+            <p className="mt-1.5 text-sm text-red-500 dark:text-red-600">
               {errors.email?.message}
             </p>
           )}
@@ -121,38 +131,44 @@ const RegisterPage = () => {
           <Label>Password</Label>
           <div className="relative">
             <Input
-              size="md"
               type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
-              {...register("password", { required: "Password is required" })}
+              size="md"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 8,
+                  message: "Password must be at least 8 characters"
+                }
+              })}
               error={!!errors.password}
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-neutral-600 dark:text-neutral-300 cursor-pointer"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-300 cursor-pointer"
             >
               {showPassword ? (
-                <RiEyeOffLine className="size-5" />
+                <RiEyeOffLine className="w-5 h-5" />
               ) : (
-                <RiEyeLine className="size-5" />
+                <RiEyeLine className="w-5 h-5" />
               )}
             </button>
           </div>
           {errors.password && (
-            <p className="text-sm text-red-500 dark:text-red-600 mt-2">
+            <p className="mt-1.5 text-sm text-red-500 dark:text-red-600">
               {errors.password?.message}
             </p>
           )}
         </div>
 
         <div>
-          <Label> Confirm Password</Label>
+          <Label>Confirm Password</Label>
           <div className="relative">
             <Input
-              size="md"
               type={showConfirmPassword ? "text" : "password"}
               placeholder="Re-enter your password"
+              size="md"
               {...register("confirmPassword", {
                 required: "Please confirm your password",
                 validate: (value) =>
@@ -163,17 +179,17 @@ const RegisterPage = () => {
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-neutral-600 dark:text-neutral-300 cursor-pointer"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-300 cursor-pointer"
             >
               {showConfirmPassword ? (
-                <RiEyeOffLine className="size-5" />
+                <RiEyeOffLine className="w-5 h-5" />
               ) : (
-                <RiEyeLine className="size-5" />
+                <RiEyeLine className="w-5 h-5" />
               )}
             </button>
           </div>
           {errors.confirmPassword && (
-            <p className="text-sm text-red-500 dark:text-red-600 mt-2">
+            <p className="mt-1.5 text-sm text-red-500 dark:text-red-600">
               {errors.confirmPassword?.message}
             </p>
           )}
@@ -182,25 +198,27 @@ const RegisterPage = () => {
         <Button
           type="submit"
           variant="primary"
-          size="lg"
+          size="md"
           disabled={isPending}
           className="w-full"
         >
-          {isPending ? <Loader size={24} className="text-muted" /> : "Register"}
+          {isPending ? (
+            <Loader size={20} className="mx-auto" />
+          ) : (
+            "Create account"
+          )}
         </Button>
       </form>
 
-      <div className="text-center mt-6">
-        <p className="text-neutral-500 dark:text-neutral-400">
-          Already have an account?{" "}
-          <Link
-            to="/login"
-            className="text-neutral-800 dark:text-neutral-200 font-medium hover:underline"
-          >
-            Login
-          </Link>
-        </p>
-      </div>
+      <p className="mt-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
+        Already have an account?{" "}
+        <Link
+          to="/login"
+          className="font-medium text-neutral-900 dark:text-neutral-100 hover:underline"
+        >
+          Log in
+        </Link>
+      </p>
     </div>
   );
 };
