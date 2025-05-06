@@ -28,9 +28,10 @@ import { Post, Like } from "@/types/prismaTypes";
 
 interface FeedItemProps {
   post: Post;
+  hasBorder?: boolean;
 }
 
-export const PostCard = ({ post }: FeedItemProps) => {
+export const PostCard = ({ post, hasBorder }: FeedItemProps) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -88,13 +89,14 @@ export const PostCard = ({ post }: FeedItemProps) => {
     <div
       onClick={handleClickPost}
       className={cn(
-        "p-4 border-b border-neutral-200 dark:border-neutral-800 ",
+        "p-4",
+        !hasBorder && "border-b border-neutral-200 dark:border-neutral-800",
         !isPostDetailPage &&
-          "hover:bg-muted/20 dark:hiover:bg-muted/50 cursor-pointer"
+          "hover:bg-muted/20 dark:hover:bg-muted/50 cursor-pointer"
       )}
     >
       <div className="flex items-start space-x-2">
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 relative">
           <Link
             to={`/profile/${post.user.username}`}
             onClick={(e) => e.stopPropagation()}

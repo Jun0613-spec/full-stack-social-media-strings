@@ -2,18 +2,20 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { axiosInstance, handleAxiosError } from "@/lib/axios";
 
-import { RepliesResponse } from "@/types";
+import { UserRepliesResponse } from "@/types";
 
-export const useGetRepliesByPostId = (postId: string) => {
-  return useInfiniteQuery<RepliesResponse>({
-    queryKey: ["replies", postId],
+export const useGetUserReplies = (username: string) => {
+  return useInfiniteQuery<UserRepliesResponse>({
+    queryKey: ["userReplies"],
     initialPageParam: "",
     queryFn: async ({ pageParam = "" }) => {
       try {
-        const response = await axiosInstance.get(`/api/replies/${postId}`, {
-          withCredentials: true,
-          params: { cursor: pageParam }
-        });
+        const response = await axiosInstance.get(
+          `/api/replies/profile/${username}`,
+          {
+            params: { cursor: pageParam }
+          }
+        );
 
         return response.data;
       } catch (error) {

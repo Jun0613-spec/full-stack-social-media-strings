@@ -24,8 +24,10 @@ export const useToggleLikePost = () => {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["followingsFeed"] });
       await queryClient.invalidateQueries({ queryKey: ["forYouFeed"] });
-      await queryClient.invalidateQueries({ queryKey: ["userProfile"] });
       await queryClient.invalidateQueries({ queryKey: ["posts"] });
+      await queryClient.invalidateQueries({ queryKey: ["replies"] });
+      await queryClient.invalidateQueries({ queryKey: ["userPosts"] });
+      await queryClient.invalidateQueries({ queryKey: ["userReplies"] });
     },
     onError: (error) => {
       toast.error(error.message);

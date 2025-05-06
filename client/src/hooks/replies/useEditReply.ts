@@ -31,9 +31,10 @@ export const useEditReply = () => {
       await queryClient.invalidateQueries({ queryKey: ["replies"] });
       await queryClient.invalidateQueries({ queryKey: ["forYouFeed"] });
       await queryClient.invalidateQueries({ queryKey: ["followingsFeed"] });
-      await queryClient.invalidateQueries({ queryKey: ["userProfile"] });
       await queryClient.invalidateQueries({ queryKey: ["posts"] });
       await queryClient.invalidateQueries({ queryKey: ["replies"] });
+      await queryClient.invalidateQueries({ queryKey: ["userReplies"] });
+      await queryClient.invalidateQueries({ queryKey: ["userPosts"] });
     },
     onError: (error) => {
       toast.error((error as Error).message);

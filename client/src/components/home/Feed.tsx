@@ -1,9 +1,9 @@
 import InfiniteScroll from "react-infinite-scroll-component";
-import { FaArrowUp } from "react-icons/fa6";
 
 import PostCard from "./PostCard";
-
 import Loader from "../Loader";
+import EndOfScroll from "../EndOfScroll";
+import ReleaseToRefresh from "../ReleaseToRefresh";
 
 import { Post } from "@/types/prismaTypes";
 
@@ -40,24 +40,11 @@ export const Feed = ({ type }: FeedProps) => {
         next={fetchForYouNextPage}
         hasMore={!!hasForYouNextPage}
         loader={<Loader />}
-        endMessage={
-          <div className="text-center py-4 text-neutral-500 dark:text-neutral-400">
-            You've reached the end of the feed
-          </div>
-        }
+        endMessage={<EndOfScroll sectionName="feed" />}
         refreshFunction={refetchForYou}
         pullDownToRefresh
         pullDownToRefreshThreshold={50}
-        releaseToRefreshContent={
-          <div className="sticky z-10 w-full">
-            <div className="mx-auto max-w-2xl bg-white dark:bg-black border-b border-neutral-200 dark:border-neutral-800 shadow-sm">
-              <div className="flex items-center justify-center gap-2 py-3 px-4 text-sm text-neutral-500 dark:text-neutral-400">
-                <FaArrowUp className="animate-bounce" />
-                <span>Release to refresh</span>
-              </div>
-            </div>
-          </div>
-        }
+        releaseToRefreshContent={<ReleaseToRefresh />}
         scrollableTarget="scrollableDiv"
       >
         {forYouPosts.map((post: Post) => (
@@ -81,16 +68,7 @@ export const Feed = ({ type }: FeedProps) => {
       refreshFunction={refetchFollowings}
       pullDownToRefresh
       pullDownToRefreshThreshold={50}
-      releaseToRefreshContent={
-        <div className="sticky z-10 w-full">
-          <div className="mx-auto max-w-2xl bg-white dark:bg-black border-b border-neutral-200 dark:border-neutral-800 shadow-sm">
-            <div className="flex items-center justify-center gap-2 py-3 px-4 text-sm text-neutral-500 dark:text-neutral-400">
-              <FaArrowUp className="animate-bounce" />
-              <span>Release to refresh</span>
-            </div>
-          </div>
-        </div>
-      }
+      releaseToRefreshContent={<ReleaseToRefresh />}
       scrollableTarget="scrollableDiv"
     >
       {followingsPosts.map((post: Post) => (

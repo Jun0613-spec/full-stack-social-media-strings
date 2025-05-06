@@ -4,6 +4,100 @@ import { prisma } from "../lib/prisma";
 
 import { NotificationType } from "../types";
 
+export const getUserReplies = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { username } = req.params;
+  const { cursor } = req.query;
+
+  const take = 5;
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { username },
+      select: { id: true }
+    });
+
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    const replies = await prisma.reply.findMany({
+      where: { userId: user.id },
+      orderBy: { createdAt: "desc" },
+      take: take + 1,
+      ...(cursor && {
+        cursor: { id: cursor as string },
+        skip: 1
+      }),
+      select: {
+        id: true,
+        text: true,
+        createdAt: true,
+        updatedAt: true,
+        postId: true,
+        likes: true,
+        user: {
+          select: {
+            id: true,
+            username: true,
+            firstName: true,
+            lastName: true,
+            avatarImage: true
+          }
+        },
+        post: {
+          select: {
+            id: true,
+            text: true,
+            images: true,
+            createdAt: true,
+            updatedAt: true,
+            likes: true,
+            replies: true,
+            user: {
+              select: {
+                id: true,
+                username: true,
+                firstName: true,
+                lastName: true,
+                avatarImage: true
+              }
+            },
+            _count: {
+              select: {
+                likes: true,
+                replies: true
+              }
+            }
+          }
+        },
+        _count: {
+          select: {
+            likes: true
+          }
+        }
+      }
+    });
+
+    const hasNextPage = replies.length > take;
+    const trimmedReplies = hasNextPage ? replies.slice(0, take) : replies;
+    const nextCursor = hasNextPage
+      ? trimmedReplies[trimmedReplies.length - 1].id
+      : null;
+
+    res.status(200).json({
+      userProfileReplies: trimmedReplies,
+      nextCursor
+    });
+  } catch (error) {
+    console.error("getUserReplies error:", error);
+    res.status(500).json({ message: "Failed to fetch user replies" });
+  }
+};
+
 export const getRepliesByPostId = async (
   req: Request,
   res: Response

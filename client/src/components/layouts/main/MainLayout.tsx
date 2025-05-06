@@ -11,7 +11,7 @@ const MainLayout = () => {
 
       <main
         id="scrollableDiv"
-        className="w-full h-screen min-w-[300px] lg:max-w-[600px] border-x border-neutral-200 dark:border-neutral-800 overflow-y-auto no-scrollbar"
+        className="w-full h-screen min-w-[300px] lg:max-w-[600px] border-x border-neutral-200 dark:border-neutral-800 overflow-y-auto no-scrollbar "
       >
         <Outlet />
       </main>

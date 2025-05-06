@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-
+import InfiniteScroll from "react-infinite-scroll-component";
 import { useState } from "react";
 import { FiCalendar } from "react-icons/fi";
 
@@ -8,16 +8,21 @@ import UserAvatar from "@/components/UserAvatar";
 import Button from "@/components/Button";
 import Tabs from "@/components/home/Tabs";
 import PostCard from "@/components/home/PostCard";
-
-import { useAuthStore } from "@/stores/authStore";
+import ReplyCard from "@/components/ReplyCard";
+import Loader from "@/components/Loader";
+import EndOfScroll from "@/components/EndOfScroll";
+import ReleaseToRefresh from "@/components/ReleaseToRefresh";
 
 import { useGetUserProfile } from "@/hooks/users/useGetUserProfile";
 import { useGetFollowingUsers } from "@/hooks/users/useGetFollowings";
 import { useToggleFollowUser } from "@/hooks/users/useToggleFollowUser";
+import { useGetUserPosts } from "@/hooks/posts/useGetUserPosts";
+import { useGetUserReplies } from "@/hooks/replies/useGetUserReplies";
 
+import { useAuthStore } from "@/stores/authStore";
 import { useEditUserModalStore } from "@/stores/modals/modalStore";
 
-import { User, Post } from "@/types/prismaTypes";
+import { User, Post, Reply } from "@/types/prismaTypes";
 
 const ProfilePage = () => {
   const { currentUser } = useAuthStore();
@@ -28,6 +33,18 @@ const ProfilePage = () => {
   const { username } = useParams();
 
   const { data } = useGetUserProfile(username as string);
+  const {
+    data: userPostsData,
+    fetchNextPage: fetchUserPostsNextPage,
+    hasNextPage: hasUserPostsNextPage,
+    refetch: refetchUserPosts
+  } = useGetUserPosts(username as string);
+  const {
+    data: userRepliesData,
+    fetchNextPage: fetchUserRepliesNextPage,
+    hasNextPage: hasUserRepliesNextPage,
+    refetch: refetchUserReplies
+  } = useGetUserReplies(username as string);
   const { data: followingsUsers } = useGetFollowingUsers();
   const { mutate: toggleFollow } = useToggleFollowUser();
 
@@ -36,6 +53,12 @@ const ProfilePage = () => {
   const user = data?.user;
 
   const followings = followingsUsers?.followingUsers || [];
+
+  const userPosts =
+    userPostsData?.pages.flatMap((page) => page.userProfilePosts) ?? [];
+
+  const userReplies =
+    userRepliesData?.pages.flatMap((page) => page.userProfileReplies) ?? [];
 
   const isFollowing = (userId: string) => {
     return followings.some((user: User) => user.id === userId);
@@ -96,7 +119,7 @@ const ProfilePage = () => {
 
           {user.bio && <p className="my-3">{user.bio}</p>}
 
-          <div className="flex items-center just text-neutral-500 datk:text-neutral-400 gap-2 mt-4">
+          <div className="flex items-center just text-neutral-500 dark:text-neutral-400 gap-2 mt-4">
             <FiCalendar className="w-5 h-5" />
             Joined{" "}
             {new Date(user.createdAt).toLocaleDateString("en-UK", {
@@ -131,21 +154,65 @@ const ProfilePage = () => {
       <div className="pb-5">
         {activeTab === "posts" && (
           <>
-            {user.posts.length === 0 ? (
+            {userPosts.length === 0 ? (
               <p className="text-center text-neutral-500 dark:text-neutral-400 mt-10">
                 {currentUser?.id === user.id
                   ? "You haven’t posted anything yet."
                   : `${user.firstName} hasn’t posted anything yet`}
               </p>
             ) : (
-              <>
-                {user.posts.map((post: Post) => (
+              <InfiniteScroll
+                dataLength={userPosts.length}
+                next={fetchUserPostsNextPage}
+                hasMore={!!hasUserPostsNextPage}
+                loader={<Loader />}
+                endMessage={<EndOfScroll sectionName="posts" />}
+                refreshFunction={refetchUserPosts}
+                pullDownToRefresh
+                pullDownToRefreshThreshold={50}
+                releaseToRefreshContent={<ReleaseToRefresh />}
+                scrollableTarget="scrollableDiv"
+              >
+                {userPosts?.map((post: Post) => (
                   <PostCard key={post.id} post={post} />
                 ))}
-                <p className="text-center text-neutral-400 dark:text-neutral-500 mt-6">
-                  You’ve reached the end
-                </p>
-              </>
+              </InfiniteScroll>
+            )}
+          </>
+        )}
+
+        {activeTab === "replies" && (
+          <>
+            {userReplies.length === 0 ? (
+              <p className="text-center text-neutral-500 dark:text-neutral-400 mt-10">
+                {currentUser?.id === user.id
+                  ? "You haven't replied to any posts yet."
+                  : `${user.firstName} hasn't replied to any posts yet`}
+              </p>
+            ) : (
+              <InfiniteScroll
+                dataLength={userReplies.length}
+                next={fetchUserRepliesNextPage}
+                hasMore={!!hasUserRepliesNextPage}
+                loader={<Loader />}
+                endMessage={<EndOfScroll sectionName="replies" />}
+                refreshFunction={refetchUserReplies}
+                pullDownToRefresh
+                pullDownToRefreshThreshold={50}
+                releaseToRefreshContent={<ReleaseToRefresh />}
+                scrollableTarget="scrollableDiv"
+              >
+                {userReplies?.map((reply: Reply) => (
+                  <div key={reply.id}>
+                    <div className="relative">
+                      <PostCard post={reply.post} hasBorder />
+                      <div className="absolute left-9 top-14 bottom-0 w-0.5 bg-primary/20 z-10" />
+                    </div>
+
+                    <ReplyCard reply={reply} />
+                  </div>
+                ))}
+              </InfiniteScroll>
             )}
           </>
         )}

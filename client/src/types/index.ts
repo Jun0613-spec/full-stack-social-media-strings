@@ -56,8 +56,18 @@ export interface FollowersResponse {
   followerUsers: User[];
 }
 
-export interface repliesResponse {
+export interface RepliesResponse {
   replies: Reply[];
+  nextCursor: string | null;
+}
+
+export interface UserRepliesResponse {
+  userProfileReplies: Reply[];
+  nextCursor: string | null;
+}
+
+export interface UserPostsResponse {
+  userProfilePosts: Post[];
   nextCursor: string | null;
 }
 
