@@ -7,11 +7,11 @@ import {
   HiSearch,
   HiHome,
   HiOutlineHome,
-  HiBell,
-  HiOutlineBell,
   HiOutlineUser,
   HiUser
 } from "react-icons/hi";
+
+import { HiBell, HiOutlineBell } from "react-icons/hi2";
 
 export const sidebarLinks = (currentUser: User) => [
   {
