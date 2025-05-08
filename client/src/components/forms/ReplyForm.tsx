@@ -106,7 +106,11 @@ const ReplyForm = ({ postId, username }: ReplyFormProps) => {
 
       <div className="flex items-center justify-between pt-4 ml-14">
         <div className="flex gap-4 items-center">
-          <EmojiSelector onEmojiClick={handleEmojiClick} align="left" />
+          <EmojiSelector
+            onEmojiClick={handleEmojiClick}
+            horizontalAlign="left"
+            verticalAlign="top"
+          />
         </div>
         <div className="flex items-center gap-4">
           <div

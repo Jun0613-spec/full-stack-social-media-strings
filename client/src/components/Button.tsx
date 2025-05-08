@@ -24,7 +24,7 @@ const Button = ({
     secondary:
       "text-black bg-white hover:opacity-80 dark:text-white dark:bg-neutral-800 dark:hover:bg-neutral-800/80 border border-neutral-300 dark:border-neutral-700",
     danger:
-      "text-white bg-red-600 hover:bg-red-700 dark:bg-red-800 dark:hover:bg-red-900",
+      "text-white bg-red-600 hover:bg-red-500 dark:bg-red-800 dark:hover:bg-red-700",
     outline:
       "bg-tranparent border border-neutral-200 text-black hover:bg-muted dark:text-white dark:border-neutral-800 dark:hover:bg-neutral-800",
     ghost:

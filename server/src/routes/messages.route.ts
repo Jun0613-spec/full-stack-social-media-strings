@@ -23,6 +23,6 @@ router.post(
 );
 router.put("/:messageId", verifyToken, upload.single("image"), editMessage);
 router.delete("/:messageId", verifyToken, deleteMessage);
-router.put("/:conversationId/seen", verifyToken, markMessagesAsSeen);
+router.put("/seen/:conversationId", verifyToken, markMessagesAsSeen);
 
 export default router;

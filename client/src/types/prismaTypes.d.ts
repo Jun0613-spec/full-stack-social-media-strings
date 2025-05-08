@@ -335,8 +335,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.6.0
-   * Query Engine version: f676762280b54cd07c770017ed3711ddde35f37a
+   * Prisma Client JS version: 6.7.0
+   * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
    */
   export type PrismaVersion = {
     client: string
@@ -1527,8 +1527,8 @@ export namespace Prisma {
   export type UserCountOutputType = {
     posts: number
     replies: number
-    followers: number
     followings: number
+    followers: number
     likes: number
     messages: number
     conversations: number
@@ -1539,8 +1539,8 @@ export namespace Prisma {
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     posts?: boolean | UserCountOutputTypeCountPostsArgs
     replies?: boolean | UserCountOutputTypeCountRepliesArgs
-    followers?: boolean | UserCountOutputTypeCountFollowersArgs
     followings?: boolean | UserCountOutputTypeCountFollowingsArgs
+    followers?: boolean | UserCountOutputTypeCountFollowersArgs
     likes?: boolean | UserCountOutputTypeCountLikesArgs
     messages?: boolean | UserCountOutputTypeCountMessagesArgs
     conversations?: boolean | UserCountOutputTypeCountConversationsArgs
@@ -1576,14 +1576,14 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountFollowersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountFollowingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FollowWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountFollowingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountFollowersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FollowWhereInput
   }
 
@@ -1829,6 +1829,7 @@ export namespace Prisma {
     avatarImage: string | null
     coverImage: string | null
     bio: string | null
+    googleId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1843,6 +1844,7 @@ export namespace Prisma {
     avatarImage: string | null
     coverImage: string | null
     bio: string | null
+    googleId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1857,6 +1859,7 @@ export namespace Prisma {
     avatarImage: number
     coverImage: number
     bio: number
+    googleId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1873,6 +1876,7 @@ export namespace Prisma {
     avatarImage?: true
     coverImage?: true
     bio?: true
+    googleId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1887,6 +1891,7 @@ export namespace Prisma {
     avatarImage?: true
     coverImage?: true
     bio?: true
+    googleId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1901,6 +1906,7 @@ export namespace Prisma {
     avatarImage?: true
     coverImage?: true
     bio?: true
+    googleId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1988,6 +1994,7 @@ export namespace Prisma {
     avatarImage: string | null
     coverImage: string | null
     bio: string | null
+    googleId: string | null
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -2019,12 +2026,13 @@ export namespace Prisma {
     avatarImage?: boolean
     coverImage?: boolean
     bio?: boolean
+    googleId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     posts?: boolean | User$postsArgs<ExtArgs>
     replies?: boolean | User$repliesArgs<ExtArgs>
-    followers?: boolean | User$followersArgs<ExtArgs>
     followings?: boolean | User$followingsArgs<ExtArgs>
+    followers?: boolean | User$followersArgs<ExtArgs>
     likes?: boolean | User$likesArgs<ExtArgs>
     messages?: boolean | User$messagesArgs<ExtArgs>
     conversations?: boolean | User$conversationsArgs<ExtArgs>
@@ -2043,6 +2051,7 @@ export namespace Prisma {
     avatarImage?: boolean
     coverImage?: boolean
     bio?: boolean
+    googleId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -2057,6 +2066,7 @@ export namespace Prisma {
     avatarImage?: boolean
     coverImage?: boolean
     bio?: boolean
+    googleId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -2071,16 +2081,17 @@ export namespace Prisma {
     avatarImage?: boolean
     coverImage?: boolean
     bio?: boolean
+    googleId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "username" | "email" | "password" | "avatarImage" | "coverImage" | "bio" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "username" | "email" | "password" | "avatarImage" | "coverImage" | "bio" | "googleId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     posts?: boolean | User$postsArgs<ExtArgs>
     replies?: boolean | User$repliesArgs<ExtArgs>
-    followers?: boolean | User$followersArgs<ExtArgs>
     followings?: boolean | User$followingsArgs<ExtArgs>
+    followers?: boolean | User$followersArgs<ExtArgs>
     likes?: boolean | User$likesArgs<ExtArgs>
     messages?: boolean | User$messagesArgs<ExtArgs>
     conversations?: boolean | User$conversationsArgs<ExtArgs>
@@ -2096,8 +2107,8 @@ export namespace Prisma {
     objects: {
       posts: Prisma.$PostPayload<ExtArgs>[]
       replies: Prisma.$ReplyPayload<ExtArgs>[]
-      followers: Prisma.$FollowPayload<ExtArgs>[]
       followings: Prisma.$FollowPayload<ExtArgs>[]
+      followers: Prisma.$FollowPayload<ExtArgs>[]
       likes: Prisma.$LikePayload<ExtArgs>[]
       messages: Prisma.$MessagePayload<ExtArgs>[]
       conversations: Prisma.$ConversationPayload<ExtArgs>[]
@@ -2114,6 +2125,7 @@ export namespace Prisma {
       avatarImage: string | null
       coverImage: string | null
       bio: string | null
+      googleId: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -2512,8 +2524,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     posts<T extends User$postsArgs<ExtArgs> = {}>(args?: Subset<T, User$postsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     replies<T extends User$repliesArgs<ExtArgs> = {}>(args?: Subset<T, User$repliesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    followers<T extends User$followersArgs<ExtArgs> = {}>(args?: Subset<T, User$followersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FollowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     followings<T extends User$followingsArgs<ExtArgs> = {}>(args?: Subset<T, User$followingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FollowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    followers<T extends User$followersArgs<ExtArgs> = {}>(args?: Subset<T, User$followersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FollowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     likes<T extends User$likesArgs<ExtArgs> = {}>(args?: Subset<T, User$likesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     messages<T extends User$messagesArgs<ExtArgs> = {}>(args?: Subset<T, User$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     conversations<T extends User$conversationsArgs<ExtArgs> = {}>(args?: Subset<T, User$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2557,6 +2569,7 @@ export namespace Prisma {
     readonly avatarImage: FieldRef<"User", 'String'>
     readonly coverImage: FieldRef<"User", 'String'>
     readonly bio: FieldRef<"User", 'String'>
+    readonly googleId: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -2995,9 +3008,9 @@ export namespace Prisma {
   }
 
   /**
-   * User.followers
+   * User.followings
    */
-  export type User$followersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$followingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Follow
      */
@@ -3019,9 +3032,9 @@ export namespace Prisma {
   }
 
   /**
-   * User.followings
+   * User.followers
    */
-  export type User$followingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$followersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Follow
      */
@@ -8792,6 +8805,7 @@ export namespace Prisma {
     image: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    textUpdatedAt: Date | null
     conversationId: string | null
     senderId: string | null
   }
@@ -8803,6 +8817,7 @@ export namespace Prisma {
     image: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    textUpdatedAt: Date | null
     conversationId: string | null
     senderId: string | null
   }
@@ -8814,6 +8829,7 @@ export namespace Prisma {
     image: number
     createdAt: number
     updatedAt: number
+    textUpdatedAt: number
     conversationId: number
     senderId: number
     _all: number
@@ -8827,6 +8843,7 @@ export namespace Prisma {
     image?: true
     createdAt?: true
     updatedAt?: true
+    textUpdatedAt?: true
     conversationId?: true
     senderId?: true
   }
@@ -8838,6 +8855,7 @@ export namespace Prisma {
     image?: true
     createdAt?: true
     updatedAt?: true
+    textUpdatedAt?: true
     conversationId?: true
     senderId?: true
   }
@@ -8849,6 +8867,7 @@ export namespace Prisma {
     image?: true
     createdAt?: true
     updatedAt?: true
+    textUpdatedAt?: true
     conversationId?: true
     senderId?: true
     _all?: true
@@ -8933,6 +8952,7 @@ export namespace Prisma {
     image: string | null
     createdAt: Date
     updatedAt: Date
+    textUpdatedAt: Date | null
     conversationId: string
     senderId: string
     _count: MessageCountAggregateOutputType | null
@@ -8961,6 +8981,7 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    textUpdatedAt?: boolean
     conversationId?: boolean
     senderId?: boolean
     conversation?: boolean | ConversationDefaultArgs<ExtArgs>
@@ -8974,6 +8995,7 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    textUpdatedAt?: boolean
     conversationId?: boolean
     senderId?: boolean
     conversation?: boolean | ConversationDefaultArgs<ExtArgs>
@@ -8987,6 +9009,7 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    textUpdatedAt?: boolean
     conversationId?: boolean
     senderId?: boolean
     conversation?: boolean | ConversationDefaultArgs<ExtArgs>
@@ -9000,11 +9023,12 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    textUpdatedAt?: boolean
     conversationId?: boolean
     senderId?: boolean
   }
 
-  export type MessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "seen" | "image" | "createdAt" | "updatedAt" | "conversationId" | "senderId", ExtArgs["result"]["message"]>
+  export type MessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "seen" | "image" | "createdAt" | "updatedAt" | "textUpdatedAt" | "conversationId" | "senderId", ExtArgs["result"]["message"]>
   export type MessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     conversation?: boolean | ConversationDefaultArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
@@ -9031,6 +9055,7 @@ export namespace Prisma {
       image: string | null
       createdAt: Date
       updatedAt: Date
+      textUpdatedAt: Date | null
       conversationId: string
       senderId: string
     }, ExtArgs["result"]["message"]>
@@ -9464,6 +9489,7 @@ export namespace Prisma {
     readonly image: FieldRef<"Message", 'String'>
     readonly createdAt: FieldRef<"Message", 'DateTime'>
     readonly updatedAt: FieldRef<"Message", 'DateTime'>
+    readonly textUpdatedAt: FieldRef<"Message", 'DateTime'>
     readonly conversationId: FieldRef<"Message", 'String'>
     readonly senderId: FieldRef<"Message", 'String'>
   }
@@ -11129,6 +11155,7 @@ export namespace Prisma {
     avatarImage: 'avatarImage',
     coverImage: 'coverImage',
     bio: 'bio',
+    googleId: 'googleId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -11200,6 +11227,7 @@ export namespace Prisma {
     image: 'image',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
+    textUpdatedAt: 'textUpdatedAt',
     conversationId: 'conversationId',
     senderId: 'senderId'
   };
@@ -11363,12 +11391,13 @@ export namespace Prisma {
     avatarImage?: StringNullableFilter<"User"> | string | null
     coverImage?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
+    googleId?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     posts?: PostListRelationFilter
     replies?: ReplyListRelationFilter
-    followers?: FollowListRelationFilter
     followings?: FollowListRelationFilter
+    followers?: FollowListRelationFilter
     likes?: LikeListRelationFilter
     messages?: MessageListRelationFilter
     conversations?: ConversationListRelationFilter
@@ -11386,12 +11415,13 @@ export namespace Prisma {
     avatarImage?: SortOrderInput | SortOrder
     coverImage?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
+    googleId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     posts?: PostOrderByRelationAggregateInput
     replies?: ReplyOrderByRelationAggregateInput
-    followers?: FollowOrderByRelationAggregateInput
     followings?: FollowOrderByRelationAggregateInput
+    followers?: FollowOrderByRelationAggregateInput
     likes?: LikeOrderByRelationAggregateInput
     messages?: MessageOrderByRelationAggregateInput
     conversations?: ConversationOrderByRelationAggregateInput
@@ -11412,12 +11442,13 @@ export namespace Prisma {
     avatarImage?: StringNullableFilter<"User"> | string | null
     coverImage?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
+    googleId?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     posts?: PostListRelationFilter
     replies?: ReplyListRelationFilter
-    followers?: FollowListRelationFilter
     followings?: FollowListRelationFilter
+    followers?: FollowListRelationFilter
     likes?: LikeListRelationFilter
     messages?: MessageListRelationFilter
     conversations?: ConversationListRelationFilter
@@ -11435,6 +11466,7 @@ export namespace Prisma {
     avatarImage?: SortOrderInput | SortOrder
     coverImage?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
+    googleId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -11455,6 +11487,7 @@ export namespace Prisma {
     avatarImage?: StringNullableWithAggregatesFilter<"User"> | string | null
     coverImage?: StringNullableWithAggregatesFilter<"User"> | string | null
     bio?: StringNullableWithAggregatesFilter<"User"> | string | null
+    googleId?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -11488,6 +11521,7 @@ export namespace Prisma {
 
   export type PostWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    createdAt_id?: PostCreatedAtIdCompoundUniqueInput
     AND?: PostWhereInput | PostWhereInput[]
     OR?: PostWhereInput[]
     NOT?: PostWhereInput | PostWhereInput[]
@@ -11499,7 +11533,7 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     likes?: LikeListRelationFilter
     replies?: ReplyListRelationFilter
-  }, "id">
+  }, "id" | "createdAt_id">
 
   export type PostOrderByWithAggregationInput = {
     id?: SortOrder
@@ -11790,6 +11824,7 @@ export namespace Prisma {
     image?: StringNullableFilter<"Message"> | string | null
     createdAt?: DateTimeFilter<"Message"> | Date | string
     updatedAt?: DateTimeFilter<"Message"> | Date | string
+    textUpdatedAt?: DateTimeNullableFilter<"Message"> | Date | string | null
     conversationId?: StringFilter<"Message"> | string
     senderId?: StringFilter<"Message"> | string
     conversation?: XOR<ConversationScalarRelationFilter, ConversationWhereInput>
@@ -11803,6 +11838,7 @@ export namespace Prisma {
     image?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    textUpdatedAt?: SortOrderInput | SortOrder
     conversationId?: SortOrder
     senderId?: SortOrder
     conversation?: ConversationOrderByWithRelationInput
@@ -11819,6 +11855,7 @@ export namespace Prisma {
     image?: StringNullableFilter<"Message"> | string | null
     createdAt?: DateTimeFilter<"Message"> | Date | string
     updatedAt?: DateTimeFilter<"Message"> | Date | string
+    textUpdatedAt?: DateTimeNullableFilter<"Message"> | Date | string | null
     conversationId?: StringFilter<"Message"> | string
     senderId?: StringFilter<"Message"> | string
     conversation?: XOR<ConversationScalarRelationFilter, ConversationWhereInput>
@@ -11832,6 +11869,7 @@ export namespace Prisma {
     image?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    textUpdatedAt?: SortOrderInput | SortOrder
     conversationId?: SortOrder
     senderId?: SortOrder
     _count?: MessageCountOrderByAggregateInput
@@ -11849,6 +11887,7 @@ export namespace Prisma {
     image?: StringNullableWithAggregatesFilter<"Message"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Message"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Message"> | Date | string
+    textUpdatedAt?: DateTimeNullableWithAggregatesFilter<"Message"> | Date | string | null
     conversationId?: StringWithAggregatesFilter<"Message"> | string
     senderId?: StringWithAggregatesFilter<"Message"> | string
   }
@@ -11960,12 +11999,13 @@ export namespace Prisma {
     avatarImage?: string | null
     coverImage?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostCreateNestedManyWithoutUserInput
     replies?: ReplyCreateNestedManyWithoutUserInput
-    followers?: FollowCreateNestedManyWithoutFollowerInput
-    followings?: FollowCreateNestedManyWithoutFollowingInput
+    followings?: FollowCreateNestedManyWithoutFollowerInput
+    followers?: FollowCreateNestedManyWithoutFollowingInput
     likes?: LikeCreateNestedManyWithoutUserInput
     messages?: MessageCreateNestedManyWithoutSenderInput
     conversations?: ConversationCreateNestedManyWithoutParticipantsInput
@@ -11983,12 +12023,13 @@ export namespace Prisma {
     avatarImage?: string | null
     coverImage?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
     replies?: ReplyUncheckedCreateNestedManyWithoutUserInput
-    followers?: FollowUncheckedCreateNestedManyWithoutFollowerInput
-    followings?: FollowUncheckedCreateNestedManyWithoutFollowingInput
+    followings?: FollowUncheckedCreateNestedManyWithoutFollowerInput
+    followers?: FollowUncheckedCreateNestedManyWithoutFollowingInput
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutParticipantsInput
@@ -12006,12 +12047,13 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutUserNestedInput
     replies?: ReplyUpdateManyWithoutUserNestedInput
-    followers?: FollowUpdateManyWithoutFollowerNestedInput
-    followings?: FollowUpdateManyWithoutFollowingNestedInput
+    followings?: FollowUpdateManyWithoutFollowerNestedInput
+    followers?: FollowUpdateManyWithoutFollowingNestedInput
     likes?: LikeUpdateManyWithoutUserNestedInput
     messages?: MessageUpdateManyWithoutSenderNestedInput
     conversations?: ConversationUpdateManyWithoutParticipantsNestedInput
@@ -12029,12 +12071,13 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
     replies?: ReplyUncheckedUpdateManyWithoutUserNestedInput
-    followers?: FollowUncheckedUpdateManyWithoutFollowerNestedInput
-    followings?: FollowUncheckedUpdateManyWithoutFollowingNestedInput
+    followings?: FollowUncheckedUpdateManyWithoutFollowerNestedInput
+    followers?: FollowUncheckedUpdateManyWithoutFollowingNestedInput
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutParticipantsNestedInput
@@ -12052,6 +12095,7 @@ export namespace Prisma {
     avatarImage?: string | null
     coverImage?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -12066,6 +12110,7 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12080,6 +12125,7 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12227,8 +12273,8 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follower: UserCreateNestedOneWithoutFollowersInput
-    following: UserCreateNestedOneWithoutFollowingsInput
+    follower: UserCreateNestedOneWithoutFollowingsInput
+    following: UserCreateNestedOneWithoutFollowersInput
     notifications?: NotificationCreateNestedManyWithoutFollowInput
   }
 
@@ -12245,8 +12291,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follower?: UserUpdateOneRequiredWithoutFollowersNestedInput
-    following?: UserUpdateOneRequiredWithoutFollowingsNestedInput
+    follower?: UserUpdateOneRequiredWithoutFollowingsNestedInput
+    following?: UserUpdateOneRequiredWithoutFollowersNestedInput
     notifications?: NotificationUpdateManyWithoutFollowNestedInput
   }
 
@@ -12409,6 +12455,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    textUpdatedAt?: Date | string | null
     conversation: ConversationCreateNestedOneWithoutMessagesInput
     sender: UserCreateNestedOneWithoutMessagesInput
   }
@@ -12420,6 +12467,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    textUpdatedAt?: Date | string | null
     conversationId: string
     senderId: string
   }
@@ -12431,6 +12479,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    textUpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     conversation?: ConversationUpdateOneRequiredWithoutMessagesNestedInput
     sender?: UserUpdateOneRequiredWithoutMessagesNestedInput
   }
@@ -12442,6 +12491,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    textUpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     conversationId?: StringFieldUpdateOperationsInput | string
     senderId?: StringFieldUpdateOperationsInput | string
   }
@@ -12453,6 +12503,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    textUpdatedAt?: Date | string | null
     conversationId: string
     senderId: string
   }
@@ -12464,6 +12515,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    textUpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type MessageUncheckedUpdateManyInput = {
@@ -12473,6 +12525,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    textUpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     conversationId?: StringFieldUpdateOperationsInput | string
     senderId?: StringFieldUpdateOperationsInput | string
   }
@@ -12696,6 +12749,7 @@ export namespace Prisma {
     avatarImage?: SortOrder
     coverImage?: SortOrder
     bio?: SortOrder
+    googleId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -12710,6 +12764,7 @@ export namespace Prisma {
     avatarImage?: SortOrder
     coverImage?: SortOrder
     bio?: SortOrder
+    googleId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -12724,6 +12779,7 @@ export namespace Prisma {
     avatarImage?: SortOrder
     coverImage?: SortOrder
     bio?: SortOrder
+    googleId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -12789,6 +12845,11 @@ export namespace Prisma {
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
+  }
+
+  export type PostCreatedAtIdCompoundUniqueInput = {
+    createdAt: Date | string
+    id: string
   }
 
   export type PostCountOrderByAggregateInput = {
@@ -13007,6 +13068,17 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type ConversationScalarRelationFilter = {
     is?: ConversationWhereInput
     isNot?: ConversationWhereInput
@@ -13019,6 +13091,7 @@ export namespace Prisma {
     image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    textUpdatedAt?: SortOrder
     conversationId?: SortOrder
     senderId?: SortOrder
   }
@@ -13030,6 +13103,7 @@ export namespace Prisma {
     image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    textUpdatedAt?: SortOrder
     conversationId?: SortOrder
     senderId?: SortOrder
   }
@@ -13041,6 +13115,7 @@ export namespace Prisma {
     image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    textUpdatedAt?: SortOrder
     conversationId?: SortOrder
     senderId?: SortOrder
   }
@@ -13051,6 +13126,20 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type EnumNotificationTypeFilter<$PrismaModel = never> = {
@@ -13727,15 +13816,15 @@ export namespace Prisma {
     deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
-  export type UserCreateNestedOneWithoutFollowersInput = {
-    create?: XOR<UserCreateWithoutFollowersInput, UserUncheckedCreateWithoutFollowersInput>
-    connectOrCreate?: UserCreateOrConnectWithoutFollowersInput
-    connect?: UserWhereUniqueInput
-  }
-
   export type UserCreateNestedOneWithoutFollowingsInput = {
     create?: XOR<UserCreateWithoutFollowingsInput, UserUncheckedCreateWithoutFollowingsInput>
     connectOrCreate?: UserCreateOrConnectWithoutFollowingsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutFollowersInput = {
+    create?: XOR<UserCreateWithoutFollowersInput, UserUncheckedCreateWithoutFollowersInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFollowersInput
     connect?: UserWhereUniqueInput
   }
 
@@ -13753,20 +13842,20 @@ export namespace Prisma {
     connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
-  export type UserUpdateOneRequiredWithoutFollowersNestedInput = {
-    create?: XOR<UserCreateWithoutFollowersInput, UserUncheckedCreateWithoutFollowersInput>
-    connectOrCreate?: UserCreateOrConnectWithoutFollowersInput
-    upsert?: UserUpsertWithoutFollowersInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFollowersInput, UserUpdateWithoutFollowersInput>, UserUncheckedUpdateWithoutFollowersInput>
-  }
-
   export type UserUpdateOneRequiredWithoutFollowingsNestedInput = {
     create?: XOR<UserCreateWithoutFollowingsInput, UserUncheckedCreateWithoutFollowingsInput>
     connectOrCreate?: UserCreateOrConnectWithoutFollowingsInput
     upsert?: UserUpsertWithoutFollowingsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFollowingsInput, UserUpdateWithoutFollowingsInput>, UserUncheckedUpdateWithoutFollowingsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutFollowersNestedInput = {
+    create?: XOR<UserCreateWithoutFollowersInput, UserUncheckedCreateWithoutFollowersInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFollowersInput
+    upsert?: UserUpsertWithoutFollowersInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFollowersInput, UserUpdateWithoutFollowersInput>, UserUncheckedUpdateWithoutFollowersInput>
   }
 
   export type NotificationUpdateManyWithoutFollowNestedInput = {
@@ -13979,6 +14068,10 @@ export namespace Prisma {
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type ConversationUpdateOneRequiredWithoutMessagesNestedInput = {
@@ -14214,12 +14307,37 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumNotificationTypeFilter<$PrismaModel = never> = {
@@ -14303,7 +14421,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    following: UserCreateNestedOneWithoutFollowingsInput
+    following: UserCreateNestedOneWithoutFollowersInput
     notifications?: NotificationCreateNestedManyWithoutFollowInput
   }
 
@@ -14329,7 +14447,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follower: UserCreateNestedOneWithoutFollowersInput
+    follower: UserCreateNestedOneWithoutFollowingsInput
     notifications?: NotificationCreateNestedManyWithoutFollowInput
   }
 
@@ -14386,6 +14504,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    textUpdatedAt?: Date | string | null
     conversation: ConversationCreateNestedOneWithoutMessagesInput
   }
 
@@ -14396,6 +14515,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    textUpdatedAt?: Date | string | null
     conversationId: string
   }
 
@@ -14655,6 +14775,7 @@ export namespace Prisma {
     image?: StringNullableFilter<"Message"> | string | null
     createdAt?: DateTimeFilter<"Message"> | Date | string
     updatedAt?: DateTimeFilter<"Message"> | Date | string
+    textUpdatedAt?: DateTimeNullableFilter<"Message"> | Date | string | null
     conversationId?: StringFilter<"Message"> | string
     senderId?: StringFilter<"Message"> | string
   }
@@ -14744,11 +14865,12 @@ export namespace Prisma {
     avatarImage?: string | null
     coverImage?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     replies?: ReplyCreateNestedManyWithoutUserInput
-    followers?: FollowCreateNestedManyWithoutFollowerInput
-    followings?: FollowCreateNestedManyWithoutFollowingInput
+    followings?: FollowCreateNestedManyWithoutFollowerInput
+    followers?: FollowCreateNestedManyWithoutFollowingInput
     likes?: LikeCreateNestedManyWithoutUserInput
     messages?: MessageCreateNestedManyWithoutSenderInput
     conversations?: ConversationCreateNestedManyWithoutParticipantsInput
@@ -14766,11 +14888,12 @@ export namespace Prisma {
     avatarImage?: string | null
     coverImage?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     replies?: ReplyUncheckedCreateNestedManyWithoutUserInput
-    followers?: FollowUncheckedCreateNestedManyWithoutFollowerInput
-    followings?: FollowUncheckedCreateNestedManyWithoutFollowingInput
+    followings?: FollowUncheckedCreateNestedManyWithoutFollowerInput
+    followers?: FollowUncheckedCreateNestedManyWithoutFollowingInput
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutParticipantsInput
@@ -14862,11 +14985,12 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     replies?: ReplyUpdateManyWithoutUserNestedInput
-    followers?: FollowUpdateManyWithoutFollowerNestedInput
-    followings?: FollowUpdateManyWithoutFollowingNestedInput
+    followings?: FollowUpdateManyWithoutFollowerNestedInput
+    followers?: FollowUpdateManyWithoutFollowingNestedInput
     likes?: LikeUpdateManyWithoutUserNestedInput
     messages?: MessageUpdateManyWithoutSenderNestedInput
     conversations?: ConversationUpdateManyWithoutParticipantsNestedInput
@@ -14884,11 +15008,12 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     replies?: ReplyUncheckedUpdateManyWithoutUserNestedInput
-    followers?: FollowUncheckedUpdateManyWithoutFollowerNestedInput
-    followings?: FollowUncheckedUpdateManyWithoutFollowingNestedInput
+    followings?: FollowUncheckedUpdateManyWithoutFollowerNestedInput
+    followers?: FollowUncheckedUpdateManyWithoutFollowingNestedInput
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutParticipantsNestedInput
@@ -14938,11 +15063,12 @@ export namespace Prisma {
     avatarImage?: string | null
     coverImage?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostCreateNestedManyWithoutUserInput
-    followers?: FollowCreateNestedManyWithoutFollowerInput
-    followings?: FollowCreateNestedManyWithoutFollowingInput
+    followings?: FollowCreateNestedManyWithoutFollowerInput
+    followers?: FollowCreateNestedManyWithoutFollowingInput
     likes?: LikeCreateNestedManyWithoutUserInput
     messages?: MessageCreateNestedManyWithoutSenderInput
     conversations?: ConversationCreateNestedManyWithoutParticipantsInput
@@ -14960,11 +15086,12 @@ export namespace Prisma {
     avatarImage?: string | null
     coverImage?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
-    followers?: FollowUncheckedCreateNestedManyWithoutFollowerInput
-    followings?: FollowUncheckedCreateNestedManyWithoutFollowingInput
+    followings?: FollowUncheckedCreateNestedManyWithoutFollowerInput
+    followers?: FollowUncheckedCreateNestedManyWithoutFollowingInput
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutParticipantsInput
@@ -15087,11 +15214,12 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutUserNestedInput
-    followers?: FollowUpdateManyWithoutFollowerNestedInput
-    followings?: FollowUpdateManyWithoutFollowingNestedInput
+    followings?: FollowUpdateManyWithoutFollowerNestedInput
+    followers?: FollowUpdateManyWithoutFollowingNestedInput
     likes?: LikeUpdateManyWithoutUserNestedInput
     messages?: MessageUpdateManyWithoutSenderNestedInput
     conversations?: ConversationUpdateManyWithoutParticipantsNestedInput
@@ -15109,11 +15237,12 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
-    followers?: FollowUncheckedUpdateManyWithoutFollowerNestedInput
-    followings?: FollowUncheckedUpdateManyWithoutFollowingNestedInput
+    followings?: FollowUncheckedUpdateManyWithoutFollowerNestedInput
+    followers?: FollowUncheckedUpdateManyWithoutFollowingNestedInput
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutParticipantsNestedInput
@@ -15184,55 +15313,6 @@ export namespace Prisma {
     data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutReplyInput>
   }
 
-  export type UserCreateWithoutFollowersInput = {
-    id?: string
-    firstName: string
-    lastName: string
-    username: string
-    email: string
-    password: string
-    avatarImage?: string | null
-    coverImage?: string | null
-    bio?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: PostCreateNestedManyWithoutUserInput
-    replies?: ReplyCreateNestedManyWithoutUserInput
-    followings?: FollowCreateNestedManyWithoutFollowingInput
-    likes?: LikeCreateNestedManyWithoutUserInput
-    messages?: MessageCreateNestedManyWithoutSenderInput
-    conversations?: ConversationCreateNestedManyWithoutParticipantsInput
-    notificationsSent?: NotificationCreateNestedManyWithoutSenderInput
-    notificationsReceived?: NotificationCreateNestedManyWithoutRecipientInput
-  }
-
-  export type UserUncheckedCreateWithoutFollowersInput = {
-    id?: string
-    firstName: string
-    lastName: string
-    username: string
-    email: string
-    password: string
-    avatarImage?: string | null
-    coverImage?: string | null
-    bio?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: PostUncheckedCreateNestedManyWithoutUserInput
-    replies?: ReplyUncheckedCreateNestedManyWithoutUserInput
-    followings?: FollowUncheckedCreateNestedManyWithoutFollowingInput
-    likes?: LikeUncheckedCreateNestedManyWithoutUserInput
-    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
-    conversations?: ConversationUncheckedCreateNestedManyWithoutParticipantsInput
-    notificationsSent?: NotificationUncheckedCreateNestedManyWithoutSenderInput
-    notificationsReceived?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
-  }
-
-  export type UserCreateOrConnectWithoutFollowersInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutFollowersInput, UserUncheckedCreateWithoutFollowersInput>
-  }
-
   export type UserCreateWithoutFollowingsInput = {
     id?: string
     firstName: string
@@ -15243,11 +15323,12 @@ export namespace Prisma {
     avatarImage?: string | null
     coverImage?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostCreateNestedManyWithoutUserInput
     replies?: ReplyCreateNestedManyWithoutUserInput
-    followers?: FollowCreateNestedManyWithoutFollowerInput
+    followers?: FollowCreateNestedManyWithoutFollowingInput
     likes?: LikeCreateNestedManyWithoutUserInput
     messages?: MessageCreateNestedManyWithoutSenderInput
     conversations?: ConversationCreateNestedManyWithoutParticipantsInput
@@ -15265,11 +15346,12 @@ export namespace Prisma {
     avatarImage?: string | null
     coverImage?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
     replies?: ReplyUncheckedCreateNestedManyWithoutUserInput
-    followers?: FollowUncheckedCreateNestedManyWithoutFollowerInput
+    followers?: FollowUncheckedCreateNestedManyWithoutFollowingInput
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutParticipantsInput
@@ -15280,6 +15362,57 @@ export namespace Prisma {
   export type UserCreateOrConnectWithoutFollowingsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutFollowingsInput, UserUncheckedCreateWithoutFollowingsInput>
+  }
+
+  export type UserCreateWithoutFollowersInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    username: string
+    email: string
+    password: string
+    avatarImage?: string | null
+    coverImage?: string | null
+    bio?: string | null
+    googleId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: PostCreateNestedManyWithoutUserInput
+    replies?: ReplyCreateNestedManyWithoutUserInput
+    followings?: FollowCreateNestedManyWithoutFollowerInput
+    likes?: LikeCreateNestedManyWithoutUserInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
+    conversations?: ConversationCreateNestedManyWithoutParticipantsInput
+    notificationsSent?: NotificationCreateNestedManyWithoutSenderInput
+    notificationsReceived?: NotificationCreateNestedManyWithoutRecipientInput
+  }
+
+  export type UserUncheckedCreateWithoutFollowersInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    username: string
+    email: string
+    password: string
+    avatarImage?: string | null
+    coverImage?: string | null
+    bio?: string | null
+    googleId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: PostUncheckedCreateNestedManyWithoutUserInput
+    replies?: ReplyUncheckedCreateNestedManyWithoutUserInput
+    followings?: FollowUncheckedCreateNestedManyWithoutFollowerInput
+    likes?: LikeUncheckedCreateNestedManyWithoutUserInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutParticipantsInput
+    notificationsSent?: NotificationUncheckedCreateNestedManyWithoutSenderInput
+    notificationsReceived?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  }
+
+  export type UserCreateOrConnectWithoutFollowersInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutFollowersInput, UserUncheckedCreateWithoutFollowersInput>
   }
 
   export type NotificationCreateWithoutFollowInput = {
@@ -15318,61 +15451,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type UserUpsertWithoutFollowersInput = {
-    update: XOR<UserUpdateWithoutFollowersInput, UserUncheckedUpdateWithoutFollowersInput>
-    create: XOR<UserCreateWithoutFollowersInput, UserUncheckedCreateWithoutFollowersInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutFollowersInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutFollowersInput, UserUncheckedUpdateWithoutFollowersInput>
-  }
-
-  export type UserUpdateWithoutFollowersInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
-    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: PostUpdateManyWithoutUserNestedInput
-    replies?: ReplyUpdateManyWithoutUserNestedInput
-    followings?: FollowUpdateManyWithoutFollowingNestedInput
-    likes?: LikeUpdateManyWithoutUserNestedInput
-    messages?: MessageUpdateManyWithoutSenderNestedInput
-    conversations?: ConversationUpdateManyWithoutParticipantsNestedInput
-    notificationsSent?: NotificationUpdateManyWithoutSenderNestedInput
-    notificationsReceived?: NotificationUpdateManyWithoutRecipientNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutFollowersInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
-    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: PostUncheckedUpdateManyWithoutUserNestedInput
-    replies?: ReplyUncheckedUpdateManyWithoutUserNestedInput
-    followings?: FollowUncheckedUpdateManyWithoutFollowingNestedInput
-    likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
-    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
-    conversations?: ConversationUncheckedUpdateManyWithoutParticipantsNestedInput
-    notificationsSent?: NotificationUncheckedUpdateManyWithoutSenderNestedInput
-    notificationsReceived?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
-  }
-
   export type UserUpsertWithoutFollowingsInput = {
     update: XOR<UserUpdateWithoutFollowingsInput, UserUncheckedUpdateWithoutFollowingsInput>
     create: XOR<UserCreateWithoutFollowingsInput, UserUncheckedCreateWithoutFollowingsInput>
@@ -15394,11 +15472,12 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutUserNestedInput
     replies?: ReplyUpdateManyWithoutUserNestedInput
-    followers?: FollowUpdateManyWithoutFollowerNestedInput
+    followers?: FollowUpdateManyWithoutFollowingNestedInput
     likes?: LikeUpdateManyWithoutUserNestedInput
     messages?: MessageUpdateManyWithoutSenderNestedInput
     conversations?: ConversationUpdateManyWithoutParticipantsNestedInput
@@ -15416,11 +15495,69 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
     replies?: ReplyUncheckedUpdateManyWithoutUserNestedInput
-    followers?: FollowUncheckedUpdateManyWithoutFollowerNestedInput
+    followers?: FollowUncheckedUpdateManyWithoutFollowingNestedInput
+    likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutParticipantsNestedInput
+    notificationsSent?: NotificationUncheckedUpdateManyWithoutSenderNestedInput
+    notificationsReceived?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  }
+
+  export type UserUpsertWithoutFollowersInput = {
+    update: XOR<UserUpdateWithoutFollowersInput, UserUncheckedUpdateWithoutFollowersInput>
+    create: XOR<UserCreateWithoutFollowersInput, UserUncheckedCreateWithoutFollowersInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutFollowersInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutFollowersInput, UserUncheckedUpdateWithoutFollowersInput>
+  }
+
+  export type UserUpdateWithoutFollowersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUpdateManyWithoutUserNestedInput
+    replies?: ReplyUpdateManyWithoutUserNestedInput
+    followings?: FollowUpdateManyWithoutFollowerNestedInput
+    likes?: LikeUpdateManyWithoutUserNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
+    conversations?: ConversationUpdateManyWithoutParticipantsNestedInput
+    notificationsSent?: NotificationUpdateManyWithoutSenderNestedInput
+    notificationsReceived?: NotificationUpdateManyWithoutRecipientNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutFollowersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUncheckedUpdateManyWithoutUserNestedInput
+    replies?: ReplyUncheckedUpdateManyWithoutUserNestedInput
+    followings?: FollowUncheckedUpdateManyWithoutFollowerNestedInput
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutParticipantsNestedInput
@@ -15454,12 +15591,13 @@ export namespace Prisma {
     avatarImage?: string | null
     coverImage?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostCreateNestedManyWithoutUserInput
     replies?: ReplyCreateNestedManyWithoutUserInput
-    followers?: FollowCreateNestedManyWithoutFollowerInput
-    followings?: FollowCreateNestedManyWithoutFollowingInput
+    followings?: FollowCreateNestedManyWithoutFollowerInput
+    followers?: FollowCreateNestedManyWithoutFollowingInput
     messages?: MessageCreateNestedManyWithoutSenderInput
     conversations?: ConversationCreateNestedManyWithoutParticipantsInput
     notificationsSent?: NotificationCreateNestedManyWithoutSenderInput
@@ -15476,12 +15614,13 @@ export namespace Prisma {
     avatarImage?: string | null
     coverImage?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
     replies?: ReplyUncheckedCreateNestedManyWithoutUserInput
-    followers?: FollowUncheckedCreateNestedManyWithoutFollowerInput
-    followings?: FollowUncheckedCreateNestedManyWithoutFollowingInput
+    followings?: FollowUncheckedCreateNestedManyWithoutFollowerInput
+    followers?: FollowUncheckedCreateNestedManyWithoutFollowingInput
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutParticipantsInput
     notificationsSent?: NotificationUncheckedCreateNestedManyWithoutSenderInput
@@ -15600,12 +15739,13 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutUserNestedInput
     replies?: ReplyUpdateManyWithoutUserNestedInput
-    followers?: FollowUpdateManyWithoutFollowerNestedInput
-    followings?: FollowUpdateManyWithoutFollowingNestedInput
+    followings?: FollowUpdateManyWithoutFollowerNestedInput
+    followers?: FollowUpdateManyWithoutFollowingNestedInput
     messages?: MessageUpdateManyWithoutSenderNestedInput
     conversations?: ConversationUpdateManyWithoutParticipantsNestedInput
     notificationsSent?: NotificationUpdateManyWithoutSenderNestedInput
@@ -15622,12 +15762,13 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
     replies?: ReplyUncheckedUpdateManyWithoutUserNestedInput
-    followers?: FollowUncheckedUpdateManyWithoutFollowerNestedInput
-    followings?: FollowUncheckedUpdateManyWithoutFollowingNestedInput
+    followings?: FollowUncheckedUpdateManyWithoutFollowerNestedInput
+    followers?: FollowUncheckedUpdateManyWithoutFollowingNestedInput
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutParticipantsNestedInput
     notificationsSent?: NotificationUncheckedUpdateManyWithoutSenderNestedInput
@@ -15722,12 +15863,13 @@ export namespace Prisma {
     avatarImage?: string | null
     coverImage?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostCreateNestedManyWithoutUserInput
     replies?: ReplyCreateNestedManyWithoutUserInput
-    followers?: FollowCreateNestedManyWithoutFollowerInput
-    followings?: FollowCreateNestedManyWithoutFollowingInput
+    followings?: FollowCreateNestedManyWithoutFollowerInput
+    followers?: FollowCreateNestedManyWithoutFollowingInput
     likes?: LikeCreateNestedManyWithoutUserInput
     messages?: MessageCreateNestedManyWithoutSenderInput
     notificationsSent?: NotificationCreateNestedManyWithoutSenderInput
@@ -15744,12 +15886,13 @@ export namespace Prisma {
     avatarImage?: string | null
     coverImage?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
     replies?: ReplyUncheckedCreateNestedManyWithoutUserInput
-    followers?: FollowUncheckedCreateNestedManyWithoutFollowerInput
-    followings?: FollowUncheckedCreateNestedManyWithoutFollowingInput
+    followings?: FollowUncheckedCreateNestedManyWithoutFollowerInput
+    followers?: FollowUncheckedCreateNestedManyWithoutFollowingInput
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     notificationsSent?: NotificationUncheckedCreateNestedManyWithoutSenderInput
@@ -15768,6 +15911,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    textUpdatedAt?: Date | string | null
     sender: UserCreateNestedOneWithoutMessagesInput
   }
 
@@ -15778,6 +15922,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    textUpdatedAt?: Date | string | null
     senderId: string
   }
 
@@ -15820,6 +15965,7 @@ export namespace Prisma {
     avatarImage?: StringNullableFilter<"User"> | string | null
     coverImage?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
+    googleId?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
   }
@@ -15871,12 +16017,13 @@ export namespace Prisma {
     avatarImage?: string | null
     coverImage?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostCreateNestedManyWithoutUserInput
     replies?: ReplyCreateNestedManyWithoutUserInput
-    followers?: FollowCreateNestedManyWithoutFollowerInput
-    followings?: FollowCreateNestedManyWithoutFollowingInput
+    followings?: FollowCreateNestedManyWithoutFollowerInput
+    followers?: FollowCreateNestedManyWithoutFollowingInput
     likes?: LikeCreateNestedManyWithoutUserInput
     conversations?: ConversationCreateNestedManyWithoutParticipantsInput
     notificationsSent?: NotificationCreateNestedManyWithoutSenderInput
@@ -15893,12 +16040,13 @@ export namespace Prisma {
     avatarImage?: string | null
     coverImage?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
     replies?: ReplyUncheckedCreateNestedManyWithoutUserInput
-    followers?: FollowUncheckedCreateNestedManyWithoutFollowerInput
-    followings?: FollowUncheckedCreateNestedManyWithoutFollowingInput
+    followings?: FollowUncheckedCreateNestedManyWithoutFollowerInput
+    followers?: FollowUncheckedCreateNestedManyWithoutFollowingInput
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutParticipantsInput
     notificationsSent?: NotificationUncheckedCreateNestedManyWithoutSenderInput
@@ -15958,12 +16106,13 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutUserNestedInput
     replies?: ReplyUpdateManyWithoutUserNestedInput
-    followers?: FollowUpdateManyWithoutFollowerNestedInput
-    followings?: FollowUpdateManyWithoutFollowingNestedInput
+    followings?: FollowUpdateManyWithoutFollowerNestedInput
+    followers?: FollowUpdateManyWithoutFollowingNestedInput
     likes?: LikeUpdateManyWithoutUserNestedInput
     conversations?: ConversationUpdateManyWithoutParticipantsNestedInput
     notificationsSent?: NotificationUpdateManyWithoutSenderNestedInput
@@ -15980,12 +16129,13 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
     replies?: ReplyUncheckedUpdateManyWithoutUserNestedInput
-    followers?: FollowUncheckedUpdateManyWithoutFollowerNestedInput
-    followings?: FollowUncheckedUpdateManyWithoutFollowingNestedInput
+    followings?: FollowUncheckedUpdateManyWithoutFollowerNestedInput
+    followers?: FollowUncheckedUpdateManyWithoutFollowingNestedInput
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutParticipantsNestedInput
     notificationsSent?: NotificationUncheckedUpdateManyWithoutSenderNestedInput
@@ -16002,12 +16152,13 @@ export namespace Prisma {
     avatarImage?: string | null
     coverImage?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostCreateNestedManyWithoutUserInput
     replies?: ReplyCreateNestedManyWithoutUserInput
-    followers?: FollowCreateNestedManyWithoutFollowerInput
-    followings?: FollowCreateNestedManyWithoutFollowingInput
+    followings?: FollowCreateNestedManyWithoutFollowerInput
+    followers?: FollowCreateNestedManyWithoutFollowingInput
     likes?: LikeCreateNestedManyWithoutUserInput
     messages?: MessageCreateNestedManyWithoutSenderInput
     conversations?: ConversationCreateNestedManyWithoutParticipantsInput
@@ -16024,12 +16175,13 @@ export namespace Prisma {
     avatarImage?: string | null
     coverImage?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
     replies?: ReplyUncheckedCreateNestedManyWithoutUserInput
-    followers?: FollowUncheckedCreateNestedManyWithoutFollowerInput
-    followings?: FollowUncheckedCreateNestedManyWithoutFollowingInput
+    followings?: FollowUncheckedCreateNestedManyWithoutFollowerInput
+    followers?: FollowUncheckedCreateNestedManyWithoutFollowingInput
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutParticipantsInput
@@ -16051,12 +16203,13 @@ export namespace Prisma {
     avatarImage?: string | null
     coverImage?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostCreateNestedManyWithoutUserInput
     replies?: ReplyCreateNestedManyWithoutUserInput
-    followers?: FollowCreateNestedManyWithoutFollowerInput
-    followings?: FollowCreateNestedManyWithoutFollowingInput
+    followings?: FollowCreateNestedManyWithoutFollowerInput
+    followers?: FollowCreateNestedManyWithoutFollowingInput
     likes?: LikeCreateNestedManyWithoutUserInput
     messages?: MessageCreateNestedManyWithoutSenderInput
     conversations?: ConversationCreateNestedManyWithoutParticipantsInput
@@ -16073,12 +16226,13 @@ export namespace Prisma {
     avatarImage?: string | null
     coverImage?: string | null
     bio?: string | null
+    googleId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
     replies?: ReplyUncheckedCreateNestedManyWithoutUserInput
-    followers?: FollowUncheckedCreateNestedManyWithoutFollowerInput
-    followings?: FollowUncheckedCreateNestedManyWithoutFollowingInput
+    followings?: FollowUncheckedCreateNestedManyWithoutFollowerInput
+    followers?: FollowUncheckedCreateNestedManyWithoutFollowingInput
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutParticipantsInput
@@ -16119,8 +16273,8 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follower: UserCreateNestedOneWithoutFollowersInput
-    following: UserCreateNestedOneWithoutFollowingsInput
+    follower: UserCreateNestedOneWithoutFollowingsInput
+    following: UserCreateNestedOneWithoutFollowersInput
   }
 
   export type FollowUncheckedCreateWithoutNotificationsInput = {
@@ -16180,12 +16334,13 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutUserNestedInput
     replies?: ReplyUpdateManyWithoutUserNestedInput
-    followers?: FollowUpdateManyWithoutFollowerNestedInput
-    followings?: FollowUpdateManyWithoutFollowingNestedInput
+    followings?: FollowUpdateManyWithoutFollowerNestedInput
+    followers?: FollowUpdateManyWithoutFollowingNestedInput
     likes?: LikeUpdateManyWithoutUserNestedInput
     messages?: MessageUpdateManyWithoutSenderNestedInput
     conversations?: ConversationUpdateManyWithoutParticipantsNestedInput
@@ -16202,12 +16357,13 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
     replies?: ReplyUncheckedUpdateManyWithoutUserNestedInput
-    followers?: FollowUncheckedUpdateManyWithoutFollowerNestedInput
-    followings?: FollowUncheckedUpdateManyWithoutFollowingNestedInput
+    followings?: FollowUncheckedUpdateManyWithoutFollowerNestedInput
+    followers?: FollowUncheckedUpdateManyWithoutFollowingNestedInput
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutParticipantsNestedInput
@@ -16235,12 +16391,13 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutUserNestedInput
     replies?: ReplyUpdateManyWithoutUserNestedInput
-    followers?: FollowUpdateManyWithoutFollowerNestedInput
-    followings?: FollowUpdateManyWithoutFollowingNestedInput
+    followings?: FollowUpdateManyWithoutFollowerNestedInput
+    followers?: FollowUpdateManyWithoutFollowingNestedInput
     likes?: LikeUpdateManyWithoutUserNestedInput
     messages?: MessageUpdateManyWithoutSenderNestedInput
     conversations?: ConversationUpdateManyWithoutParticipantsNestedInput
@@ -16257,12 +16414,13 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
     replies?: ReplyUncheckedUpdateManyWithoutUserNestedInput
-    followers?: FollowUncheckedUpdateManyWithoutFollowerNestedInput
-    followings?: FollowUncheckedUpdateManyWithoutFollowingNestedInput
+    followings?: FollowUncheckedUpdateManyWithoutFollowerNestedInput
+    followers?: FollowUncheckedUpdateManyWithoutFollowingNestedInput
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutParticipantsNestedInput
@@ -16315,8 +16473,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follower?: UserUpdateOneRequiredWithoutFollowersNestedInput
-    following?: UserUpdateOneRequiredWithoutFollowingsNestedInput
+    follower?: UserUpdateOneRequiredWithoutFollowingsNestedInput
+    following?: UserUpdateOneRequiredWithoutFollowersNestedInput
   }
 
   export type FollowUncheckedUpdateWithoutNotificationsInput = {
@@ -16401,6 +16559,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    textUpdatedAt?: Date | string | null
     conversationId: string
   }
 
@@ -16490,7 +16649,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    following?: UserUpdateOneRequiredWithoutFollowingsNestedInput
+    following?: UserUpdateOneRequiredWithoutFollowersNestedInput
     notifications?: NotificationUpdateManyWithoutFollowNestedInput
   }
 
@@ -16513,7 +16672,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follower?: UserUpdateOneRequiredWithoutFollowersNestedInput
+    follower?: UserUpdateOneRequiredWithoutFollowingsNestedInput
     notifications?: NotificationUpdateManyWithoutFollowNestedInput
   }
 
@@ -16565,6 +16724,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    textUpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     conversation?: ConversationUpdateOneRequiredWithoutMessagesNestedInput
   }
 
@@ -16575,6 +16735,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    textUpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     conversationId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -16585,6 +16746,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    textUpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     conversationId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -16956,6 +17118,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    textUpdatedAt?: Date | string | null
     senderId: string
   }
 
@@ -16969,12 +17132,13 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutUserNestedInput
     replies?: ReplyUpdateManyWithoutUserNestedInput
-    followers?: FollowUpdateManyWithoutFollowerNestedInput
-    followings?: FollowUpdateManyWithoutFollowingNestedInput
+    followings?: FollowUpdateManyWithoutFollowerNestedInput
+    followers?: FollowUpdateManyWithoutFollowingNestedInput
     likes?: LikeUpdateManyWithoutUserNestedInput
     messages?: MessageUpdateManyWithoutSenderNestedInput
     notificationsSent?: NotificationUpdateManyWithoutSenderNestedInput
@@ -16991,12 +17155,13 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
     replies?: ReplyUncheckedUpdateManyWithoutUserNestedInput
-    followers?: FollowUncheckedUpdateManyWithoutFollowerNestedInput
-    followings?: FollowUncheckedUpdateManyWithoutFollowingNestedInput
+    followings?: FollowUncheckedUpdateManyWithoutFollowerNestedInput
+    followers?: FollowUncheckedUpdateManyWithoutFollowingNestedInput
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     notificationsSent?: NotificationUncheckedUpdateManyWithoutSenderNestedInput
@@ -17013,6 +17178,7 @@ export namespace Prisma {
     avatarImage?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17024,6 +17190,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    textUpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sender?: UserUpdateOneRequiredWithoutMessagesNestedInput
   }
 
@@ -17034,6 +17201,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    textUpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     senderId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -17044,6 +17212,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    textUpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     senderId?: StringFieldUpdateOperationsInput | string
   }
 

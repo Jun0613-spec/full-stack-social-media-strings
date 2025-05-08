@@ -19,6 +19,7 @@ import ProfilePage from "./pages/main/Profile";
 import GoogleAuthSuccess from "./pages/auth/GoogleAuthSuccess";
 import SettingsPage from "./pages/main/Settings";
 import PostDetailPage from "./pages/main/PostDetail";
+import MessagePage from "./pages/main/Message";
 
 function App() {
   useAuth();
@@ -55,6 +56,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
+          <Route path="/messages" element={<MessagePage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/profile/:username" element={<ProfilePage />} />
           <Route path="/:username/post/:postId" element={<PostDetailPage />} />

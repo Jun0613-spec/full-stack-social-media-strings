@@ -93,7 +93,7 @@ export const getFollowingsFeed = async (
     return;
   }
 
-  const take = 10;
+  const take = 5;
 
   try {
     const posts = await prisma.post.findMany({
@@ -174,7 +174,7 @@ export const getForYouFeed = async (
   const { cursor } = req.query;
   const userId = req.userId;
 
-  const take = 10;
+  const take = 5;
 
   try {
     const posts = await prisma.post.findMany({

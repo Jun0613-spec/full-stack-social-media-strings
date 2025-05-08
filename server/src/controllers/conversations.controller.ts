@@ -28,12 +28,34 @@ export const getUserConversations = async (
       },
       include: {
         participants: {
+          where: {
+            id: {
+              not: userId
+            }
+          },
           select: {
             id: true,
             username: true,
             firstName: true,
             lastName: true,
             avatarImage: true
+          }
+        },
+        messages: {
+          take: 1,
+          orderBy: {
+            createdAt: "desc"
+          },
+          include: {
+            sender: {
+              select: {
+                id: true,
+                username: true,
+                firstName: true,
+                lastName: true,
+                avatarImage: true
+              }
+            }
           }
         }
       }
@@ -55,8 +77,12 @@ export const getUserConversations = async (
             image: lastMessage.image,
             sender: (
               await prisma.user.findUnique({
-                where: { id: lastMessage.senderId },
-                select: { username: true }
+                where: {
+                  id: lastMessage.senderId
+                },
+                select: {
+                  username: true
+                }
               })
             )?.username
           }
@@ -95,27 +121,17 @@ export const getConversationById = async (
       },
       include: {
         participants: {
+          where: {
+            id: {
+              not: userId
+            }
+          },
           select: {
             id: true,
             username: true,
             firstName: true,
             lastName: true,
             avatarImage: true
-          }
-        },
-        messages: {
-          orderBy: {
-            createdAt: "asc"
-          },
-          take: 50,
-          include: {
-            sender: {
-              select: {
-                id: true,
-                username: true,
-                avatarImage: true
-              }
-            }
           }
         }
       }
@@ -152,16 +168,18 @@ export const createConversation = async (
   }
 
   if (participantId === userId) {
-    res
-      .status(400)
-      .json({ message: "Cannot create conversation with yourself" });
+    res.status(400).json({ message: "You can't send message to yourself" });
     return;
   }
 
   try {
     const participant = await prisma.user.findUnique({
-      where: { id: participantId },
-      select: { id: true }
+      where: {
+        id: participantId
+      },
+      select: {
+        id: true
+      }
     });
 
     if (!participant) {

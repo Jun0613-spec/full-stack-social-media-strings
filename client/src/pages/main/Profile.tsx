@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useState } from "react";
 import { FiCalendar } from "react-icons/fi";
+import { LuSend } from "react-icons/lu";
 
 import Header from "@/components/Header";
 import UserAvatar from "@/components/UserAvatar";
@@ -18,6 +19,7 @@ import { useGetFollowingUsers } from "@/hooks/users/useGetFollowings";
 import { useToggleFollowUser } from "@/hooks/users/useToggleFollowUser";
 import { useGetUserPosts } from "@/hooks/posts/useGetUserPosts";
 import { useGetUserReplies } from "@/hooks/replies/useGetUserReplies";
+import { useCreateConversation } from "@/hooks/conversations/useCreateConversation";
 
 import { useAuthStore } from "@/stores/authStore";
 import { useEditUserModalStore } from "@/stores/modals/modalStore";
@@ -46,7 +48,9 @@ const ProfilePage = () => {
     refetch: refetchUserReplies
   } = useGetUserReplies(username as string);
   const { data: followingsUsers } = useGetFollowingUsers();
+
   const { mutate: toggleFollow } = useToggleFollowUser();
+  const { mutate: createConversation } = useCreateConversation();
 
   if (!data?.user) return null;
 
@@ -62,6 +66,10 @@ const ProfilePage = () => {
 
   const isFollowing = (userId: string) => {
     return followings.some((user: User) => user.id === userId);
+  };
+
+  const handleCreateConversation = (userId: string) => {
+    createConversation({ participantId: userId });
   };
 
   return (
@@ -97,14 +105,24 @@ const ProfilePage = () => {
                   Edit Profile
                 </Button>
               ) : (
-                <Button
-                  size="md"
-                  variant={isFollowing(user.id) ? "outline" : "primary"}
-                  onClick={() => toggleFollow(user.id)}
-                  className="rounded-full py-1 font-bold"
-                >
-                  {isFollowing(user.id) ? "Following" : "Follow"}
-                </Button>
+                <div className="flex itesm-center gap-2">
+                  <Button
+                    onClick={() => handleCreateConversation(user.id)}
+                    variant="muted"
+                    size="icon"
+                    className="flex items-center"
+                  >
+                    <LuSend className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    size="md"
+                    variant={isFollowing(user.id) ? "outline" : "primary"}
+                    onClick={() => toggleFollow(user.id)}
+                    className="rounded-full py-1 font-bold"
+                  >
+                    {isFollowing(user.id) ? "Following" : "Follow"}
+                  </Button>
+                </div>
               )}
             </div>
           </div>
@@ -187,7 +205,7 @@ const ProfilePage = () => {
               <p className="text-center text-neutral-500 dark:text-neutral-400 mt-10">
                 {currentUser?.id === user.id
                   ? "You haven't replied to any posts yet."
-                  : `${user.firstName} hasn't replied to any posts yet`}
+                  : `${user.firstName} ${user.lastName} hasn't replied to any posts yet`}
               </p>
             ) : (
               <InfiniteScroll

@@ -13,13 +13,15 @@ import { useTheme } from "@/providers/theme-provider";
 interface EmojiSelectorProps {
   onEmojiClick: (emojiData: EmojiClickData) => void;
   emojiStyle?: EmojiStyle;
-  align?: "left" | "right";
+  verticalAlign?: "top" | "bottom";
+  horizontalAlign?: "left" | "right";
 }
 
 const EmojiSelector = ({
   onEmojiClick,
   emojiStyle = EmojiStyle.TWITTER,
-  align = "left"
+  horizontalAlign = "left",
+  verticalAlign = "bottom"
 }: EmojiSelectorProps) => {
   const { theme } = useTheme();
 
@@ -47,8 +49,9 @@ const EmojiSelector = ({
       {open && (
         <div
           className={cn(
-            "absolute top-6 z-50",
-            align === "right" ? "right-0" : "left-0"
+            "absolute z-50",
+            horizontalAlign === "right" ? "right-0" : "left-0",
+            verticalAlign === "top" ? "top-6" : "bottom-6"
           )}
         >
           <EmojiPicker

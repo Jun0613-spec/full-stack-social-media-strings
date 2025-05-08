@@ -200,7 +200,11 @@ const EditReplyModal = () => {
 
             <div className="flex items-center justify-between pt-4">
               <div className="flex gap-4 items-center ml-14">
-                <EmojiSelector onEmojiClick={handleEmojiClick} align="left" />
+                <EmojiSelector
+                  onEmojiClick={handleEmojiClick}
+                  horizontalAlign="left"
+                  verticalAlign="top"
+                />
               </div>
               <div className="flex items-center gap-4">
                 <div

@@ -1,4 +1,4 @@
-import { Post, Reply, User } from "./prismaTypes";
+import { Message, Post, Reply, User } from "./prismaTypes";
 
 export enum NotificationType {
   LIKE_POST = "LIKE_POST",
@@ -71,6 +71,11 @@ export interface UserPostsResponse {
   nextCursor: string | null;
 }
 
+export interface MessagesResponse {
+  messages: Message[];
+  nextCursor: string | null;
+}
+
 export interface PostFormData {
   text: string;
   imageFiles: FileList;
@@ -89,6 +94,18 @@ export interface ReplyFormData {
 
 export interface EditReplyFormData {
   text: string;
+}
+
+export interface MessageFormData {
+  text: string;
+  imageFile: File | null;
+  imageUrl: string | null;
+}
+
+export interface EditMessageFormData {
+  text: string;
+  imageFile: File | null;
+  imageUrl: string | null;
 }
 
 export interface EditUserFormData {

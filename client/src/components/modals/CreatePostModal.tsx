@@ -242,7 +242,11 @@ const CreatePostModal = () => {
                     <FaRegImage className="w-5 h-5 " />
                   </Button>
 
-                  <EmojiSelector onEmojiClick={handleEmojiClick} align="left" />
+                  <EmojiSelector
+                    onEmojiClick={handleEmojiClick}
+                    horizontalAlign="left"
+                    verticalAlign="top"
+                  />
                 </div>
 
                 <div className="flex items-center gap-4">

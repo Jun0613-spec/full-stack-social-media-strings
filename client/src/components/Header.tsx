@@ -3,6 +3,7 @@ import { useLocation, useMatch, useNavigate } from "react-router-dom";
 
 import Button from "./Button";
 import ThemeToggle from "./ThemeToggle";
+
 import { useReplyModalStore } from "@/stores/modals/replies/replyModalStore";
 
 interface HeaderProps {
@@ -27,7 +28,7 @@ const Header = ({ label }: HeaderProps) => {
       <div className="flex items-center gap-2">
         {!isHomePage && (
           <Button onClick={handleBackClick} variant="ghost" size="icon">
-            <FaArrowLeftLong />
+            <FaArrowLeftLong className=" dark:text-neutral-400" />
           </Button>
         )}
 

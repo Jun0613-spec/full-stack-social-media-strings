@@ -10,15 +10,11 @@ export const getMessages = async (
 ): Promise<void> => {
   const userId = req.userId;
   const { conversationId } = req.params;
-  const { cursor } = req.query;
 
   if (!userId) {
     res.status(401).json({ message: "Unauthorized" });
     return;
   }
-
-  const take = 20;
-  const skip = cursor ? parseInt(cursor as string) : 0;
 
   try {
     const conversation = await prisma.conversation.findUnique({
@@ -42,27 +38,15 @@ export const getMessages = async (
         conversationId
       },
       orderBy: {
-        createdAt: "desc"
+        createdAt: "asc"
       },
-      skip,
-      take: take + 1,
       include: {
-        sender: {
-          select: {
-            id: true,
-            username: true,
-            avatarImage: true
-          }
-        }
+        sender: true
       }
     });
 
-    const nextCursor = messages.length > take ? skip + take : null;
-    const resultMessages = messages.slice(0, take).reverse();
-
     res.status(200).json({
-      messages: resultMessages,
-      nextCursor
+      messages
     });
   } catch (error) {
     console.error("getMessages error:", error);
@@ -209,7 +193,8 @@ export const editMessage = async (
       where: { id: messageId },
       data: {
         text: text || existingMessage.text,
-        image: imageUrl
+        image: imageUrl,
+        textUpdatedAt: new Date()
       },
       include: {
         sender: {
