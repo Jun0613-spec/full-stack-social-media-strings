@@ -37,7 +37,9 @@ const getNotificationTargetUrl = (notification: Notification) => {
 
 const NotificationsPage = () => {
   const navigate = useNavigate();
+
   const { openModal: openConfirmModal } = useConfirmModalStore();
+
   const [activeNotification, setActiveNotification] = useState<string | null>(
     null
   );
