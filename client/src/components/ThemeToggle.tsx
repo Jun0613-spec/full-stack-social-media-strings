@@ -1,40 +1,29 @@
 "use client";
 
 import { HiOutlineMoon, HiOutlineSun } from "react-icons/hi2";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 
 import { useTheme } from "../providers/theme-provider";
 
 import Button from "./Button";
 
+import useHandleOutsideClick from "@/hooks/useHandleOutsideClick";
+
 const ThemeToggle = () => {
   const { setTheme } = useTheme();
 
   const [open, setOpen] = useState<boolean>(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useHandleOutsideClick({
+    isOpen: open,
+    onClose: () => setOpen(false)
+  });
 
   const toggleDropdown = () => {
     setOpen((prev) => !prev);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
   return (
-    <div className="relative inline-block text-sm">
+    <div className="relative inline-block text-sm" ref={dropdownRef}>
       <Button
         variant="outline"
         size="icon"
@@ -46,10 +35,7 @@ const ThemeToggle = () => {
       </Button>
 
       {open && (
-        <div
-          ref={dropdownRef}
-          className="absolute bg-white dark:bg-black right-0 mt-2 w-32  shadow-lg rounded-md z-10 border border-neutral-200 dark:border-neutral-800"
-        >
+        <div className="absolute bg-white dark:bg-black right-0 mt-2 w-32  shadow-lg rounded-md z-10 border border-neutral-200 dark:border-neutral-800">
           <div
             onClick={() => {
               setTheme("light");

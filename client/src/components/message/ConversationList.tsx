@@ -31,7 +31,7 @@ const ConversationList = ({
   }
 
   return (
-    <div className="flex-1 overflow-y-auto no-scrollbar ">
+    <div className="flex-1 overflow-y-auto no-scrollbar">
       {conversations.map((conversation) => (
         <ConversationCard
           key={conversation.id}

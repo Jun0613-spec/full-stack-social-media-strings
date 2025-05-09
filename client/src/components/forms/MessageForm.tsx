@@ -74,9 +74,9 @@ const MessageForm = ({ conversationId }: MessageFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="pb-14 md:pb-0 w-full">
+    <form onSubmit={handleSubmit(onSubmit)} className=" pb-14 md:pb-0 w-full">
       {imagePreview && (
-        <div className="relative mb-2 flex items-center justify-center">
+        <div className="relativemb-2 flex items-center justify-center">
           <img
             src={imagePreview}
             alt="Preview"

@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { axiosInstance, handleAxiosError } from "@/lib/axios";
 
-import { Message } from "react-hook-form";
+import { Message } from "@/types/prismaTypes";
 
 export const useGetMessagesByConversationId = (conversationId: string) => {
   return useQuery<{ messages: Message[] }>({

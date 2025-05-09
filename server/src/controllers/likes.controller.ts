@@ -4,6 +4,7 @@ import { NotificationType } from "@prisma/client";
 
 import { prisma } from "../lib/prisma";
 import { getIO } from "../lib/socket";
+import { triggerAsyncId } from "async_hooks";
 
 export const toggleLikePost = async (
   req: Request,
@@ -47,7 +48,8 @@ export const toggleLikePost = async (
         where: {
           senderId: userId,
           recipientId: likedPost.post.userId,
-          type: NotificationType.LIKE_POST
+          type: NotificationType.LIKE_POST,
+          likeId: likedPost.id
         }
       });
 
@@ -90,16 +92,8 @@ export const toggleLikePost = async (
             type: NotificationType.LIKE_POST,
             senderId: userId,
             recipientId: post.userId,
-            message: `${user.username} liked your post.`
-          },
-          include: {
-            sender: {
-              select: {
-                id: true,
-                username: true,
-                avatarImage: true
-              }
-            }
+            message: `${user.username} liked your post.`,
+            likeId: like.id
           }
         });
 
@@ -157,7 +151,8 @@ export const toggleLikeReply = async (
         where: {
           senderId: userId,
           recipientId: likedReply.reply.userId,
-          type: NotificationType.LIKE_REPLY
+          type: NotificationType.LIKE_REPLY,
+          likeId: likedReply.id
         }
       });
 
@@ -172,13 +167,18 @@ export const toggleLikeReply = async (
       });
 
       const user = await prisma.user.findUnique({
-        where: { id: userId },
-        select: { username: true }
+        where: {
+          id: userId
+        }
       });
 
       const reply = await prisma.reply.findUnique({
-        where: { id: replyId },
-        select: { userId: true }
+        where: {
+          id: replyId
+        },
+        include: {
+          user: true
+        }
       });
 
       if (!user || !reply) {
@@ -192,16 +192,8 @@ export const toggleLikeReply = async (
             type: NotificationType.LIKE_REPLY,
             senderId: userId,
             recipientId: reply.userId,
-            message: `${user.username} liked your reply.`
-          },
-          include: {
-            sender: {
-              select: {
-                id: true,
-                username: true,
-                avatarImage: true
-              }
-            }
+            message: `${user.username} liked your reply.`,
+            likeId: like.id
           }
         });
 

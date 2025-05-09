@@ -65,7 +65,7 @@ const UserButton = () => {
 
       {/* Dropdown Menu */}
       {isDropdownOpen && (
-        <div className="absolute bottom-14 left-2 lg:right-auto 2xl:right-auto w-64 rounded-xl shadow-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden z-10 bg-white dark:bg-black">
+        <div className="absolute bottom-14 left-2 lg:right-auto 2xl:right-auto w-64 rounded-xl shadow-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden z-50 bg-white dark:bg-black">
           <UserButtonItems
             icon={LuSettings}
             label="Settings"

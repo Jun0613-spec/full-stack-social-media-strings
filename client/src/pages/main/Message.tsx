@@ -82,7 +82,7 @@ const MessagePage = () => {
             />
           </div>
 
-          <div className="sticky bottom-0 p-4 border-t border-neutral-200 dark:border-neutral-800 bg-background/80 backdrop-blur-sm">
+          <div className="bottom-0 px-2 py-2.5 border-t border-neutral-200 dark:border-neutral-800 bg-background/80 backdrop-blur-sm">
             <MessageForm conversationId={selectedConversationId} />
           </div>
         </div>

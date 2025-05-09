@@ -40,7 +40,7 @@ export const Feed = ({ type }: FeedProps) => {
         next={fetchForYouNextPage}
         hasMore={!!hasForYouNextPage}
         loader={<Loader />}
-        endMessage={<EndOfScroll sectionName="feed" />}
+        endMessage={<EndOfScroll sectionName="feeds" />}
         refreshFunction={refetchForYou}
         pullDownToRefresh
         pullDownToRefreshThreshold={50}
@@ -60,11 +60,7 @@ export const Feed = ({ type }: FeedProps) => {
       next={fetchFollowingsNextPage}
       hasMore={!!hasFollowingsNextPage}
       loader={<Loader />}
-      endMessage={
-        <div className="text-center py-4 text-neutral-500 dark:text-neutral-400">
-          You've reached the end of the feed
-        </div>
-      }
+      endMessage={<EndOfScroll sectionName="feeds" />}
       refreshFunction={refetchFollowings}
       pullDownToRefresh
       pullDownToRefreshThreshold={50}

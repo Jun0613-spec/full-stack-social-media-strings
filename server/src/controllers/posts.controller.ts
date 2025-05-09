@@ -99,7 +99,7 @@ export const getFollowingsFeed = async (
     const posts = await prisma.post.findMany({
       where: {
         user: {
-          followings: {
+          followers: {
             some: {
               followerId: userId
             }

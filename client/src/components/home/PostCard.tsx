@@ -89,14 +89,14 @@ export const PostCard = ({ post, hasBorder }: FeedItemProps) => {
     <div
       onClick={handleClickPost}
       className={cn(
-        "p-4",
+        "p-4 ",
         !hasBorder && "border-b border-neutral-200 dark:border-neutral-800",
         !isPostDetailPage &&
           "hover:bg-muted/20 dark:hover:bg-muted/50 cursor-pointer"
       )}
     >
       <div className="flex items-start space-x-2">
-        <div className="flex-shrink-0 relative">
+        <div className="flex-shrink-0">
           <Link
             to={`/profile/${post.user.username}`}
             onClick={(e) => e.stopPropagation()}
@@ -145,7 +145,7 @@ export const PostCard = ({ post, hasBorder }: FeedItemProps) => {
                   {isDropdownOpen && (
                     <div
                       onClick={(e) => e.stopPropagation()}
-                      className="absolute right-8 top-0 w-30 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden z-50 bg-white dark:bg-black"
+                      className="absolute right-8 top-0 w-30 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden z-10 bg-white dark:bg-black"
                     >
                       <button
                         className="w-full px-3 py-2 hover:bg-muted dark:hover:bg-neutral-900 flex items-center gap-4 text-sm transition duration-150 ease-in-out"

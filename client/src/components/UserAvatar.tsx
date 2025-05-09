@@ -26,7 +26,7 @@ const UserAvatar = ({ src, className, href }: UserAvatarProps) => {
     >
       <img
         src={src || defaultImage}
-        alt={"user-avatar"}
+        alt="user profile image"
         className=" object-cover w-full h-full"
       />
     </div>
