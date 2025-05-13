@@ -3,6 +3,8 @@ import { toast } from "react-toastify";
 
 import { axiosInstance, handleAxiosError } from "@/lib/axios";
 
+import { Notification } from "@/types/prismaTypes";
+
 export const useDeleteNotification = () => {
   const queryClient = useQueryClient();
 
@@ -16,22 +18,25 @@ export const useDeleteNotification = () => {
           }
         );
 
-        return response.data;
+        return { notificationId, notification: response.data };
       } catch (error) {
         handleAxiosError(error);
         throw error;
       }
     },
-    onSuccess: async () => {
+    onSuccess: async ({ notificationId }) => {
       await queryClient.invalidateQueries({ queryKey: ["notifications"] });
-      await queryClient.invalidateQueries({ queryKey: ["conversations"] });
-      await queryClient.invalidateQueries({ queryKey: ["messages"] });
-      await queryClient.invalidateQueries({ queryKey: ["followingsFeed"] });
-      await queryClient.invalidateQueries({ queryKey: ["forYouFeed"] });
-      await queryClient.invalidateQueries({ queryKey: ["posts"] });
-      await queryClient.invalidateQueries({ queryKey: ["replies"] });
-      await queryClient.invalidateQueries({ queryKey: ["userPosts"] });
-      await queryClient.invalidateQueries({ queryKey: ["userReplies"] });
+
+      queryClient.setQueryData(
+        ["notifications"],
+        (oldData: Notification[] | undefined) => {
+          if (!oldData) return [];
+
+          return oldData.filter(
+            (notification) => notification.id !== notificationId
+          );
+        }
+      );
     },
     onError: (error) => {
       toast.error(error.message);

@@ -21,8 +21,12 @@ import SettingsPage from "./pages/main/Settings";
 import PostDetailPage from "./pages/main/PostDetail";
 import MessagePage from "./pages/main/Message";
 
+import { useSocket } from "./hooks/useSocket";
+
 function App() {
   useAuth();
+  useSocket();
+
   const { isLoggedIn, isLoading } = useAuthStore();
 
   if (isLoading) {

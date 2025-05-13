@@ -1,21 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 import { axiosInstance, handleAxiosError } from "@/lib/axios";
-import { useAuthStore } from "@/stores/authStore";
 
-export const useDeleteUser = () => {
+export const useDeleteAllNotifications = () => {
   const queryClient = useQueryClient();
-
-  const navigate = useNavigate();
-
-  const { logout } = useAuthStore();
 
   const mutation = useMutation({
     mutationFn: async () => {
       try {
-        const response = await axiosInstance.delete("/api/users", {
+        const response = await axiosInstance.delete("/api/notifications", {
           withCredentials: true
         });
 
@@ -26,11 +20,9 @@ export const useDeleteUser = () => {
       }
     },
     onSuccess: async () => {
-      toast.success("User account has been deleted");
-      logout();
-      navigate("/login");
+      await queryClient.setQueryData(["notifications"], []);
 
-      queryClient.clear();
+      await queryClient.invalidateQueries({ queryKey: ["notifications"] });
     },
     onError: (error) => {
       toast.error(error.message);

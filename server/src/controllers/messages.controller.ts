@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 
 import { prisma } from "../lib/prisma";
 import { deleteImage, uploadSingleImage } from "../lib/handleImage";
-import { getIO } from "../lib/socket";
 
 export const getMessages = async (
   req: Request,
@@ -45,9 +44,7 @@ export const getMessages = async (
       }
     });
 
-    res.status(200).json({
-      messages
-    });
+    res.status(200).json({ messages });
   } catch (error) {
     console.error("getMessages error:", error);
     res.status(500).json({ message: "Failed to fetch messages" });
@@ -130,12 +127,6 @@ export const createMessage = async (
         },
         updatedAt: new Date()
       }
-    });
-
-    const io = getIO();
-
-    conversation.participants.forEach((participant) => {
-      io.to(participant.id).emit("newMessage", newMessage);
     });
 
     res.status(201).json(newMessage);
@@ -228,12 +219,6 @@ export const editMessage = async (
           select: { id: true }
         }
       }
-    });
-
-    const io = getIO();
-
-    conversation?.participants.forEach((participant) => {
-      io.to(participant.id).emit("messageEdited", updatedMessage);
     });
 
     res.status(200).json(updatedMessage);
@@ -354,12 +339,6 @@ export const markMessagesAsSeen = async (
       data: {
         seen: true
       }
-    });
-
-    const io = getIO();
-
-    conversation.participants.forEach((participant) => {
-      io.to(participant.id).emit("messagesSeen", { conversationId });
     });
 
     res.status(200).json({ message: "Messages marked as seen" });

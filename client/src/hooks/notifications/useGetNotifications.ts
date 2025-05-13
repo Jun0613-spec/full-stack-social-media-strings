@@ -1,38 +1,9 @@
-// import { useQuery } from "@tanstack/react-query";
-
-// import { axiosInstance, handleAxiosError } from "@/lib/axios";
-
-// import { Notification } from "@/types/prismaTypes";
-
-// export const useGetNotifications = () => {
-//   return useQuery<Notification[]>({
-//     queryKey: ["notifications"],
-//     queryFn: async () => {
-//       try {
-//         const response = await axiosInstance.get("/api/notifications", {
-//           withCredentials: true
-//         });
-
-//         return response.data || [];
-//       } catch (error) {
-//         handleAxiosError(error);
-//         return [];
-//       }
-//     },
-//     retry: 1,
-//     staleTime: 1000 * 60 * 30,
-//     gcTime: 1000 * 60 * 60,
-//     refetchOnWindowFocus: false
-//   });
-// };
-
 import { useQuery } from "@tanstack/react-query";
 
 import { axiosInstance, handleAxiosError } from "@/lib/axios";
 
-import { Notification } from "@/types/prismaTypes";
 export const useGetNotifications = () => {
-  return useQuery<{ notifications: Notification[] }>({
+  return useQuery({
     queryKey: ["notifications"],
     queryFn: async () => {
       try {
@@ -47,8 +18,10 @@ export const useGetNotifications = () => {
       }
     },
     retry: 1,
-    staleTime: 1000 * 60 * 30,
-    gcTime: 1000 * 60 * 60,
-    refetchOnWindowFocus: false
+    enabled: true,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    gcTime: 1000 * 60 * 10, // 10 minutes
+    refetchOnWindowFocus: true,
+    refetchInterval: 5000
   });
 };

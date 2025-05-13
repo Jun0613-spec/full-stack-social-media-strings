@@ -24,14 +24,6 @@ export const useMarkNotificationAsRead = () => {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["notifications"] });
-      await queryClient.invalidateQueries({ queryKey: ["conversations"] });
-      await queryClient.invalidateQueries({ queryKey: ["messages"] });
-      await queryClient.invalidateQueries({ queryKey: ["followingsFeed"] });
-      await queryClient.invalidateQueries({ queryKey: ["forYouFeed"] });
-      await queryClient.invalidateQueries({ queryKey: ["posts"] });
-      await queryClient.invalidateQueries({ queryKey: ["replies"] });
-      await queryClient.invalidateQueries({ queryKey: ["userPosts"] });
-      await queryClient.invalidateQueries({ queryKey: ["userReplies"] });
     },
     onError: (error) => {
       toast.error(error.message);

@@ -26,10 +26,11 @@ const ConversationHeader = ({
         </Button>
         <div className="flex flex-col items-start">
           <h2 className="font-bold text-sm">
-            {participant?.firstName || ""} {participant?.lastName || ""}
+            {participant?.firstName || "Unknown"}{" "}
+            {participant?.lastName || "User"}
           </h2>
           <p className="text-xs text-neutral-500 dark:text-netural-400">
-            @{participant?.username || ""}
+            @{participant?.username || "unknown"}
           </p>
         </div>
       </div>

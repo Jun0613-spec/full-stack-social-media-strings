@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 
 import { prisma } from "../lib/prisma";
-import { getIO } from "../lib/socket";
 
 export const getUserConversations = async (
   req: Request,
@@ -250,11 +249,6 @@ export const createConversation = async (
           }
         }
       }
-    });
-
-    const io = getIO();
-    conversation.participants.forEach((participant) => {
-      io.to(participant.id).emit("newConversation", conversation);
     });
 
     res.status(201).json(conversation);

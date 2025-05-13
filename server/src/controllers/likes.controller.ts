@@ -3,8 +3,7 @@ import { Request, Response } from "express";
 import { NotificationType } from "@prisma/client";
 
 import { prisma } from "../lib/prisma";
-import { getIO } from "../lib/socket";
-import { triggerAsyncId } from "async_hooks";
+import { emitNotification } from "../lib/socket";
 
 export const toggleLikePost = async (
   req: Request,
@@ -97,8 +96,7 @@ export const toggleLikePost = async (
           }
         });
 
-        const io = getIO();
-        io.emit("sendNotification", notification);
+        emitNotification(post.userId, notification);
       }
 
       res.status(201).json({ message: "Post liked successfully", like });
@@ -197,8 +195,7 @@ export const toggleLikeReply = async (
           }
         });
 
-        const io = getIO();
-        io.emit("sendNotification", notification);
+        emitNotification(reply.userId, notification);
       }
 
       res.status(201).json({ message: "Reply liked successfully", like });

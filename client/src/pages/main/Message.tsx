@@ -13,18 +13,20 @@ import { useGetConversationById } from "@/hooks/conversations/useGetConversation
 import { useDeleteConversation } from "@/hooks/conversations/useDeleteConversation";
 import { useGetMessagesByConversationId } from "@/hooks/messages/useGetMessagesByConversationId";
 
+import { useConfirmModalStore } from "@/stores/modals/confirmModalStore";
+
 const MessagePage = () => {
+  const { openModal: openConfirmModal } = useConfirmModalStore();
+
   const [selectedConversationId, setSelectedConversationId] = useState<
     string | null
   >(null);
 
   const { data: conversations = [], isLoading: conversationsLoading } =
     useGetConversations();
-
   const { data: selectedConversation } = useGetConversationById(
     selectedConversationId as string
   );
-
   const { data: messagesData, isLoading: messagesLoading } =
     useGetMessagesByConversationId(selectedConversationId as string);
 
@@ -38,9 +40,15 @@ const MessagePage = () => {
 
   const handleDeleteConversation = () => {
     if (selectedConversationId) {
-      deleteConversation(selectedConversationId, {
-        onSuccess: () => {
-          setSelectedConversationId(null);
+      openConfirmModal({
+        title: "Delete Conversation",
+        message: "Are you sure you want to delete this notification?",
+        onConfirm: async () => {
+          await deleteConversation(selectedConversationId, {
+            onSuccess: () => {
+              setSelectedConversationId(null);
+            }
+          });
         }
       });
     }

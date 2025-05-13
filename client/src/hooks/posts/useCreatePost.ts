@@ -22,6 +22,7 @@ export const useCreatePost = () => {
     onSuccess: async () => {
       toast.success("Your post has been created");
 
+      await queryClient.invalidateQueries({ queryKey: ["currentUser"] });
       await queryClient.invalidateQueries({ queryKey: ["posts"] });
       await queryClient.invalidateQueries({ queryKey: ["replies"] });
       await queryClient.invalidateQueries({ queryKey: ["forYouFeed"] });

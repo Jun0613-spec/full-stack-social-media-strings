@@ -6,7 +6,7 @@ import helmet from "helmet";
 import http from "http";
 
 import { cronJob } from "./lib/cronJob";
-import socket from "./lib/socket";
+import initializeSocket from "./lib/socket";
 
 /* ROUTES */
 import authRoute from "./routes/auth.route";
@@ -61,7 +61,7 @@ app.use("/api/likes", likesRoute);
 app.use("/api/conversations", conversationsRoute);
 app.use("/api/messages", messagesRoute);
 
-const io = socket(server);
+const io = initializeSocket(server);
 
 app.set("io", io);
 

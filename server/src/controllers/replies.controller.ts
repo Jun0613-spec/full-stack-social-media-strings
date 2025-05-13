@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { prisma } from "../lib/prisma";
 
 import { NotificationType } from "../types";
+import { emitNotification } from "../lib/socket";
 
 export const getUserReplies = async (
   req: Request,
@@ -205,7 +206,7 @@ export const createReply = async (
     });
 
     if (post.userId !== userId) {
-      await prisma.notification.create({
+      const notification = await prisma.notification.create({
         data: {
           type: NotificationType.REPLY,
           message: `${post.user.username} replied to your post.`,
@@ -214,6 +215,8 @@ export const createReply = async (
           replyId: reply.id
         }
       });
+
+      emitNotification(post.userId, notification);
     }
 
     res.status(201).json(reply);

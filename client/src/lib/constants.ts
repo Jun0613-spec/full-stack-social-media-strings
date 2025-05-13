@@ -30,7 +30,7 @@ export const sidebarLinks = (currentUser: User) => [
   },
   {
     id: 3,
-    label: "Notification",
+    label: "Notifications",
     href: "/notifications",
     icon: HiOutlineBell,
     activeIcon: HiBell

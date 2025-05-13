@@ -3,7 +3,7 @@ import { NotificationType, Prisma } from "@prisma/client";
 
 import { prisma } from "../lib/prisma";
 import { deleteImage, uploadSingleImage } from "../lib/handleImage";
-import { getIO } from "../lib/socket";
+import { emitNotification } from "../lib/socket";
 
 export const getCurrentUser = async (
   req: Request,
@@ -521,20 +521,10 @@ export const toggleFollowUser = async (
           senderId: followerId,
           recipientId: followingId,
           message: `${follower.username} started following you.`
-        },
-        include: {
-          sender: {
-            select: {
-              id: true,
-              username: true,
-              avatarImage: true
-            }
-          }
         }
       });
 
-      const io = getIO();
-      io.emit("sendNotification", notification);
+      emitNotification(followingId, notification);
 
       res
         .status(201)

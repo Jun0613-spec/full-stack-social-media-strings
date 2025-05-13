@@ -28,8 +28,8 @@ const ConversationCard = ({ conversation, onClick }: ConversationCardProps) => {
         <div className="flex-1 min-w-0">
           <div className="flex justify-between items-start">
             <h3 className="font-bold truncate">
-              {otherParticipant?.firstName || ""}{" "}
-              {otherParticipant?.lastName || ""}
+              {otherParticipant?.firstName || "Unknown"}{" "}
+              {otherParticipant?.lastName || "User"}
             </h3>
             <span className="text-xs text-neutral-500 whitespace-nowrap">
               {conversation.updatedAt &&
@@ -40,9 +40,9 @@ const ConversationCard = ({ conversation, onClick }: ConversationCardProps) => {
             <p className="text-sm text-neutral-600 dark:text-neutral-400 truncate">
               {lastMessage?.text || "No messages yet"}
             </p>
-            {lastMessage?.senderId === otherParticipant?.id ? (
+            {lastMessage && lastMessage.senderId === otherParticipant?.id ? (
               lastMessage.seen ? (
-                <BsCheck2All className="text-blue-500 dark:text-bleu-600" />
+                <BsCheck2All className="text-blue-500 dark:text-blue-600" />
               ) : (
                 <BsCheck2 className="text-neutral-500 dark:text-neutral-600" />
               )

@@ -1,9 +1,9 @@
-import { HiOutlineBell } from "react-icons/hi";
-
 import Loader from "@/components/Loader";
 
-import { Notification } from "@/types/prismaTypes";
 import NotificationCard from "./NotificationCard";
+
+import { Notification } from "@/types/prismaTypes";
+import { HiOutlineBell } from "react-icons/hi2";
 
 interface NotificationListProps {
   notifications: Notification[];
