@@ -1,7 +1,7 @@
 import { Server } from "socket.io";
 import http from "http";
 
-import { Notification } from "@prisma/client";
+import { Notification, Message } from "@prisma/client";
 
 let io: Server;
 
@@ -24,6 +24,54 @@ export const emitNotification = (
   });
 };
 
+export const emitMessage = (userId: string, message: Message) => {
+  const socketIds = getReceiverSocketIds(userId);
+
+  if (!socketIds) return;
+
+  socketIds.forEach((socketId) => {
+    io.to(socketId).emit("new_message", message);
+  });
+};
+
+export const emitMessageEdited = (userId: string, message: Message) => {
+  const socketIds = getReceiverSocketIds(userId);
+
+  if (!socketIds) return;
+
+  socketIds.forEach((socketId) => {
+    io.to(socketId).emit("message_edited", message);
+  });
+};
+
+export const emitMessageDeleted = (
+  userId: string,
+  conversationId: string,
+  messageId: string
+) => {
+  const socketIds = getReceiverSocketIds(userId);
+
+  if (!socketIds) return;
+
+  socketIds.forEach((socketId) => {
+    io.to(socketId).emit("message_deleted", conversationId, messageId);
+  });
+};
+
+export const emitMessageSeen = (
+  userId: string,
+  conversationId: string,
+  messageIds: string[]
+) => {
+  const socketIds = getReceiverSocketIds(userId);
+
+  if (!socketIds) return;
+
+  socketIds.forEach((socketId) => {
+    io.to(socketId).emit("message_seen", conversationId, messageIds);
+  });
+};
+
 const initializeSocket = (server: http.Server) => {
   io = new Server(server, {
     cors: {
@@ -34,9 +82,10 @@ const initializeSocket = (server: http.Server) => {
   });
 
   io.on("connection", (socket) => {
+    console.log("A user connected", socket.id);
     const userId = socket.handshake.query.userId as string;
 
-    if (!userId) {
+    if (!userId || userId === "undefined") {
       socket.disconnect();
       return;
     }
@@ -47,11 +96,24 @@ const initializeSocket = (server: http.Server) => {
 
     connectedUsers[userId].push(socket.id);
 
+    io.emit("get_online_users", Object.keys(connectedUsers));
     console.log(
-      `User ${userId} connected. Total: ${connectedUsers[userId].length}`
+      `User ${userId} connected. Total connections: ${connectedUsers[userId].length}`
+    );
+
+    socket.on(
+      "mark_message_seen",
+      (conversationId: string, messageIds: string[], senderId: string) => {
+        console.log(
+          `Marking message ${messageIds} as seen in conversation ${conversationId}`
+        );
+        emitMessageSeen(senderId, conversationId, messageIds);
+      }
     );
 
     socket.on("disconnect", () => {
+      if (!userId || !connectedUsers[userId]) return;
+
       connectedUsers[userId] = connectedUsers[userId].filter(
         (id) => id !== socket.id
       );
@@ -60,8 +122,9 @@ const initializeSocket = (server: http.Server) => {
         delete connectedUsers[userId];
       }
 
+      io.emit("get_online_users", Object.keys(connectedUsers));
       console.log(
-        `User ${userId} disconnected. Remaining: ${
+        `User ${userId} disconnected. Remaining connections: ${
           connectedUsers[userId]?.length || 0
         }`
       );

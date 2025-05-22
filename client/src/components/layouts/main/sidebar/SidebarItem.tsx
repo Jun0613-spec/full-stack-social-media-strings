@@ -1,6 +1,8 @@
 import { IconType } from "react-icons/lib";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useSocketStore } from "@/stores/socketStore";
+
+import { useNotificationStore } from "@/stores/notificationStore";
+import { useMessageStore } from "@/stores/messageStore";
 
 import { cn } from "@/lib/utils";
 
@@ -24,7 +26,10 @@ const SidebarItem = ({
   const isActive = href ? location.pathname === href : false;
   const ActiveIcon = activeIcon ?? Icon;
 
-  const { hasNewNotification, markNotificationsSeen } = useSocketStore();
+  const { hasNewNotification, markNotificationsSeen } = useNotificationStore();
+  const { getDisplayMessageCount, clearNewMessageCount } = useMessageStore();
+
+  const displayMessageCount = getDisplayMessageCount();
 
   const handleClick = () => {
     if (onClick) {
@@ -35,6 +40,10 @@ const SidebarItem = ({
 
     if (label === "Notifications") {
       markNotificationsSeen();
+    }
+
+    if (label === "Messages") {
+      clearNewMessageCount();
     }
   };
 
@@ -50,7 +59,13 @@ const SidebarItem = ({
           <Icon className="w-6 h-6" />
         )}
         {label === "Notifications" && hasNewNotification && (
-          <span className="absolute -top-1 right-0 block h-2 w-2 rounded-full bg-blue-500 dark:bg-blue-400" />
+          <span className="absolute -top-1 right-0 block h-2 w-2 rounded-full bg-blue-500 dark:bg-blue-600" />
+        )}
+
+        {label === "Messages" && displayMessageCount > 0 && (
+          <span className="absolute -top-1 -right-1 flex items-center justify-center h-4 w-4 text-xs rounded-full bg-blue-500 dark:bg-blue-600 text-white">
+            {displayMessageCount > 99 ? "99+" : displayMessageCount}
+          </span>
         )}
       </div>
 

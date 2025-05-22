@@ -27,6 +27,8 @@ export const useCreateConversation = () => {
     },
     onSuccess: async () => {
       navigate("/messages");
+      
+      await queryClient.invalidateQueries({ queryKey: ["currentUser"] });
       await queryClient.invalidateQueries({ queryKey: ["conversations"] });
       await queryClient.invalidateQueries({ queryKey: ["messages"] });
     },

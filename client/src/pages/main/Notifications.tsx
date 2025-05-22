@@ -12,7 +12,7 @@ import { useDeleteNotification } from "@/hooks/notifications/useDeleteNotificati
 import { useDeleteAllNotifications } from "@/hooks/notifications/useDeleteAllNotifications";
 
 import { useConfirmModalStore } from "@/stores/modals/confirmModalStore";
-import { useSocketStore } from "@/stores/socketStore";
+import { useNotificationStore } from "@/stores/notificationStore";
 
 import { Notification } from "@/types/prismaTypes";
 
@@ -38,7 +38,7 @@ const NotificationsPage = () => {
   const navigate = useNavigate();
 
   const { openModal: openConfirmModal } = useConfirmModalStore();
-  const { hasNewNotification, markNotificationsSeen } = useSocketStore();
+  const { hasNewNotification, markNotificationsSeen } = useNotificationStore();
 
   const [activeNotification, setActiveNotification] = useState<string | null>(
     null

@@ -10,11 +10,9 @@ export const useSocket = () => {
   useEffect(() => {
     if (currentUser?.id) {
       connect(currentUser.id);
-    }
-
-    return () => {
+    } else {
       disconnect();
-    };
+    }
   }, [currentUser?.id, connect, disconnect]);
 
   return null;

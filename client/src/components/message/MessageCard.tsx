@@ -109,7 +109,7 @@ const MessageCard = ({ message, isOwnMessage }: MessageCardProps) => {
           {isDropdownOpen && (
             <div
               className={cn(
-                "absolute right-0 top-8 w-40 rounded-xl shadow-lg border border-neutral-200 dark:border-neutral-700 overflow-hidden z-50 bg-white dark:bg-neutral-900"
+                "absolute right-8 w-40 rounded-xl shadow-lg border border-neutral-200 dark:border-neutral-700 overflow-hidden z-50 bg-white dark:bg-neutral-900"
               )}
               onClick={(e) => e.stopPropagation()}
             >

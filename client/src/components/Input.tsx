@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from "react";
+import { forwardRef, InputHTMLAttributes } from "react";
 
 import { cn } from "../lib/utils";
 
@@ -9,33 +9,33 @@ interface InputProps
   error?: boolean;
 }
 
-const Input = ({
-  className,
-  size = "md",
-  error = false,
-  ...props
-}: InputProps) => {
-  const sizeStyles = {
-    sm: "px-3 py-1.5 text-sm",
-    md: "px-4 py-2 text-base",
-    lg: "px-5 py-2.5 text-lg"
-  };
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ className, size = "md", error = false, ...props }, ref) => {
+    const sizeStyles = {
+      sm: "px-3 py-1.5 text-sm",
+      md: "px-4 py-2 text-base",
+      lg: "px-5 py-2.5 text-lg"
+    };
 
-  const errorStyles = error
-    ? "border-red-500 focus:ring-red-500 dark:border-red-600 dark:focus:ring-red-600"
-    : "border-neutral-200 focus:ring-neutral-500 dark:border-neutral-800 dark:focus:ring-neutral-500";
+    const errorStyles = error
+      ? "border-red-500 focus:ring-red-500 dark:border-red-600 dark:focus:ring-red-600"
+      : "border-neutral-200 focus:ring-neutral-500 dark:border-neutral-800 dark:focus:ring-neutral-500";
 
-  return (
-    <input
-      className={cn(
-        "mt-1 w-full border border-neutral-200 dark:border-neutral-800 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-300 ease-in-out placeholder:text-sm md:placeholder:text-base",
-        sizeStyles[size],
-        errorStyles,
-        className
-      )}
-      {...props}
-    />
-  );
-};
+    return (
+      <input
+        ref={ref}
+        className={cn(
+          "mt-1 w-full border border-neutral-200 dark:border-neutral-800 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-300 ease-in-out placeholder:text-sm md:placeholder:text-base",
+          sizeStyles[size],
+          errorStyles,
+          className
+        )}
+        {...props}
+      />
+    );
+  }
+);
+
+Input.displayName = "Input";
 
 export default Input;

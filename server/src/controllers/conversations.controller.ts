@@ -109,7 +109,7 @@ export const getConversationById = async (
   }
 
   try {
-    const conversation = await prisma.conversation.findUnique({
+    const conversation = await prisma.conversation.findFirst({
       where: {
         id: conversationId,
         participants: {
@@ -272,7 +272,7 @@ export const deleteConversation = async (
   }
 
   try {
-    const conversation = await prisma.conversation.findUnique({
+    const conversation = await prisma.conversation.findFirst({
       where: {
         id: conversationId,
         participants: {

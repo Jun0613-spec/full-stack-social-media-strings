@@ -1,21 +1,20 @@
 import { create } from "zustand";
 
 interface NotificationState {
-  hasUnread: boolean;
-  unreadCount: number;
-  setHasUnread: (value: boolean) => void;
-  incrementUnreadCount: () => void;
-  clearUnread: () => void;
+  hasNewNotification: boolean;
+  setHasNewNotification: (value: boolean) => void;
+  markNotificationsSeen: () => void;
+  clearAllNotifications: () => void;
 }
 
 export const useNotificationStore = create<NotificationState>((set) => ({
-  hasUnread: false,
-  unreadCount: 0,
-  setHasUnread: (value) => set({ hasUnread: value }),
-  incrementUnreadCount: () =>
-    set((state) => ({
-      hasUnread: true,
-      unreadCount: state.unreadCount + 1
-    })),
-  clearUnread: () => set({ hasUnread: false, unreadCount: 0 })
+  hasNewNotification: false,
+
+  setHasNewNotification: (value) => set({ hasNewNotification: value }),
+
+  markNotificationsSeen: () => set({ hasNewNotification: false }),
+
+  clearAllNotifications: () => {
+    set({ hasNewNotification: false });
+  }
 }));

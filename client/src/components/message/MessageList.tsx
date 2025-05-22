@@ -4,40 +4,62 @@ import { Message } from "@/types/prismaTypes";
 
 import { useMessageMarkAsSeen } from "@/hooks/messages/useMessageMarkAsSeen";
 
-import Loader from "@/components/Loader";
+import { useSocketStore } from "@/stores/socketStore";
+import { useMessageStore } from "@/stores/messageStore";
+
 import MessageCard from "@/components/message/MessageCard";
 
+import Loader from "@/components/Loader";
+
 interface MessageListProps {
-  messages: Message[];
-  isLoading: boolean;
+  initialMessages: Message[];
   isOwnMessage: (message: Message) => boolean;
   conversationId: string;
+  isLoading: boolean;
 }
 
 const MessageList = ({
-  messages,
-  isLoading,
+  initialMessages,
   isOwnMessage,
-  conversationId
+  conversationId,
+  isLoading
 }: MessageListProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const hasInitiallyMarkedAsSeen = useRef<boolean>(false);
+
+  const { markMessageAsSeen } = useSocketStore();
+  const { getMessages, setMessages } = useMessageStore();
+
   const { mutate: markAsSeen } = useMessageMarkAsSeen(conversationId);
-  const hasMarkedAsSeen = useRef(false);
+
+  const messages = getMessages(conversationId);
+
+  useEffect(() => {
+    if (initialMessages.length > 0) {
+      setMessages(conversationId, initialMessages);
+    }
+  }, [initialMessages, conversationId, setMessages]);
 
   useEffect(() => {
     if (messages.length > 0) {
-      messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
 
-      const hasUnread = messages.some((msg) => !msg.seen && !isOwnMessage(msg));
+      const unseenMessages = messages.filter(
+        (message) => !message.seen && !isOwnMessage(message)
+      );
 
-      if (hasUnread && !hasMarkedAsSeen.current) {
+      if (unseenMessages.length > 0 && !hasInitiallyMarkedAsSeen.current) {
         markAsSeen();
-        hasMarkedAsSeen.current = true;
+        hasInitiallyMarkedAsSeen.current = true;
+
+        const senderId = unseenMessages[0].senderId;
+        const messageIds = unseenMessages.map((message) => message.id);
+        markMessageAsSeen(conversationId, messageIds, senderId);
       }
     }
-  }, [messages, markAsSeen, isOwnMessage]);
+  }, [messages, markAsSeen, isOwnMessage, conversationId, markMessageAsSeen]);
 
-  if (isLoading && messages.length === 0) {
+  if (isLoading) {
     return (
       <div className="flex justify-center items-center h-40">
         <Loader />
@@ -45,7 +67,7 @@ const MessageList = ({
     );
   }
 
-  if (messages.length === 0) {
+  if (!messages || messages.length === 0) {
     return (
       <div className="flex justify-center items-center h-40">
         <p>No messages yet</p>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Header from "@/components/Header";
 import MessageForm from "@/components/forms/MessageForm";
@@ -14,20 +14,35 @@ import { useDeleteConversation } from "@/hooks/conversations/useDeleteConversati
 import { useGetMessagesByConversationId } from "@/hooks/messages/useGetMessagesByConversationId";
 
 import { useConfirmModalStore } from "@/stores/modals/confirmModalStore";
+import { useAuthStore } from "@/stores/authStore";
+import { useMessageStore } from "@/stores/messageStore";
+import { useConversationStore } from "@/stores/conversationStore";
 
 const MessagePage = () => {
   const { openModal: openConfirmModal } = useConfirmModalStore();
+  const { currentUser } = useAuthStore();
+  const { setIsMessagesPage, setCurrentConversationId } = useMessageStore();
+  const { removeConversation } = useConversationStore();
 
   const [selectedConversationId, setSelectedConversationId] = useState<
     string | null
   >(null);
+
+  useEffect(() => {
+    setIsMessagesPage(true);
+    setCurrentConversationId(selectedConversationId);
+
+    return () => {
+      setIsMessagesPage(false);
+    };
+  }, [selectedConversationId, setIsMessagesPage, setCurrentConversationId]);
 
   const { data: conversations = [], isLoading: conversationsLoading } =
     useGetConversations();
   const { data: selectedConversation } = useGetConversationById(
     selectedConversationId as string
   );
-  const { data: messagesData, isLoading: messagesLoading } =
+  const { data: messagesData, isLoading: isMessageLoading } =
     useGetMessagesByConversationId(selectedConversationId as string);
 
   const { mutate: deleteConversation } = useDeleteConversation();
@@ -42,10 +57,11 @@ const MessagePage = () => {
     if (selectedConversationId) {
       openConfirmModal({
         title: "Delete Conversation",
-        message: "Are you sure you want to delete this notification?",
+        message: "Are you sure you want to delete this conversation?",
         onConfirm: async () => {
           await deleteConversation(selectedConversationId, {
             onSuccess: () => {
+              removeConversation(selectedConversationId);
               setSelectedConversationId(null);
             }
           });
@@ -55,7 +71,7 @@ const MessagePage = () => {
   };
 
   const isOwnMessage = (message: Message) => {
-    return message.senderId !== selectedConversation?.participants?.[0]?.id;
+    return message.senderId === currentUser?.id;
   };
 
   return (
@@ -72,7 +88,6 @@ const MessagePage = () => {
         )}
       </div>
 
-      {/* Main Content */}
       {!selectedConversationId ? (
         <ConversationList
           conversations={conversations}
@@ -83,10 +98,10 @@ const MessagePage = () => {
         <div className="flex flex-col h-full">
           <div className="flex-1 overflow-y-auto" id="messageContainer">
             <MessageList
-              messages={messages}
-              isLoading={messagesLoading}
+              initialMessages={messages}
               isOwnMessage={isOwnMessage}
               conversationId={selectedConversationId}
+              isLoading={isMessageLoading}
             />
           </div>
 

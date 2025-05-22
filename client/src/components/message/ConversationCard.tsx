@@ -1,9 +1,12 @@
 import { format } from "date-fns";
-import { BsCheck2All, BsCheck2 } from "react-icons/bs";
+import { useEffect } from "react";
 
 import UserAvatar from "@/components/UserAvatar";
 
 import { Conversation } from "@/types/prismaTypes";
+
+import { useSocketStore } from "@/stores/socketStore";
+import { useConversationStore } from "@/stores/conversationStore";
 
 interface ConversationCardProps {
   conversation: Conversation;
@@ -11,9 +14,21 @@ interface ConversationCardProps {
 }
 
 const ConversationCard = ({ conversation, onClick }: ConversationCardProps) => {
-  const otherParticipant = conversation.participants?.[0] || null;
+  const { onlineUsers } = useSocketStore();
+  const { getConversation, setConversation } = useConversationStore();
 
-  const lastMessage = conversation.lastMessage;
+  useEffect(() => {
+    setConversation(conversation.id, conversation);
+  }, [conversation, setConversation]);
+
+  const currentConversation = getConversation(conversation.id) || conversation;
+
+  const otherParticipant = currentConversation.participants?.[0] || null;
+  const isOnline = otherParticipant
+    ? onlineUsers.includes(otherParticipant.id)
+    : false;
+
+  const lastMessage = currentConversation.lastMessage;
 
   return (
     <div
@@ -21,10 +36,15 @@ const ConversationCard = ({ conversation, onClick }: ConversationCardProps) => {
       className="p-4 border-b border-neutral-200 dark:border-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-900 cursor-pointer "
     >
       <div className="flex items-start gap-3">
-        <UserAvatar
-          src={otherParticipant?.avatarImage || ""}
-          className="w-12 h-12"
-        />
+        <div className="relative">
+          <UserAvatar
+            src={otherParticipant?.avatarImage || ""}
+            className="w-12 h-12"
+          />
+          {isOnline && (
+            <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 dark:bg-emerald-400 rounded-full border-2 border-white dark:border-neutral-800" />
+          )}
+        </div>
         <div className="flex-1 min-w-0">
           <div className="flex justify-between items-start">
             <h3 className="font-bold truncate">
@@ -32,21 +52,14 @@ const ConversationCard = ({ conversation, onClick }: ConversationCardProps) => {
               {otherParticipant?.lastName || "User"}
             </h3>
             <span className="text-xs text-neutral-500 whitespace-nowrap">
-              {conversation.updatedAt &&
-                format(new Date(conversation.updatedAt), "h:mm a")}
+              {currentConversation.updatedAt &&
+                format(new Date(currentConversation.updatedAt), "h:mm a")}
             </span>
           </div>
           <div className="flex justify-between items-center">
             <p className="text-sm text-neutral-600 dark:text-neutral-400 truncate">
               {lastMessage?.text || "No messages yet"}
             </p>
-            {lastMessage && lastMessage.senderId === otherParticipant?.id ? (
-              lastMessage.seen ? (
-                <BsCheck2All className="text-blue-500 dark:text-blue-600" />
-              ) : (
-                <BsCheck2 className="text-neutral-500 dark:text-neutral-600" />
-              )
-            ) : null}
           </div>
         </div>
       </div>

@@ -2,12 +2,13 @@ import { useRef, useState } from "react";
 import { LuSend, LuImagePlus, LuX } from "react-icons/lu";
 import { useForm } from "react-hook-form";
 import { EmojiClickData } from "emoji-picker-react";
-import Input from "../Input";
-import Button from "../Button";
+
 import { MessageFormData } from "@/types";
 
 import { useCreateMessage } from "@/hooks/messages/useCreateMessage";
 
+import Input from "../Input";
+import Button from "../Button";
 import EmojiSelector from "../EmojiSelector";
 
 interface MessageFormProps {
@@ -74,9 +75,9 @@ const MessageForm = ({ conversationId }: MessageFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className=" pb-14 md:pb-0 w-full">
+    <form onSubmit={handleSubmit(onSubmit)} className="pb-14 md:pb-0 w-full">
       {imagePreview && (
-        <div className="relativemb-2 flex items-center justify-center">
+        <div className="relative mb-2 flex items-center justify-center">
           <img
             src={imagePreview}
             alt="Preview"

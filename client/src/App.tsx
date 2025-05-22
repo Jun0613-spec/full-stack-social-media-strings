@@ -20,7 +20,6 @@ import GoogleAuthSuccess from "./pages/auth/GoogleAuthSuccess";
 import SettingsPage from "./pages/main/Settings";
 import PostDetailPage from "./pages/main/PostDetail";
 import MessagePage from "./pages/main/Message";
-
 import { useSocket } from "./hooks/useSocket";
 
 function App() {
