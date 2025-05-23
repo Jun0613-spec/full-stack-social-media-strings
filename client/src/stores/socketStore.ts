@@ -5,7 +5,6 @@ import { Message, Notification } from "@/types/prismaTypes";
 
 import { useNotificationStore } from "./notificationStore";
 import { useMessageStore } from "./messageStore";
-import { useConversationStore } from "./conversationStore";
 
 interface SocketState {
   socket: Socket | null;
@@ -176,10 +175,6 @@ export const useSocketStore = create<SocketState>((set, get) => ({
         isConnected: false,
         onlineUsers: []
       });
-
-      useMessageStore.getState().clearAllMessages();
-      useConversationStore.getState().clearAllConversations();
-      useNotificationStore.getState().clearAllNotifications();
 
       console.log("Socket disconnected and cleaned up");
     }

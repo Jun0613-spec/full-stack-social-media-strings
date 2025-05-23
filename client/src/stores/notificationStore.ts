@@ -4,7 +4,6 @@ interface NotificationState {
   hasNewNotification: boolean;
   setHasNewNotification: (value: boolean) => void;
   markNotificationsSeen: () => void;
-  clearAllNotifications: () => void;
 }
 
 export const useNotificationStore = create<NotificationState>((set) => ({
@@ -12,9 +11,5 @@ export const useNotificationStore = create<NotificationState>((set) => ({
 
   setHasNewNotification: (value) => set({ hasNewNotification: value }),
 
-  markNotificationsSeen: () => set({ hasNewNotification: false }),
-
-  clearAllNotifications: () => {
-    set({ hasNewNotification: false });
-  }
+  markNotificationsSeen: () => set({ hasNewNotification: false })
 }));

@@ -14,7 +14,6 @@ interface ConversationState {
   ) => void;
 
   removeConversation: (conversationId: string) => void;
-  clearAllConversations: () => void;
 }
 
 export const useConversationStore = create<ConversationState>((set, get) => ({
@@ -64,8 +63,5 @@ export const useConversationStore = create<ConversationState>((set, get) => ({
 
       return { conversations: newConversations };
     });
-  },
-  clearAllConversations: () => {
-    set({ conversations: {} });
   }
 }));

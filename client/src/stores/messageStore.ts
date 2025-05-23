@@ -30,8 +30,6 @@ interface MessageState {
   onMessageSent: (message: Message) => void;
   onMessageUpdated: (message: Message) => void;
   onMessageRemoved: (conversationId: string, messageId: string) => void;
-
-  clearAllMessages: () => void;
 }
 
 export const useMessageStore = create<MessageState>((set, get) => ({
@@ -189,14 +187,5 @@ export const useMessageStore = create<MessageState>((set, get) => ({
       .updateConversationLastMessage(conversationId, null);
 
     decrementMessageCount();
-  },
-
-  clearAllMessages: () => {
-    set({
-      newMessageCount: 0,
-      isMessagesPage: false,
-      currentConversationId: null,
-      messages: {}
-    });
   }
 }));
