@@ -32,10 +32,16 @@ const SuggestedUsersCard = () => {
     );
   }
 
+  const hasSuggestionUsers = users.length > 0;
+
   return (
     <div className="p-4 rounded-2xl border border-neutral-200 dark:border-neutral-800 flex flex-col gap-4">
-      {users.length === 0 ? (
-        <p>No suggested users at the moment.</p>
+      {!hasSuggestionUsers ? (
+        <div className="flex flex-col items-center justify-center  py-8 ">
+          <p className="text-sm text-neutral-500 dark:text-neutral-400">
+            No suggested users at the moment.
+          </p>
+        </div>
       ) : (
         users.map((user) => (
           <div
@@ -69,14 +75,16 @@ const SuggestedUsersCard = () => {
         ))
       )}
 
-      <Button
-        variant="muted"
-        size="sm"
-        onClick={() => navigate("/search")}
-        className="flex items-center justify-start mt-2"
-      >
-        Show more
-      </Button>
+      {hasSuggestionUsers && (
+        <Button
+          variant="muted"
+          size="sm"
+          onClick={() => navigate("/search")}
+          className="flex items-center justify-start mt-2"
+        >
+          Show more
+        </Button>
+      )}
     </div>
   );
 };
