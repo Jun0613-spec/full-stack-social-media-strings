@@ -5,7 +5,6 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import http from "http";
 
-import { cronJob } from "./lib/cronJob";
 import initializeSocket from "./lib/socket";
 
 /* ROUTES */
@@ -20,8 +19,6 @@ import conversationsRoute from "./routes/conversations.route";
 import messagesRoute from "./routes/messages.route";
 
 dotenv.config();
-
-cronJob.start();
 
 const app = express();
 const server = http.createServer(app);

@@ -135,7 +135,6 @@ export const PostCard = ({ post, hasBorder }: FeedItemProps) => {
               </time>
             </div>
 
-            {/* More Button */}
             <div className="relative" ref={dropdownRef}>
               {currentUser?.id === post.user.id && (
                 <>
