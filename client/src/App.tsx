@@ -65,6 +65,7 @@ function App() {
           <Route path="/:username/post/:postId" element={<PostDetailPage />} />
         </Route>
       </Route>
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 }
