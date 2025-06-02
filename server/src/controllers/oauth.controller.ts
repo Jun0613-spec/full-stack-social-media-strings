@@ -102,7 +102,11 @@ export const googleCallback = async (
       maxAge: 1000 * 60 * 60 * 24 // 1 day
     });
 
-    res.redirect(`${process.env.CLIENT_URL!}/auth/google/success`);
+    res.redirect(
+      `${process.env.CLIENT_URL!}/auth/google/success?token=${token}&userId=${
+        user.id
+      }&username=${encodeURIComponent(user.username)}`
+    );
   } catch (error) {
     console.error("Google Authentication Error:", error);
     res.status(500).json({ message: "Failed to authenticate with Google" });
