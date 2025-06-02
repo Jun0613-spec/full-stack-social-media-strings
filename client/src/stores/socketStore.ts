@@ -65,22 +65,16 @@ export const useSocketStore = create<SocketState>((set, get) => ({
     });
 
     socket.on("new_message", (message: Message) => {
-      console.log("New message received:", message);
-
       useMessageStore.getState().onMessageReceived(message);
     });
 
     socket.on("message_edited", (editedMessage: Message) => {
-      console.log("Message edited:", editedMessage);
-
       useMessageStore.getState().onMessageUpdated(editedMessage);
     });
 
     socket.on(
       "message_deleted",
       (conversationId: string, messageId: string) => {
-        console.log("Message deleted:", { conversationId, messageId });
-
         useMessageStore.getState().onMessageRemoved(conversationId, messageId);
       }
     );
@@ -88,7 +82,6 @@ export const useSocketStore = create<SocketState>((set, get) => ({
     socket.on(
       "message_seen",
       (conversationId: string, messageIds: string[]) => {
-        console.log("Messages marked as seen:", { conversationId, messageIds });
         useMessageStore
           .getState()
           .markMessagesAsSeen(conversationId, messageIds);
@@ -96,7 +89,6 @@ export const useSocketStore = create<SocketState>((set, get) => ({
     );
 
     socket.on("get_online_users", (users: string[]) => {
-      console.log("Online users updated:", users);
       set({ onlineUsers: users });
     });
 
