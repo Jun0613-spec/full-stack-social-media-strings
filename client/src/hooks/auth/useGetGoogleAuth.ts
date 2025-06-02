@@ -9,7 +9,7 @@ import { User } from "@/types/prismaTypes";
 
 export const useGoogleAuth = () => {
   const queryClient = useQueryClient();
-  const setUser = useAuthStore((state) => state.setUser);
+  const { setUser } = useAuthStore();
 
   const getGoogleAuthURL = useMutation({
     mutationFn: async () => {

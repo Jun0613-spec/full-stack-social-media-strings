@@ -10,7 +10,7 @@ import { useGoogleAuth } from "@/hooks/auth/useGetGoogleAuth";
 const GoogleAuthSuccess = () => {
   const navigate = useNavigate();
   const { completeGoogleAuth } = useGoogleAuth();
-  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const { isLoggedIn } = useAuthStore();
 
   useEffect(() => {
     if (isLoggedIn) {
